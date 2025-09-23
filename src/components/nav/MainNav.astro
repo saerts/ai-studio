@@ -1,0 +1,32 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: '/', label: 'Home' },
+  { href: '/diensten', label: 'Onze diensten' },
+  { href: '/blog', label: 'Blog' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+
+<nav role="navigation" aria-label="Hoofdnavigatie">
+  <ul class="flex space-x-8">
+    {
+      navItems.map(({ href, label }) => (
+        <li>
+          <a
+            href={href}
+            class={`text-sm font-medium transition-colors hover:text-primary-600 focus:text-primary-600 ${
+              currentPath === href
+                ? 'text-primary-600'
+                : 'text-gray-700 dark:text-gray-300'
+            }`}
+            aria-current={currentPath === href ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

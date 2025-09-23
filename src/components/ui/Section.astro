@@ -1,0 +1,23 @@
+---
+export interface Props {
+  class?: string;
+  id?: string;
+  'aria-labelledby'?: string;
+}
+
+const {
+  class: className = '',
+  id,
+  'aria-labelledby': ariaLabelledBy,
+} = Astro.props;
+---
+
+<section
+  class={`py-12 sm:py-16 lg:py-20 ${className}`}
+  id={id}
+  aria-labelledby={ariaLabelledBy}
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <slot />
+  </div>
+</section>

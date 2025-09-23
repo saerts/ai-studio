@@ -1,0 +1,67 @@
+---
+import type { SEOProps } from '../../lib/seo';
+import { getSEOProps } from '../../lib/seo';
+import { orgSchema } from '../../lib/schema';
+import SkipLink from '../a11y/SkipLink.astro';
+import Header from '../nav/Header.astro';
+import Footer from '../nav/Footer.astro';
+import '../../styles/globals.css';
+
+export interface Props extends SEOProps {
+  class?: string;
+}
+
+const seoProps = getSEOProps(Astro.props);
+const organizationSchema = orgSchema();
+---
+
+<!doctype html>
+<html lang="nl" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={seoProps.description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{seoProps.title}</title>
+    <link rel="canonical" href={seoProps.canonical} />
+    {seoProps.noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={seoProps.type} />
+    <meta property="og:url" content={seoProps.canonical} />
+    <meta property="og:title" content={seoProps.title} />
+    <meta property="og:description" content={seoProps.description} />
+    <meta property="og:image" content={seoProps.image} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={seoProps.canonical} />
+    <meta property="twitter:title" content={seoProps.title} />
+    <meta property="twitter:description" content={seoProps.description} />
+    <meta property="twitter:image" content={seoProps.image} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+  </head>
+
+  <body class="min-h-full bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <SkipLink />
+
+    <div class="flex min-h-full flex-col">
+      <Header />
+
+      <main id="main-content" class={`flex-1 ${Astro.props.class || ''}`}>
+        <slot />
+      </main>
+
+      <Footer />
+    </div>
+  </body>
+</html>

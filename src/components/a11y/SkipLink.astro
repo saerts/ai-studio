@@ -1,0 +1,12 @@
+---
+export interface Props {
+  href?: string;
+  text?: string;
+}
+
+const { href = '#main-content', text = 'Spring naar hoofdinhoud' } = Astro.props;
+---
+
+<a href={href} class="skip-link">
+  {text}
+</a>

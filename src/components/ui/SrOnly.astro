@@ -1,0 +1,11 @@
+---
+export interface Props {
+  as?: keyof HTMLElementTagNameMap;
+}
+
+const { as: Tag = 'span' } = Astro.props;
+---
+
+<Tag class="sr-only">
+  <slot />
+</Tag>

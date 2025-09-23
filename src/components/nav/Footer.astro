@@ -1,0 +1,110 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div>
+        <div class="flex items-center space-x-2">
+          <svg
+            class="h-8 w-8"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <defs>
+              <linearGradient id="gradient-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#0ea5e9" />
+                <stop offset="100%" style="stop-color:#0369a1" />
+              </linearGradient>
+            </defs>
+            <circle cx="12" cy="12" r="10" fill="url(#gradient-footer)" />
+            <path fill="white" d="M8 12h8M12 8v8" />
+          </svg>
+          <span class="text-xl font-bold text-gray-900 dark:text-white">
+            AI Studio
+          </span>
+        </div>
+        <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+          AI Studio — Antwerpen, BE
+        </p>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          <a href="mailto:info@ai-studio.be" class="hover:text-primary-600">
+            info@ai-studio.be
+          </a>
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+          Navigatie
+        </h3>
+        <ul class="mt-4 space-y-2">
+          <li>
+            <a
+              href="/"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/diensten"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Onze diensten
+            </a>
+          </li>
+          <li>
+            <a
+              href="/blog"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Blog
+            </a>
+          </li>
+          <li>
+            <a
+              href="/contact"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
+          Juridisch
+        </h3>
+        <ul class="mt-4 space-y-2">
+          <li>
+            <a
+              href="/privacy"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Privacy Policy
+            </a>
+          </li>
+          <li>
+            <a
+              href="/terms"
+              class="text-sm text-gray-600 hover:text-primary-600 dark:text-gray-400"
+            >
+              Algemene Voorwaarden
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 border-t border-gray-200 pt-8 dark:border-gray-700">
+      <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+        © {currentYear} AI Studio. Alle rechten voorbehouden.
+      </p>
+    </div>
+  </div>
+</footer>
