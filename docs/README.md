@@ -21,14 +21,12 @@ Comprehensive documentation for the AI Studio website project.
 
 ### General Documentation
 - **[Design Review](./general/design-review/README.md)** - Automated design review workflow and standards
-- **[Advertising Integration](./guides/advertising-setup.md)** - Revenue optimization and ad management
+
 - **[Performance Optimization](./guides/performance-optimization.md)** - Speed and Core Web Vitals
 
 ## 🚀 Quick Start
 
-1. **Development**: See [Development Setup](./development/setup-and-workflow.md)
-2. **Content Import**: See [MCP Tool Guide](./mcp/ai-news-tool.md)
-3. **Deployment**: See [Deployment Options](./deployment/deployment-options.md)
+1. **Content Import**: See [MCP Tool Guide](./mcp/ai-news-tool.md)
 
 ## 📖 Additional Resources
 

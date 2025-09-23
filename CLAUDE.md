@@ -181,8 +181,6 @@ npm run build      # Production build test
 ## 📖 Documentation
 
 ### For Developers
-- `docs/development/` - Setup and workflow guides
-- `docs/architecture/` - Technical architecture
 - `docs/mcp/` - MCP tool documentation
 
 ### For Content Creators
