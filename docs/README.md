@@ -18,6 +18,9 @@ Comprehensive documentation for the AI Studio website project.
 
 ### Feature Documentation
 - **[Image Generation](./mcp/image-generation.md)** - AI-powered image creation for blog posts
+
+### General Documentation
+- **[Design Review](./general/design-review/README.md)** - Automated design review workflow and standards
 - **[Advertising Integration](./guides/advertising-setup.md)** - Revenue optimization and ad management
 - **[Performance Optimization](./guides/performance-optimization.md)** - Speed and Core Web Vitals
 

@@ -1,0 +1,23 @@
+<svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e"/>
+      <stop offset="50%" style="stop-color:#10b981"/>
+      <stop offset="100%" style="stop-color:#059669"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Modern geometric logo symbol -->
+  <g transform="translate(0, 5)">
+    <!-- Main geometric shape -->
+    <path d="M10 5 L25 5 Q35 5 35 15 L35 25 Q35 35 25 35 L15 35 Q5 35 5 25 L5 15 Q5 5 15 5 Z" fill="url(#logoGradient)"/>
+    <!-- Inner accent -->
+    <path d="M12 10 L22 10 Q28 10 28 16 L28 24 Q28 30 22 30 L18 30 Q12 30 12 24 L12 16 Q12 10 18 10 Z" fill="white" opacity="0.2"/>
+    <!-- Sharp edge accent -->
+    <path d="M30 15 L40 10 L35 25 Z" fill="url(#logoGradient)"/>
+  </g>
+
+  <!-- Studio AI Text -->
+  <text x="50" y="28" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="white">Studio</text>
+  <text x="50" y="43" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="500" fill="#22c55e">AI</text>
+</svg>

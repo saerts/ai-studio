@@ -8,25 +8,8 @@ import Button from '../ui/Button.astro';
     <div class="flex h-16 items-center justify-between">
       <!-- Logo -->
       <div class="flex items-center">
-        <a href="/" class="flex items-center space-x-2">
-          <svg
-            class="h-8 w-8"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <defs>
-              <linearGradient id="gradient-header" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#0ea5e9" />
-                <stop offset="100%" style="stop-color:#0369a1" />
-              </linearGradient>
-            </defs>
-            <circle cx="12" cy="12" r="10" fill="url(#gradient-header)" />
-            <path fill="white" d="M8 12h8M12 8v8" />
-          </svg>
-          <span class="text-xl font-bold text-gray-900 dark:text-white">
-            AI Studio
-          </span>
+        <a href="/" class="flex items-center">
+          <img src="/logo.svg" alt="Studio AI Logo" class="h-12 w-auto" />
         </a>
       </div>
 
@@ -46,7 +29,7 @@ import Button from '../ui/Button.astro';
         <!-- Mobile menu button -->
         <button
           type="button"
-          class="mobile-menu-button md:hidden rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
+          class="mobile-menu-button md:hidden rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
           aria-expanded="false"
           aria-controls="mobile-menu"
           aria-label="Toggle navigation menu"
@@ -70,28 +53,28 @@ import Button from '../ui/Button.astro';
         <a
           href="/"
           class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-          data-current-class="bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100"
+          data-current-class="bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100"
         >
           Home
         </a>
         <a
           href="/diensten"
           class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-          data-current-class="bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100"
+          data-current-class="bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100"
         >
           Onze diensten
         </a>
         <a
           href="/blog"
           class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-          data-current-class="bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100"
+          data-current-class="bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100"
         >
           Blog
         </a>
         <a
           href="/contact"
           class="block rounded-md px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white"
-          data-current-class="bg-primary-100 text-primary-900 dark:bg-primary-900 dark:text-primary-100"
+          data-current-class="bg-green-100 text-green-900 dark:bg-green-900 dark:text-green-100"
         >
           Contact
         </a>
@@ -100,7 +83,7 @@ import Button from '../ui/Button.astro';
         <div class="pt-4 sm:hidden">
           <a
             href="/contact"
-            class="block w-full rounded-md bg-primary-600 px-3 py-2 text-center text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            class="block w-full rounded-md bg-green-600 px-3 py-2 text-center text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
           >
             Start gesprek
           </a>

@@ -47,7 +47,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
         <h2 class="sr-only">Filter op tags</h2>
         <div class="flex flex-wrap justify-center gap-2">
           <button
-            class="filter-tag rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 data-[active]:bg-primary-600 data-[active]:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+            class="filter-tag rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 data-[active]:bg-green-600 data-[active]:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
             data-tag="all"
             data-active="true"
           >
@@ -55,7 +55,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
           </button>
           {allTags.map((tag) => (
             <button
-              class="filter-tag rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 data-[active]:bg-primary-600 data-[active]:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+              class="filter-tag rounded-full bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 data-[active]:bg-green-600 data-[active]:text-white dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
               data-tag={tag}
             >
               {tag}
@@ -74,7 +74,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
             type="text"
             id="search"
             placeholder="Zoek artikelen..."
-            class="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-sm placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
+            class="block w-full rounded-md border-gray-300 pl-10 pr-3 py-2 text-sm placeholder-gray-500 focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
           />
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,7 +104,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white">
                       <a
                         href={`/blog/${post.slug}`}
-                        class="hover:text-primary-600 focus:text-primary-600"
+                        class="hover:text-green-600 focus:text-green-600"
                       >
                         {post.data.title}
                       </a>
@@ -117,7 +117,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
                     {post.data.tags.length > 0 && (
                       <div class="mt-4 flex flex-wrap gap-2">
                         {post.data.tags.slice(0, 3).map((tag) => (
-                          <span class="inline-flex items-center rounded-full bg-primary-100 px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:bg-primary-900 dark:text-primary-200">
+                          <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900 dark:text-green-200">
                             {tag}
                           </span>
                         ))}
@@ -162,7 +162,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
                 href={page === 1 ? '/blog' : `/blog/page/${page}`}
                 class={`px-4 py-2 rounded-md text-sm font-medium ${
                   page === currentPage
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-green-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600'
                 }`}
                 aria-current={page === currentPage ? 'page' : undefined}
