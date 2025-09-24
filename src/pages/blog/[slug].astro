@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 import BlogLayout from '../../components/layout/BlogLayout.astro';
 
@@ -83,7 +82,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // Get post data from props (passed from getStaticPaths)
-const { post, isMCPPost } = Astro.props;
+const { post, isMCPPost } = Astro.props as { post: any; isMCPPost: boolean };
 
 // For static posts, render the content
 let Content: any = null;

@@ -135,7 +135,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
           >
             Alle artikelen
           </button>
-          {allTags.map((tag) => (
+          {allTags.map((tag: string) => (
             <button
               class="filter-tag glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-primary-400 hover:border-primary-400/30 data-[active]:bg-primary-400/20 data-[active]:text-primary-400 data-[active]:border-primary-400"
               data-tag={tag}
@@ -198,7 +198,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 
                     {post.data.tags.length > 0 && (
                       <div class="mt-4 flex flex-wrap gap-2">
-                        {post.data.tags.slice(0, 3).map((tag) => (
+                        {post.data.tags.slice(0, 3).map((tag: string) => (
                           <span class="inline-flex items-center rounded-full bg-primary-400/20 px-2.5 py-0.5 text-xs font-medium text-primary-400">
                             {tag}
                           </span>
@@ -261,10 +261,10 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 
 <script>
   document.addEventListener('DOMContentLoaded', async function() {
-    const searchInput = document.getElementById('search') as HTMLInputElement;
+    const searchInput = document.getElementById('search') as HTMLInputElement | null;
     const filterTags = document.querySelectorAll('.filter-tag');
-    const postsContainer = document.getElementById('posts-container');
-    const noResults = document.getElementById('no-results');
+    const postsContainer = document.getElementById('posts-container') as HTMLElement | null;
+    const noResults = document.getElementById('no-results') as HTMLElement | null;
 
     if (!searchInput || !postsContainer || !noResults) return;
 
@@ -272,8 +272,8 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 
     // Filter functionality
     function filterPosts() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const posts = postsContainer.querySelectorAll('article');
+      const searchTerm = searchInput!.value.toLowerCase();
+      const posts = postsContainer!.querySelectorAll('article');
       let visibleCount = 0;
 
       posts.forEach(post => {
@@ -297,13 +297,13 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
       });
 
       // Show/hide no results message
-      const postsGrid = postsContainer.querySelector('.grid');
+      const postsGrid = postsContainer!.querySelector('.grid');
       if (visibleCount === 0) {
         postsGrid?.classList.add('hidden');
-        noResults.classList.remove('hidden');
+        noResults!.classList.remove('hidden');
       } else {
         postsGrid?.classList.remove('hidden');
-        noResults.classList.add('hidden');
+        noResults!.classList.add('hidden');
       }
     }
 
@@ -336,7 +336,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
     initScrollAnimations();
 
     // Refresh posts functionality
-    const refreshButton = document.getElementById('refresh-posts');
+    const refreshButton = document.getElementById('refresh-posts') as HTMLButtonElement | null;
     if (refreshButton) {
       refreshButton.addEventListener('click', async () => {
         const originalText = refreshButton.innerHTML;
@@ -372,7 +372,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
           const errorDiv = document.createElement('div');
           errorDiv.className = 'mt-2 text-sm text-red-400';
           errorDiv.textContent = 'Kon artikelen niet vernieuwen. Probeer het opnieuw.';
-          refreshButton.parentNode.appendChild(errorDiv);
+          refreshButton.parentNode?.appendChild(errorDiv);
 
           // Remove error after 5 seconds
           setTimeout(() => {

@@ -106,19 +106,21 @@ Instructions:
     let translatedDescription: string | undefined;
 
     if (frontmatterMatch) {
-      frontmatter = frontmatterMatch[1];
-      mainContent = frontmatterMatch[2];
+      frontmatter = frontmatterMatch[1] || '';
+      mainContent = frontmatterMatch[2] || content;
 
       // Extract title and description from frontmatter for translation
       // More robust regex patterns to handle various YAML formats
       const titleMatch = frontmatter.match(/^title:\s*["']?([^"'\n\r]+)["']?\s*$/m);
       const descMatch = frontmatter.match(/^description:\s*["']?([^"'\n\r]+)["']?\s*$/m);
 
-      if (titleMatch && titleMatch[1].trim()) {
-        translatedTitle = await this.translateToDutch(titleMatch[1].trim(), originalLanguage);
+      const titleText = titleMatch?.[1]?.trim();
+      const descText = descMatch?.[1]?.trim();
+      if (titleText) {
+        translatedTitle = await this.translateToDutch(titleText, originalLanguage);
       }
-      if (descMatch && descMatch[1].trim()) {
-        translatedDescription = await this.translateToDutch(descMatch[1].trim(), originalLanguage);
+      if (descText) {
+        translatedDescription = await this.translateToDutch(descText, originalLanguage);
       }
     }
 
@@ -150,12 +152,18 @@ Instructions:
       translatedContent = `---\n${updatedFrontmatter}\n---\n${translatedMainContent}`;
     }
 
-    return {
+    const result: {
+      originalLanguage: string;
+      translatedContent: string;
+      translatedTitle?: string;
+      translatedDescription?: string;
+    } = {
       originalLanguage,
       translatedContent,
-      translatedTitle,
-      translatedDescription
     };
+    if (translatedTitle) result.translatedTitle = translatedTitle;
+    if (translatedDescription) result.translatedDescription = translatedDescription;
+    return result;
   }
 }
 

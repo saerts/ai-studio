@@ -305,8 +305,8 @@ class AINewsServer {
           try {
             const result = await this.imageGenerator.generateImageForArticle(article);
             if (result.success) {
-              article.cover = result.imagePath;
-              article.coverAlt = result.altText;
+              article.cover = result.imagePath ?? '';
+              article.coverAlt = result.altText ?? '';
               article.coverGenerated = true;
               article.coverPrompt = `Generated for "${article.title}"`;
               imagesGenerated++;
@@ -536,8 +536,8 @@ canonicalUrl: "${data.canonicalUrl}"`;
 
         if (result.success) {
           // Update article with image information
-          article.cover = result.imagePath;
-          article.coverAlt = result.altText;
+          article.cover = result.imagePath ?? '';
+          article.coverAlt = result.altText ?? '';
           article.coverGenerated = true;
           article.coverPrompt = result.cached ? 'cached' : 'generated';
 

@@ -101,18 +101,20 @@ Instructions:
     let translatedDescription: string | undefined;
 
     if (frontmatterMatch) {
-      frontmatter = frontmatterMatch[1];
-      mainContent = frontmatterMatch[2];
+      frontmatter = frontmatterMatch[1] || '';
+      mainContent = frontmatterMatch[2] || content;
 
       // More robust regex patterns to handle various YAML formats
       const titleMatch = frontmatter.match(/^title:\s*["']?([^"'\n\r]+)["']?\s*$/m);
       const descMatch = frontmatter.match(/^description:\s*["']?([^"'\n\r]+)["']?\s*$/m);
 
-      if (titleMatch && titleMatch[1].trim()) {
-        translatedTitle = await this.translateToDutch(titleMatch[1].trim(), originalLanguage);
+      const titleText = titleMatch?.[1]?.trim();
+      const descText = descMatch?.[1]?.trim();
+      if (titleText) {
+        translatedTitle = await this.translateToDutch(titleText, originalLanguage);
       }
-      if (descMatch && descMatch[1].trim()) {
-        translatedDescription = await this.translateToDutch(descMatch[1].trim(), originalLanguage);
+      if (descText) {
+        translatedDescription = await this.translateToDutch(descText, originalLanguage);
       }
     }
 
@@ -154,7 +156,7 @@ const translationService = new TranslationService();
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', service: 'translate-server' });
+  return res.json({ status: 'ok', service: 'translate-server' });
 });
 
 // Detect language endpoint
@@ -168,12 +170,12 @@ app.post('/detect-language', async (req, res) => {
 
     const language = await translationService.detectLanguage(text);
 
-    res.json({
+    return res.json({
       detectedLanguage: language
     });
   } catch (error) {
     console.error('Language detection error:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Language detection failed',
       details: error instanceof Error ? error.message : 'Unknown error'
     });
@@ -196,13 +198,13 @@ app.post('/translate', async (req, res) => {
 
     const translatedText = await translationService.translateToDutch(text, detectedLanguage);
 
-    res.json({
+    return res.json({
       originalLanguage: detectedLanguage,
       translatedText
     });
   } catch (error) {
     console.error('Translation error:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Translation failed',
       details: error instanceof Error ? error.message : 'Unknown error'
     });
@@ -220,10 +222,10 @@ app.post('/translate-blog', async (req, res) => {
 
     const result = await translationService.translateBlogPost(content);
 
-    res.json(result);
+    return res.json(result);
   } catch (error) {
     console.error('Blog translation error:', error);
-    res.status(500).json({
+    return res.status(500).json({
       error: 'Blog translation failed',
       details: error instanceof Error ? error.message : 'Unknown error'
     });

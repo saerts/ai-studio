@@ -69,7 +69,7 @@ class MCPBlogService {
     // Extract articles from MCP response
     const articles: MCPArticle[] = mcpData.articles || [];
 
-    return articles.map((article, index) => ({
+    return articles.map((article, index): BlogPost => ({
       id: article.guid || `${article.slug}-${index}`,
       slug: article.slug,
       data: {
@@ -80,9 +80,9 @@ class MCPBlogService {
         tags: article.tags,
         source: article.source,
         canonicalUrl: article.link,
-        cover: article.cover,
-        coverAlt: article.coverAlt,
-        coverGenerated: article.coverGenerated,
+        ...(article.cover !== undefined && article.cover !== null && article.cover !== '' ? { cover: article.cover } : {}),
+        ...(article.coverAlt !== undefined && article.coverAlt !== null && article.coverAlt !== '' ? { coverAlt: article.coverAlt } : {}),
+        ...(article.coverGenerated !== undefined ? { coverGenerated: article.coverGenerated } : {}),
         draft: false,
       },
       body: article.content || '',

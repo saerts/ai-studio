@@ -151,10 +151,10 @@ import Button from '../ui/Button.astro';
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('.mobile-menu-button');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const menuIcon = document.querySelector('.menu-icon');
-    const closeIcon = document.querySelector('.close-icon');
+    const menuButton = document.querySelector('.mobile-menu-button') as HTMLButtonElement | null;
+    const mobileMenu = document.querySelector('.mobile-menu') as HTMLElement | null;
+    const menuIcon = document.querySelector('.menu-icon') as SVGElement | null;
+    const closeIcon = document.querySelector('.close-icon') as SVGElement | null;
 
     if (!menuButton || !mobileMenu || !menuIcon || !closeIcon) return;
 
@@ -164,7 +164,7 @@ import Button from '../ui/Button.astro';
 
     mobileLinks.forEach(link => {
       const href = link.getAttribute('href');
-      const currentClass = link.getAttribute('data-current-class');
+      const currentClass = link.getAttribute('data-current-class') || '';
 
       if (href === currentPath || (currentPath === '/' && href === '/')) {
         link.className = link.className.replace(/text-white\/80.*?(?=\s|$)/g, '').trim();
@@ -175,6 +175,7 @@ import Button from '../ui/Button.astro';
 
     // Toggle mobile menu
     function toggleMobileMenu() {
+      if (!menuButton || !mobileMenu || !menuIcon || !closeIcon) return;
       const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
 
       menuButton.setAttribute('aria-expanded', (!isExpanded).toString());
@@ -204,7 +205,9 @@ import Button from '../ui/Button.astro';
 
     // Close menu when clicking outside
     document.addEventListener('click', (event) => {
-      const isClickInsideNav = menuButton.contains(event.target) || mobileMenu.contains(event.target);
+      const target = event.target;
+      const node = (target && target instanceof Node) ? target : null;
+      const isClickInsideNav = (node ? menuButton.contains(node) : false) || (node ? mobileMenu.contains(node) : false);
 
       if (!isClickInsideNav && !mobileMenu.classList.contains('hidden')) {
         toggleMobileMenu();
@@ -213,28 +216,29 @@ import Button from '../ui/Button.astro';
 
     // Close menu on escape key
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+      if ((event instanceof KeyboardEvent) && event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
         toggleMobileMenu();
-        menuButton.focus(); // Return focus to menu button
+        if (menuButton) menuButton.focus(); // Return focus to menu button
       }
     });
 
     // Handle focus trapping in mobile menu
     mobileMenu.addEventListener('keydown', (event) => {
+      if (!(event instanceof KeyboardEvent)) return;
       if (event.key === 'Tab') {
         const focusableElements = mobileMenu.querySelectorAll('a, button');
-        const firstElement = focusableElements[0];
-        const lastElement = focusableElements[focusableElements.length - 1];
+        const firstElement = (focusableElements[0] as unknown) as HTMLElement | undefined;
+        const lastElement = (focusableElements[focusableElements.length - 1] as unknown) as HTMLElement | undefined;
 
         if (event.shiftKey) {
           if (document.activeElement === firstElement) {
             event.preventDefault();
-            lastElement.focus();
+            lastElement && lastElement.focus();
           }
         } else {
           if (document.activeElement === lastElement) {
             event.preventDefault();
-            firstElement.focus();
+            firstElement && firstElement.focus();
           }
         }
       }
