@@ -147,6 +147,14 @@ class AINewsServer {
             properties: {},
           },
         },
+        {
+          name: 'get_processed_articles',
+          description: 'Get all processed articles in structured format',
+          inputSchema: {
+            type: 'object',
+            properties: {},
+          },
+        },
       ],
     }));
 
@@ -162,6 +170,8 @@ class AINewsServer {
           return this.generateImages(request.params.arguments as ImageGenerationOptions);
         case 'get_usage_stats':
           return this.getUsageStats();
+        case 'get_processed_articles':
+          return this.getProcessedArticles();
         default:
           throw new Error(`Unknown tool: ${request.params.name}`);
       }
@@ -295,8 +305,8 @@ class AINewsServer {
           try {
             const result = await this.imageGenerator.generateImageForArticle(article);
             if (result.success) {
-              article.cover = result.imagePath;
-              article.coverAlt = result.altText;
+              article.cover = result.imagePath ?? '';
+              article.coverAlt = result.altText ?? '';
               article.coverGenerated = true;
               article.coverPrompt = `Generated for "${article.title}"`;
               imagesGenerated++;
@@ -526,8 +536,8 @@ canonicalUrl: "${data.canonicalUrl}"`;
 
         if (result.success) {
           // Update article with image information
-          article.cover = result.imagePath;
-          article.coverAlt = result.altText;
+          article.cover = result.imagePath ?? '';
+          article.coverAlt = result.altText ?? '';
           article.coverGenerated = true;
           article.coverPrompt = result.cached ? 'cached' : 'generated';
 
@@ -577,6 +587,35 @@ canonicalUrl: "${data.canonicalUrl}"`;
             `📅 Monthly usage: $${stats.monthlyUsage.toFixed(3)}\n` +
             `⚡ Cache hit rate: ${(stats.cacheHitRate * 100).toFixed(1)}%`,
         },
+      ],
+    };
+  }
+
+  private async getProcessedArticles(): Promise<any> {
+    const articles = Array.from(this.processedArticles.values());
+
+    return {
+      content: [
+        {
+          type: 'json',
+          data: articles.map(article => ({
+            id: this.getArticleHash(article),
+            slug: article.slug,
+            title: article.title,
+            description: article.summary,
+            link: article.link,
+            pubDate: article.pubDate.toISOString(),
+            content: article.content,
+            source: article.source,
+            tags: article.tags,
+            summary: article.summary,
+            guid: article.guid,
+            cover: article.cover,
+            coverAlt: article.coverAlt,
+            coverGenerated: article.coverGenerated,
+            fetchedAt: new Date().toISOString()
+          }))
+        }
       ],
     };
   }

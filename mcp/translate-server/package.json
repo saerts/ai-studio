@@ -1,39 +1,36 @@
 {
-  "name": "ai-studio-ai-news",
+  "name": "ai-studio-translate-server",
   "version": "1.0.0",
-  "description": "MCP server for fetching and converting AI news from RSS feeds to Markdown with AI image generation",
+  "description": "MCP server for translating blog content to Dutch with language detection",
   "type": "module",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/server.js",
-    "start:http": "node dist/http-server.js"
+    "start:http": "node dist/http-server.js",
+    "setup": "node setup-claude-config.js",
+    "test": "node example-usage.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "openai": "^4.67.1",
-    "rss-parser": "^3.13.0",
-    "turndown": "^7.2.0",
-    "sharp": "^0.33.2",
     "express": "^4.18.2",
     "cors": "^2.8.5"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "@types/turndown": "^5.0.4",
     "@types/express": "^4.17.21",
     "@types/cors": "^2.8.17",
     "typescript": "^5.7.2"
   },
   "keywords": [
     "mcp",
-    "ai",
-    "rss",
-    "markdown",
-    "news",
-    "image-generation",
-    "dall-e"
+    "translation",
+    "dutch",
+    "language-detection",
+    "blog",
+    "openai"
   ],
   "author": "AI Studio",
   "license": "MIT"

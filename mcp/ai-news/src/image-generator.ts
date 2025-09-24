@@ -37,24 +37,26 @@ export interface UsageStats {
 }
 
 export class AIImageGenerator {
-  private openai: OpenAI;
+  private openai?: OpenAI;
   private config: ImageConfig;
   private cache = new Map<string, string>();
   private usageStats: UsageStats;
 
   constructor(config: Partial<ImageConfig> = {}) {
     const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) {
-      throw new Error('OPENAI_API_KEY environment variable is required');
+
+    // Initialize OpenAI client only if API key is present
+    if (apiKey) {
+      this.openai = new OpenAI({
+        apiKey,
+        organization: process.env.OPENAI_ORG_ID,
+      });
     }
 
-    this.openai = new OpenAI({
-      apiKey,
-      organization: process.env.OPENAI_ORG_ID,
-    });
-
+    // Build configuration with sensible defaults
     this.config = {
-      enabled: process.env.IMAGE_GENERATION_ENABLED === 'true' || true,
+      // Disabled by default; can be enabled via env or config, but requires API key
+      enabled: process.env.IMAGE_GENERATION_ENABLED === 'true',
       style: (process.env.DEFAULT_IMAGE_STYLE as ImageConfig['style']) || 'corporate',
       size: '1792x1024',
       quality: 'standard',
@@ -64,6 +66,11 @@ export class AIImageGenerator {
       cacheDuration: parseInt(process.env.IMAGE_CACHE_DURATION || '7776000'), // 90 days
       ...config,
     };
+
+    // If no API key, force-disable image generation regardless of config
+    if (!apiKey) {
+      this.config.enabled = false;
+    }
 
     this.usageStats = {
       imagesGenerated: 0,
@@ -180,6 +187,10 @@ export class AIImageGenerator {
   }
 
   private async generateImage(prompt: string): Promise<string> {
+    if (!this.openai) {
+      throw new Error('Image generation disabled: OpenAI API key not configured');
+    }
+
     const response = await this.openai.images.generate({
       model: 'dall-e-3',
       prompt: prompt,

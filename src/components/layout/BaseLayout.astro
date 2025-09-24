@@ -48,7 +48,7 @@ const organizationSchema = orgSchema();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
   </head>
 
   <body class="min-h-full bg-dark-900 text-white">
