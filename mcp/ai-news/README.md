@@ -1,4 +1,4 @@
-# AI Studio AI News MCP Server
+# AI Studio AI News MCP Servers
 
 An MCP (Model Context Protocol) server that fetches AI news articles from RSS feeds and converts them to Markdown files for the AI Studio blog.
 
