@@ -1,5 +1,4 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Card from '../components/ui/Card.astro';
@@ -11,17 +10,63 @@ const seoProps = {
   canonical: 'https://ai-studio.be/blog',
 };
 
-// Get all blog posts and sort by publication date
-const allPosts = await getCollection('blog', ({ data }) => {
-  return !data.draft;
-});
+// Fetch blog posts from MCP API
+let allPosts: any[] = [];
+let allTags: string[] = [];
+let errorMessage = '';
 
+try {
+  // Try to fetch from MCP API first
+  const apiUrl = new URL('/api/blog', Astro.site || 'http://localhost:4321');
+  const response = await fetch(apiUrl.toString());
+
+  if (response.ok) {
+    const data = await response.json();
+    // Convert date strings back to Date objects
+    allPosts = (data.posts || []).map((post: any) => ({
+      ...post,
+      data: {
+        ...post.data,
+        pubDate: new Date(post.data.pubDate),
+        updatedDate: new Date(post.data.updatedDate),
+      }
+    }));
+    allTags = data.tags || [];
+  } else {
+    throw new Error(`API returned ${response.status}: ${response.statusText}`);
+  }
+} catch (error) {
+  console.warn('Failed to fetch from MCP API, falling back to static content:', error);
+  errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
+  // Fallback to static content collections if MCP API is not available
+  try {
+    const { getCollection } = await import('astro:content');
+    const staticPosts = await getCollection('blog', ({ data }) => {
+      return !data.draft;
+    });
+
+    // Convert static posts to match MCP API format
+    allPosts = staticPosts.map(post => ({
+      id: post.id,
+      slug: post.slug,
+      data: post.data,
+      body: '', // Body would be rendered separately for static posts
+    }));
+
+    allTags = [...new Set(staticPosts.flatMap(post => post.data.tags))].sort();
+  } catch (staticError) {
+    console.error('Failed to load static content as fallback:', staticError);
+    allPosts = [];
+    allTags = [];
+    errorMessage = 'Unable to load blog posts from both MCP API and static content';
+  }
+}
+
+// Sort posts by publication date (newest first)
 const sortedPosts = allPosts.sort((a, b) => {
   return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
 });
-
-// Get unique tags for filtering
-const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))].sort();
 
 // Pagination (can be enhanced)
 const postsPerPage = 12;
@@ -40,6 +85,43 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
         Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.
         Praktische tips, case studies en inzichten van experts.
       </p>
+
+      {/* Debug/Status Section */}
+      <div class="mt-4 flex justify-center">
+        <div class="glass-card px-4 py-2 text-sm">
+          {errorMessage ? (
+            <div class="text-amber-400 flex items-center gap-2">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+              Fallback mode (static content)
+            </div>
+          ) : (
+            <div class="text-teal-400 flex items-center gap-2">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Live content from MCP API
+            </div>
+          )}
+          <div class="mt-1 text-xs text-zinc-400">
+            {paginatedPosts.length} artikel{paginatedPosts.length !== 1 ? 'en' : ''} geladen
+          </div>
+        </div>
+      </div>
+
+      {/* Refresh Button */}
+      <div class="mt-4">
+        <button
+          id="refresh-posts"
+          class="glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-teal-400 hover:border-teal-400/30 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
+        >
+          <svg class="inline-block h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Vernieuw artikelen
+        </button>
+      </div>
     </div>
 
     {allTags.length > 0 && (
@@ -178,7 +260,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 </BaseLayout>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', async function() {
     const searchInput = document.getElementById('search') as HTMLInputElement;
     const filterTags = document.querySelectorAll('.filter-tag');
     const postsContainer = document.getElementById('posts-container');
@@ -250,8 +332,58 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
     });
 
     // Initialize scroll animations
-    import { initScrollAnimations } from '../lib/scrollAnimations.js';
+    const { initScrollAnimations } = await import('../lib/scrollAnimations.js');
     initScrollAnimations();
+
+    // Refresh posts functionality
+    const refreshButton = document.getElementById('refresh-posts');
+    if (refreshButton) {
+      refreshButton.addEventListener('click', async () => {
+        const originalText = refreshButton.innerHTML;
+        refreshButton.innerHTML = '<svg class="inline-block h-4 w-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>Artikelen ophalen...';
+        refreshButton.disabled = true;
+
+        try {
+          // First, try to trigger fresh fetch from MCP server
+          const refreshResponse = await fetch('/api/blog', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              action: 'fetch_and_generate',
+              sinceDays: 30,
+              limit: 50,
+              generateImages: true,
+              imageStyle: 'corporate',
+            }),
+          });
+
+          if (refreshResponse.ok) {
+            // Reload the page to show fresh content
+            window.location.reload();
+          } else {
+            throw new Error('Failed to refresh articles');
+          }
+        } catch (error) {
+          console.error('Failed to refresh articles:', error);
+
+          // Show error message
+          const errorDiv = document.createElement('div');
+          errorDiv.className = 'mt-2 text-sm text-red-400';
+          errorDiv.textContent = 'Kon artikelen niet vernieuwen. Probeer het opnieuw.';
+          refreshButton.parentNode.appendChild(errorDiv);
+
+          // Remove error after 5 seconds
+          setTimeout(() => {
+            errorDiv.remove();
+          }, 5000);
+        } finally {
+          refreshButton.innerHTML = originalText;
+          refreshButton.disabled = false;
+        }
+      });
+    }
   });
 </script>
 
