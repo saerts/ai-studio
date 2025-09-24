@@ -1,23 +1,97 @@
-<svg width="180" height="50" viewBox="0 0 180 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#22c55e"/>
-      <stop offset="50%" style="stop-color:#10b981"/>
-      <stop offset="100%" style="stop-color:#059669"/>
+    <!-- Sharp gradient in our brand colors -->
+    <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2dd4bf"/>
+      <stop offset="50%" style="stop-color:#22d3ee"/>
+      <stop offset="100%" style="stop-color:#06b6d4"/>
     </linearGradient>
+
+    <!-- Colorful inner gradient -->
+    <linearGradient id="innerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0abfc"/>
+      <stop offset="25%" style="stop-color:#e879f9"/>
+      <stop offset="50%" style="stop-color:#c084fc"/>
+      <stop offset="75%" style="stop-color:#a855f7"/>
+      <stop offset="100%" style="stop-color:#22d3ee"/>
+    </linearGradient>
+
+    <!-- Reduced glow effect -->
+    <filter id="professionalGlow">
+      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Reduced text shadow -->
+    <filter id="textShadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
   </defs>
 
-  <!-- Modern geometric logo symbol -->
-  <g transform="translate(0, 5)">
-    <!-- Main geometric shape -->
-    <path d="M10 5 L25 5 Q35 5 35 15 L35 25 Q35 35 25 35 L15 35 Q5 35 5 25 L5 15 Q5 5 15 5 Z" fill="url(#logoGradient)"/>
-    <!-- Inner accent -->
-    <path d="M12 10 L22 10 Q28 10 28 16 L28 24 Q28 30 22 30 L18 30 Q12 30 12 24 L12 16 Q12 10 18 10 Z" fill="white" opacity="0.2"/>
-    <!-- Sharp edge accent -->
-    <path d="M30 15 L40 10 L35 25 Z" fill="url(#logoGradient)"/>
+  <!-- Creative Flowing Star Icon -->
+  <g transform="translate(2, 2)">
+    <!-- Top flowing point -->
+    <path d="M25 2 C30 2 35 8 35 15 C30 12 25 10 25 15 C25 10 20 12 15 15 C15 8 20 2 25 2 Z"
+          fill="url(#starGradient)"
+          filter="url(#professionalGlow)"/>
+
+    <!-- Right flowing point -->
+    <path d="M48 25 C48 20 42 15 35 15 C38 20 40 25 35 25 C40 25 38 30 35 35 C42 35 48 30 48 25 Z"
+          fill="url(#starGradient)"
+          filter="url(#professionalGlow)"/>
+
+    <!-- Bottom flowing point -->
+    <path d="M25 48 C20 48 15 42 15 35 C20 38 25 40 25 35 C25 40 30 38 35 35 C35 42 30 48 25 48 Z"
+          fill="url(#starGradient)"
+          filter="url(#professionalGlow)"/>
+
+    <!-- Left flowing point -->
+    <path d="M2 25 C2 30 8 35 15 35 C12 30 10 25 15 25 C10 25 12 20 15 15 C8 15 2 20 2 25 Z"
+          fill="url(#starGradient)"
+          filter="url(#professionalGlow)"/>
+
+    <!-- Colorful flowing inner shape -->
+    <path d="M25 12 C32 15 38 22 35 28 C32 35 25 32 18 28 C15 22 18 15 25 12 Z"
+          fill="url(#innerGradient)"
+          opacity="0.7"/>
+
+    <!-- Additional colorful accent -->
+    <path d="M25 18 C29 20 32 24 30 27 C28 30 25 28 22 27 C20 24 22 20 25 18 Z"
+          fill="url(#innerGradient)"
+          opacity="0.5"/>
+
+    <!-- Dynamic center highlight -->
+    <ellipse cx="25" cy="25" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.9" transform="rotate(45 25 25)"/>
   </g>
 
-  <!-- Studio AI Text -->
-  <text x="50" y="28" font-family="Inter, system-ui, sans-serif" font-size="18" font-weight="700" fill="white">Studio</text>
-  <text x="50" y="43" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="500" fill="#22c55e">AI</text>
+  <!-- AI-STUDIO Text -->
+  <g transform="translate(55, 0)">
+    <!-- AI-STUDIO text - serious and professional -->
+    <text x="0" y="28"
+          font-family="Inter, system-ui, sans-serif"
+          font-size="20"
+          font-weight="800"
+          letter-spacing="2px"
+          fill="#ffffff"
+          filter="url(#textShadow)">AI-STUDIO</text>
+
+    <!-- Professional tagline -->
+    <text x="0" y="42"
+          font-family="Inter, system-ui, sans-serif"
+          font-size="8"
+          font-weight="600"
+          letter-spacing="1px"
+          fill="#94a3b8"
+          opacity="0.8">PROFESSIONAL AI SOLUTIONS</text>
+  </g>
+
+  <!-- Minimal accent elements -->
+  <g opacity="0.4">
+    <rect x="185" y="12" width="2" height="8" fill="#2dd4bf"/>
+    <rect x="190" y="8" width="2" height="12" fill="#22d3ee"/>
+    <rect x="195" y="15" width="2" height="6" fill="#06b6d4"/>
+  </g>
 </svg>

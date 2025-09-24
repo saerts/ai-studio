@@ -11,67 +11,67 @@ const seoProps = {
 ---
 
 <BaseLayout {...seoProps}>
-  <Section>
+  <Section class="scroll-animate">
     <div class="grid grid-cols-1 gap-12 lg:grid-cols-2">
       <!-- Contact Info -->
       <div>
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+        <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl gradient-text">
           Laten we praten
         </h1>
-        <p class="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
+        <p class="mt-6 text-lg leading-8 text-zinc-300">
           Klaar om AI in je dagelijkse flow te brengen? We horen graag van je.
           Plan een vrijblijvend gesprek en ontdek hoe we jouw bedrijf kunnen helpen.
         </p>
 
         <div class="mt-8 space-y-6">
           <div class="flex items-center">
-            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-6 w-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            <span class="ml-3 text-gray-600 dark:text-gray-400">
-              <a href="mailto:info@ai-studio.be" class="hover:text-green-600">
+            <span class="ml-3 text-zinc-300">
+              <a href="mailto:info@ai-studio.be" class="hover:text-primary-400 transition-colors">
                 info@ai-studio.be
               </a>
             </span>
           </div>
 
           <div class="flex items-center">
-            <svg class="h-6 w-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="h-6 w-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span class="ml-3 text-gray-600 dark:text-gray-400">
+            <span class="ml-3 text-zinc-300">
               Antwerpen, België
             </span>
           </div>
         </div>
 
         <div class="mt-8">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+          <h2 class="text-lg font-semibold text-white">
             Wat je kunt verwachten:
           </h2>
           <ul class="mt-4 space-y-2">
             <li class="flex items-start">
-              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-gray-600 dark:text-gray-400">
+              <span class="text-zinc-300">
                 Respons binnen 24 uur
               </span>
             </li>
             <li class="flex items-start">
-              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-gray-600 dark:text-gray-400">
+              <span class="text-zinc-300">
                 Vrijblijvend kennismakingsgesprek
               </span>
             </li>
             <li class="flex items-start">
-              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
               </svg>
-              <span class="text-gray-600 dark:text-gray-400">
+              <span class="text-zinc-300">
                 Concrete AI-kansen voor jouw bedrijf
               </span>
             </li>
@@ -105,7 +105,7 @@ const seoProps = {
           />
 
           <div>
-            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="name" class="block text-sm font-medium text-white">
               Naam *
             </label>
             <input
@@ -114,13 +114,13 @@ const seoProps = {
               name="name"
               required
               aria-required="true"
-              class="mt-1 block w-full rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-green-400"
+              class="form-input"
             />
             <div id="name-error" class="mt-1 hidden text-sm text-red-600" role="alert" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="email" class="block text-sm font-medium text-white">
               E-mailadres *
             </label>
             <input
@@ -130,28 +130,28 @@ const seoProps = {
               required
               aria-required="true"
               aria-describedby="email-help"
-              class="mt-1 block w-full rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-green-400"
+              class="form-input"
             />
-            <div id="email-help" class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            <div id="email-help" class="mt-1 text-xs text-zinc-400">
               We gebruiken je e-mailadres alleen om te reageren op je bericht.
             </div>
             <div id="email-error" class="mt-1 hidden text-sm text-red-600" role="alert" aria-live="polite"></div>
           </div>
 
           <div>
-            <label for="company" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="company" class="block text-sm font-medium text-white">
               Bedrijf
             </label>
             <input
               type="text"
               id="company"
               name="company"
-              class="mt-1 block w-full rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-green-400"
+              class="form-input"
             />
           </div>
 
           <div>
-            <label for="message" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            <label for="message" class="block text-sm font-medium text-white">
               Bericht *
             </label>
             <textarea
@@ -161,7 +161,7 @@ const seoProps = {
               required
               aria-required="true"
               placeholder="Vertel ons kort over je uitdaging of vraag..."
-              class="mt-1 block w-full rounded-md border-gray-300 px-3 py-2 shadow-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:focus:border-green-400"
+              class="form-input"
             ></textarea>
             <div id="message-error" class="mt-1 hidden text-sm text-red-600" role="alert" aria-live="polite"></div>
           </div>
@@ -174,32 +174,32 @@ const seoProps = {
           </button>
 
           <!-- Success/Error Messages -->
-          <div id="form-success" class="hidden rounded-md bg-green-50 p-4 dark:bg-green-900" role="alert" aria-live="polite">
+          <div id="form-success" class="hidden glass-card p-4 border-primary-400/30" role="alert" aria-live="polite">
             <div class="flex">
-              <svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="h-5 w-5 text-primary-400" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
               <div class="ml-3">
-                <h3 class="text-sm font-medium text-green-800 dark:text-green-200">
+                <h3 class="text-sm font-medium text-white">
                   Bericht verzonden!
                 </h3>
-                <div class="mt-2 text-sm text-green-700 dark:text-green-300">
+                <div class="mt-2 text-sm text-zinc-300">
                   Bedankt voor je bericht. We nemen binnen 24 uur contact met je op.
                 </div>
               </div>
             </div>
           </div>
 
-          <div id="form-error" class="hidden rounded-md bg-red-50 p-4 dark:bg-red-900" role="alert" aria-live="polite">
+          <div id="form-error" class="hidden glass-card p-4 border-error/30" role="alert" aria-live="polite">
             <div class="flex">
-              <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+              <svg class="h-5 w-5 text-error" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
               </svg>
               <div class="ml-3">
-                <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+                <h3 class="text-sm font-medium text-white">
                   Er ging iets mis
                 </h3>
-                <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+                <div class="mt-2 text-sm text-zinc-300">
                   Probeer het opnieuw of stuur ons een e-mail naar info@ai-studio.be
                 </div>
               </div>
@@ -298,4 +298,8 @@ const seoProps = {
       }
     });
   });
+
+  // Initialize scroll animations
+  import { initScrollAnimations } from '../lib/scrollAnimations.js';
+  initScrollAnimations();
 </script>
