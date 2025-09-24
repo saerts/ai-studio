@@ -16,10 +16,10 @@ const navItems = [
         <li>
           <a
             href={href}
-            class={`text-sm font-medium transition-colors hover:text-green-600 focus:text-green-600 ${
+            class={`text-sm font-medium transition-colors hover:text-primary-400 focus:text-primary-400 ${
               currentPath === href
-                ? 'text-green-600'
-                : 'text-gray-700 dark:text-gray-300'
+                ? 'text-primary-400 gradient-text'
+                : 'text-white/80 hover:text-white'
             }`}
             aria-current={currentPath === href ? 'page' : undefined}
           >
