@@ -1,10 +1,13 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import BlogLayout from '../../components/layout/BlogLayout.astro';
+import SafeHTML from '../../components/SafeHTML.astro';
+import type { BlogPost } from '../../lib/validation';
+import type { StaticPath, AstroCollectionEntry, AstroContent, BlogApiResponse } from '../../types/api';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   // Generate paths for both MCP posts and static posts
-  const paths: any[] = [];
+  const paths: StaticPath[] = [];
 
   // Fetch real articles from the API
   try {
@@ -16,32 +19,33 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const response = await fetch(`${baseUrl}/api/blog`);
 
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json() as BlogApiResponse;
       const posts = data.posts || [];
 
       // Add all posts from the API
-      posts.forEach((post: any) => {
+      posts.forEach((post: unknown) => {
+        const blogPost = post as BlogPost;
         paths.push({
-          params: { slug: post.slug },
+          params: { slug: blogPost.slug },
           props: {
             isMCPPost: true, // All API posts are MCP posts
             post: {
-              id: post.id,
-              slug: post.slug,
+              id: blogPost.id,
+              slug: blogPost.slug,
               data: {
-                title: post.data.title,
-                description: post.data.description,
-                pubDate: new Date(post.data.pubDate),
-                updatedDate: new Date(post.data.updatedDate),
-                tags: post.data.tags,
-                source: post.data.source,
-                canonicalUrl: post.data.canonicalUrl,
-                cover: post.data.cover,
-                coverAlt: post.data.coverAlt,
-                coverGenerated: post.data.coverGenerated,
-                draft: post.data.draft
+                title: blogPost.data.title,
+                description: blogPost.data.description,
+                pubDate: new Date(blogPost.data.pubDate),
+                updatedDate: new Date(blogPost.data.updatedDate),
+                tags: blogPost.data.tags,
+                source: blogPost.data.source,
+                canonicalUrl: blogPost.data.canonicalUrl,
+                cover: blogPost.data.cover,
+                coverAlt: blogPost.data.coverAlt,
+                coverGenerated: blogPost.data.coverGenerated,
+                draft: blogPost.data.draft
               },
-              body: post.body
+              body: blogPost.body
             }
           }
         });
@@ -82,13 +86,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 // Get post data from props (passed from getStaticPaths)
-const { post, isMCPPost } = Astro.props as { post: any; isMCPPost: boolean };
+const { post, isMCPPost } = Astro.props as { post: BlogPost | AstroCollectionEntry; isMCPPost: boolean };
 
 // For static posts, render the content
-let Content: any = null;
-if (!isMCPPost && post) {
+let Content: AstroContent | null = null;
+if (!isMCPPost && post && 'render' in post) {
   try {
-    const rendered = await post.render();
+    const astroPost = post as AstroCollectionEntry;
+    const rendered = await astroPost.render!();
     Content = rendered.Content;
   } catch (error) {
     console.error('Failed to render static post content:', error);
@@ -96,14 +101,17 @@ if (!isMCPPost && post) {
 }
 ---
 
-<BlogLayout post={post} isMCPPost={isMCPPost}>
+<BlogLayout post={post as any} isMCPPost={isMCPPost}>
   {isMCPPost ? (
     <!-- MCP post content -->
     <div class="prose prose-invert prose-lg max-w-none">
-      <div class="text-zinc-300 leading-relaxed space-y-6" set:html={post.body || `
-        <p>This article was automatically imported from <a href="${post.data.canonicalUrl}" class="text-teal-400 hover:text-teal-300 underline" target="_blank" rel="noopener">${post.data.source}</a>.</p>
-        <p>Click the link above to read the full article on the original source.</p>
-      `} />
+      <SafeHTML
+        content={post.body || `
+          <p>This article was automatically imported from <a href="${post.data.canonicalUrl}" class="text-teal-400 hover:text-teal-300 underline" target="_blank" rel="noopener">${post.data.source}</a>.</p>
+          <p>Click the link above to read the full article on the original source.</p>
+        `}
+        class="text-zinc-300 leading-relaxed space-y-6"
+      />
 
       <!-- Source Attribution -->
       <div class="mt-12 p-6 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
@@ -120,7 +128,7 @@ if (!isMCPPost && post) {
               Voor de volledige inhoud en eventuele updates, bezoek het originele artikel.
             </p>
             <a
-              href={post.data.canonicalUrl}
+              href={String(post.data.canonicalUrl || '')}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 font-medium transition-colors"
@@ -135,7 +143,6 @@ if (!isMCPPost && post) {
       </div>
     </div>
   ) : (
-    <!-- Static post content -->
-    <Content />
+    <div>{Content && <Content />}</div>
   )}
 </BlogLayout>
