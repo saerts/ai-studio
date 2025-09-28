@@ -225,8 +225,8 @@ services:
 ### Production Environment Variables
 ```bash
 # .env.production
-PUBLIC_SITE_URL=https://ai-studio.be
-PUBLIC_CONTACT_ENDPOINT=https://api.ai-studio.be/contact
+PUBLIC_SITE_URL=https://ai-studio44.be
+PUBLIC_CONTACT_ENDPOINT=https://api.ai-studio44.be/contact
 PUBLIC_ANALYTICS_ID=G-XXXXXXXXXX
 
 # Optional: API keys for enhanced features
@@ -316,13 +316,13 @@ const { PUBLIC_ANALYTICS_ID } = import.meta.env;
 # Redirect HTTP to HTTPS
 server {
     listen 80;
-    server_name ai-studio.be www.ai-studio.be;
+    server_name ai-studio44.be www.ai-studio44.be;
     return 301 https://$server_name$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name ai-studio.be;
+    server_name ai-studio44.be;
 
     ssl_certificate /path/to/certificate.pem;
     ssl_certificate_key /path/to/private.key;
@@ -372,7 +372,7 @@ const csp = [
 tail -f /var/log/nginx/access.log | grep -E "(404|500)"
 
 # Performance monitoring
-curl -w "@curl-format.txt" -o /dev/null -s "https://ai-studio.be"
+curl -w "@curl-format.txt" -o /dev/null -s "https://ai-studio44.be"
 ```
 
 ### Automated Backups
@@ -422,7 +422,7 @@ location / {
 // astro.config.ts
 export default defineConfig({
   base: '/',  // Ensure correct base path
-  site: 'https://ai-studio.be',
+  site: 'https://ai-studio44.be',
 });
 ---
 ```
@@ -430,7 +430,7 @@ export default defineConfig({
 #### 4. Performance Issues
 ```bash
 # Check Lighthouse scores
-npx lighthouse https://ai-studio.be --output html --output-path ./lighthouse-report.html
+npx lighthouse https://ai-studio44.be --output html --output-path ./lighthouse-report.html
 
 # Analyze bundle size
 npm run build -- --verbose

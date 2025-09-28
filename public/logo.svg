@@ -1,4 +1,4 @@
-<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="250" height="50" viewBox="0 0 250 50" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <!-- Sharp gradient in our brand colors -->
     <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -67,16 +67,16 @@
     <ellipse cx="25" cy="25" rx="2.5" ry="1.5" fill="#ffffff" opacity="0.9" transform="rotate(45 25 25)"/>
   </g>
 
-  <!-- AI-STUDIO Text -->
+  <!-- AI-STUDIO44 Text -->
   <g transform="translate(55, 0)">
-    <!-- AI-STUDIO text - serious and professional -->
+    <!-- AI-STUDIO44 text - serious and professional -->
     <text x="0" y="28"
           font-family="Inter, system-ui, sans-serif"
-          font-size="20"
+          font-size="17"
           font-weight="800"
           letter-spacing="2px"
           fill="#ffffff"
-          filter="url(#textShadow)">AI-STUDIO</text>
+          filter="url(#textShadow)">AI-STUDIO44</text>
 
     <!-- Professional tagline -->
     <text x="0" y="42"
@@ -90,8 +90,8 @@
 
   <!-- Minimal accent elements -->
   <g opacity="0.4">
-    <rect x="185" y="12" width="2" height="8" fill="#2dd4bf"/>
-    <rect x="190" y="8" width="2" height="12" fill="#22d3ee"/>
-    <rect x="195" y="15" width="2" height="6" fill="#06b6d4"/>
+    <rect x="235" y="12" width="2" height="8" fill="#2dd4bf"/>
+    <rect x="240" y="8" width="2" height="12" fill="#22d3ee"/>
+    <rect x="245" y="15" width="2" height="6" fill="#06b6d4"/>
   </g>
 </svg>

@@ -1,5 +1,5 @@
 {
-  "name": "ai-studio-translate-server",
+  "name": "ai-studio44-translate-server",
   "version": "1.0.0",
   "description": "MCP server for translating blog content to Dutch with language detection",
   "type": "module",

@@ -1,5 +1,5 @@
 {
-  "name": "ai-studio-ai-news",
+  "name": "ai-studio44-ai-news",
   "version": "1.0.0",
   "description": "MCP server for fetching and converting AI news from RSS feeds to Markdown with AI image generation",
   "type": "module",
