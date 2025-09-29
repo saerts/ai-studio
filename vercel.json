@@ -5,5 +5,7 @@
       "runtime": "nodejs20.x"
     }
   },
-  "framework": null
+  "framework": null,
+  "outputDirectory": null,
+  "installCommand": "npm ci"
 }
