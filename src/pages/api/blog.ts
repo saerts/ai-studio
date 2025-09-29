@@ -24,7 +24,7 @@ import type { FetchOptions, MCPDataResponse } from '../../types/api.js';
 // Get MCP server URL from environment or use default
 const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
 
-// If a canonical domain is specified, use it for domain normalization
+// Domain configuration for .be to .com migration
 const CANONICAL_DOMAIN = process.env.CANONICAL_DOMAIN || 'ai-studio44.com';
 const LEGACY_DOMAIN = process.env.LEGACY_DOMAIN || 'ai-studio44.be';
 
