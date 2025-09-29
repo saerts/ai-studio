@@ -103,7 +103,6 @@ if (!isMCPPost && post && 'render' in post) {
 
 <BlogLayout post={post as any} isMCPPost={isMCPPost}>
   {isMCPPost ? (
-    <!-- MCP post content -->
     <div class="prose prose-invert prose-lg max-w-none">
       <SafeHTML
         content={post.body || `
@@ -113,7 +112,7 @@ if (!isMCPPost && post && 'render' in post) {
         class="text-zinc-300 leading-relaxed space-y-6"
       />
 
-      <!-- Source Attribution -->
+      {/* Source Attribution */}
       <div class="mt-12 p-6 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
         <div class="flex items-start gap-4">
           <div class="flex-shrink-0">

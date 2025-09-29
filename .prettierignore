@@ -1,0 +1,14 @@
+# Ignore generated and external content
+node_modules/**
+dist/**
+.astro/**
+
+# Docs and content outside the app code
+.github/**
+docs/**
+
+# MCP workspaces and generated assets
+mcp/**
+
+# Build caches
+*.log
