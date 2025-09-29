@@ -17,7 +17,7 @@ export async function GET(context: APIContext) {
     title: 'AI Studio Blog',
     description:
       'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
-    site: context.site ?? 'https://ai-studio44.be',
+    site: context.site ?? 'https://ai-studio44.com',
     items: sortedPosts.map((post) => ({
       title: post.data.title,
       pubDate: post.data.pubDate,

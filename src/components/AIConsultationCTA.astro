@@ -1,0 +1,235 @@
+---
+import Button from './ui/Button.astro';
+
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  primaryButtonText?: string;
+  primaryButtonHref?: string;
+  secondaryButtonText?: string;
+  secondaryButtonHref?: string;
+  showCalendar?: boolean;
+  class?: string;
+}
+
+const {
+  title = 'Klaar om AI te omarmen?',
+  subtitle = 'Laten we samen ontdekken hoe AI jouw organisatie naar een hoger niveau kan tillen.',
+  primaryButtonText = 'Plan een strategiegesprek',
+  primaryButtonHref = '/contact',
+  showCalendar = false,
+  class: className = '',
+} = Astro.props;
+---
+
+<section
+  class={`cta-section relative overflow-hidden px-6 sm:px-8 lg:px-12 ${className}`}
+>
+  <div class="cta-gradient-bg absolute inset-0"></div>
+  <div class="relative max-w-6xl mx-auto py-24 sm:py-32 lg:py-40">
+    <div class="text-center space-y-12">
+      <!-- Decorative Elements -->
+      <div class="flex justify-center">
+        <div class="relative">
+          <div
+            class="absolute -inset-4 bg-teal-500/20 blur-xl rounded-full animate-pulse"
+          >
+          </div>
+          <div
+            class="relative bg-gradient-to-br from-teal-400 to-cyan-500 w-16 h-16 rounded-2xl flex items-center justify-center transform rotate-3 hover:rotate-6 transition-transform"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-8 w-8 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="space-y-6 pt-6 pb-6">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          {title}
+        </h2>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          {subtitle}
+        </p>
+      </div>
+
+      <!-- Features List -->
+      <div
+        class="flex flex-wrap justify-center gap-6 text-sm text-gray-400 pt-6 pb-6 mt-8"
+      >
+        <div class="flex items-center gap-2">
+          <svg
+            class="w-5 h-5 text-teal-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>Gratis intake</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg
+            class="w-5 h-5 text-teal-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>ROI-garantie</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg
+            class="w-5 h-5 text-teal-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>Bewezen methodologie</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg
+            class="w-5 h-5 text-teal-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>100+ succesvolle implementaties</span>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="flex flex-col sm:flex-row gap-6 justify-center mt-12">
+        <Button href={primaryButtonHref} variant="primary" size="lg">
+          <span>{primaryButtonText}</span>
+          <svg
+            class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 5l7 7-7 7"></path>
+          </svg>
+        </Button>
+      </div>
+
+      <!-- Optional Calendar Widget -->
+      {
+        showCalendar && (
+          <div class="mt-16 max-w-2xl mx-auto">
+            <div class="bg-dark-700/50 backdrop-blur-sm rounded-xl p-10 border border-dark-600">
+              <h3 class="text-lg font-semibold text-white mb-6">
+                Direct een afspraak inplannen
+              </h3>
+              <div class="calendar-widget bg-dark-800 rounded-lg p-6 min-h-[350px] flex items-center justify-center">
+                {/* Calendly or other scheduling widget would go here */}
+                <p class="text-gray-500 text-sm">
+                  Kalender widget wordt hier geladen...
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      }
+    </div>
+  </div>
+
+  <style>
+    .cta-gradient-bg {
+      background: linear-gradient(
+        135deg,
+        rgba(13, 148, 136, 0.05) 0%,
+        rgba(6, 182, 212, 0.05) 25%,
+        rgba(15, 20, 25, 0.95) 50%,
+        rgba(6, 182, 212, 0.05) 75%,
+        rgba(13, 148, 136, 0.05) 100%
+      );
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(
+        circle at center,
+        transparent 0%,
+        rgba(20, 184, 166, 0.03) 50%,
+        transparent 70%
+      );
+      animation: rotate 30s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cta-section::before {
+        animation: none;
+      }
+
+      .animate-pulse {
+        animation: none;
+      }
+    }
+
+    /* Hover effect for the CTA section */
+    .cta-section:hover .cta-gradient-bg {
+      background: linear-gradient(
+        135deg,
+        rgba(13, 148, 136, 0.08) 0%,
+        rgba(6, 182, 212, 0.08) 25%,
+        rgba(15, 20, 25, 0.95) 50%,
+        rgba(6, 182, 212, 0.08) 75%,
+        rgba(13, 148, 136, 0.08) 100%
+      );
+      transition: background 0.3s ease;
+    }
+  </style>
+</section>

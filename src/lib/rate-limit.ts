@@ -34,7 +34,10 @@ function getClientId(request: Request): string {
 
   if (cfConnectingIp) return cfConnectingIp;
   if (realIp) return realIp;
-  if (forwardedFor) return forwardedFor.split(',')[0].trim();
+  if (forwardedFor) {
+    const first = forwardedFor.split(',')[0];
+    if (first) return first.trim();
+  }
 
   // Fallback to connection info (limited in serverless environments)
   return 'unknown';
@@ -43,7 +46,9 @@ function getClientId(request: Request): string {
 /**
  * Check rate limit for API endpoints
  */
-export async function checkApiRateLimit(request: Request): Promise<{ allowed: boolean; resetTime?: Date }> {
+export async function checkApiRateLimit(
+  request: Request
+): Promise<{ allowed: boolean; resetTime?: Date }> {
   const clientId = getClientId(request);
 
   try {
@@ -51,7 +56,9 @@ export async function checkApiRateLimit(request: Request): Promise<{ allowed: bo
     return { allowed: true };
   } catch (rateLimiterRes: unknown) {
     const rateLimitResult = rateLimiterRes as RateLimiterResult;
-    const resetTime = new Date(Date.now() + (rateLimitResult.msBeforeNext || 60000));
+    const resetTime = new Date(
+      Date.now() + (rateLimitResult.msBeforeNext || 60000)
+    );
     return { allowed: false, resetTime };
   }
 }
@@ -59,7 +66,9 @@ export async function checkApiRateLimit(request: Request): Promise<{ allowed: bo
 /**
  * Check rate limit for refresh operations
  */
-export async function checkRefreshRateLimit(request: Request): Promise<{ allowed: boolean; resetTime?: Date }> {
+export async function checkRefreshRateLimit(
+  request: Request
+): Promise<{ allowed: boolean; resetTime?: Date }> {
   const clientId = getClientId(request);
 
   try {
@@ -67,7 +76,9 @@ export async function checkRefreshRateLimit(request: Request): Promise<{ allowed
     return { allowed: true };
   } catch (rateLimiterRes: unknown) {
     const rateLimitResult = rateLimiterRes as RateLimiterResult;
-    const resetTime = new Date(Date.now() + (rateLimitResult.msBeforeNext || 300000));
+    const resetTime = new Date(
+      Date.now() + (rateLimitResult.msBeforeNext || 300000)
+    );
     return { allowed: false, resetTime };
   }
 }
@@ -75,7 +86,9 @@ export async function checkRefreshRateLimit(request: Request): Promise<{ allowed
 /**
  * Check rate limit for MCP operations
  */
-export async function checkMCPRateLimit(request: Request): Promise<{ allowed: boolean; resetTime?: Date }> {
+export async function checkMCPRateLimit(
+  request: Request
+): Promise<{ allowed: boolean; resetTime?: Date }> {
   const clientId = getClientId(request);
 
   try {
@@ -83,7 +96,9 @@ export async function checkMCPRateLimit(request: Request): Promise<{ allowed: bo
     return { allowed: true };
   } catch (rateLimiterRes: unknown) {
     const rateLimitResult = rateLimiterRes as RateLimiterResult;
-    const resetTime = new Date(Date.now() + (rateLimitResult.msBeforeNext || 600000));
+    const resetTime = new Date(
+      Date.now() + (rateLimitResult.msBeforeNext || 600000)
+    );
     return { allowed: false, resetTime };
   }
 }
@@ -92,16 +107,21 @@ export async function checkMCPRateLimit(request: Request): Promise<{ allowed: bo
  * Create rate limit error response
  */
 export function createRateLimitResponse(resetTime: Date): Response {
-  return new Response(JSON.stringify({
-    error: 'Rate limit exceeded',
-    message: 'Too many requests. Please try again later.',
-    resetTime: resetTime.toISOString(),
-  }), {
-    status: 429,
-    headers: {
-      'Content-Type': 'application/json',
-      'Retry-After': Math.ceil((resetTime.getTime() - Date.now()) / 1000).toString(),
-      'X-RateLimit-Reset': resetTime.toISOString(),
-    },
-  });
+  return new Response(
+    JSON.stringify({
+      error: 'Rate limit exceeded',
+      message: 'Too many requests. Please try again later.',
+      resetTime: resetTime.toISOString(),
+    }),
+    {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': Math.ceil(
+          (resetTime.getTime() - Date.now()) / 1000
+        ).toString(),
+        'X-RateLimit-Reset': resetTime.toISOString(),
+      },
+    }
+  );
 }

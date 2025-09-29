@@ -1,11 +1,11 @@
 ---
-title: "Welkom bij AI Studio — Jouw partner in AI-transformatie"
-description: "Ontdek hoe AI Studio bedrijven helpt bij het implementeren van praktische AI-oplossingen die echt werken."
+title: 'Welkom bij AI Studio — Jouw partner in AI-transformatie'
+description: 'Ontdek hoe AI Studio bedrijven helpt bij het implementeren van praktische AI-oplossingen die echt werken.'
 pubDate: 2025-01-15T09:00:00.000Z
 updatedDate: 2025-01-15T09:00:00.000Z
-tags: ["ai", "automatisering", "bedrijfstransformatie", "ai-studio44"]
-source: "AI Studio"
-canonicalUrl: "https://ai-studio44.be/blog/welcome-to-ai-studio"
+tags: ['ai', 'automatisering', 'bedrijfstransformatie', 'ai-studio44']
+source: 'AI Studio'
+canonicalUrl: 'https://ai-studio44.com/blog/welcome-to-ai-studio'
 draft: false
 ---
 
@@ -27,15 +27,19 @@ Wij maken AI toegankelijk en praktisch voor Nederlandse en Belgische bedrijven. 
 ## Onze kernservices
 
 ### 🔍 AI Scan
+
 Een grondige analyse van je processen om de beste AI-kansen te identificeren.
 
 ### ⚡ Workflow Automations
+
 Automatiseer repetitieve taken met slimme oplossingen.
 
 ### 🎓 Training & Coaching
+
 Breng je team up-to-speed met praktische AI-training.
 
 ### 🚀 Pilot & Rollout
+
 Van proof-of-concept tot volledige implementatie.
 
 ## Waarom nu?
@@ -46,4 +50,4 @@ De AI-revolutie is hier, en de bedrijven die nu starten hebben een concurrentiev
 
 Klaar om te ontdekken hoe AI jouw bedrijf kan transformeren? [Plan een vrijblijvend gesprek](/contact) en laten we samen kijken naar de mogelijkheden.
 
-_Bron: [AI Studio Blog](https://ai-studio44.be/blog/welcome-to-ai-studio)_
+_Bron: [AI Studio Blog](https://ai-studio44.com/blog/welcome-to-ai-studio)_

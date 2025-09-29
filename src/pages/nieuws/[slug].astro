@@ -1,6 +1,4 @@
 ---
-const { slug } = Astro.params;
-Astro.redirect(`/news/${slug}`);
 import type { GetStaticPaths } from 'astro';
 import BlogLayout from '../../components/layout/BlogLayout.astro';
 import SafeHTML from '../../components/SafeHTML.astro';
@@ -115,7 +113,7 @@ if (!isMCPPost && post && 'render' in post) {
 const DynamicContent = Content as any;
 ---
 
-<BlogLayout post={post as any} isMCPPost={isMCPPost}>
+<BlogLayout post={post as any} isMCPPost={isMCPPost} basePath="/news">
   {
     isMCPPost ? (
       <div class="prose prose-invert prose-lg max-w-none">

@@ -8,8 +8,13 @@ const purify = DOMPurify(window);
 // Configure DOMPurify for blog content
 purify.addHook('beforeSanitizeElements', (node, data) => {
   // Remove any script tags entirely
-  if (data.tagName === 'script') {
-    node.remove();
+  if (data && (data as any).tagName === 'script') {
+    const el = node as any;
+    if (typeof el.remove === 'function') {
+      (el as any).remove();
+    } else if (el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
     return;
   }
 });
@@ -27,19 +32,43 @@ export function sanitizeHTML(content: string): string {
   // Configure allowed tags and attributes for blog content
   const cleanContent = purify.sanitize(content, {
     ALLOWED_TAGS: [
-      'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'a', 'ul', 'ol', 'li',
-      'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'code', 'pre',
-      'img', 'figure', 'figcaption', 'table', 'thead', 'tbody', 'tr', 'th', 'td'
+      'p',
+      'br',
+      'strong',
+      'b',
+      'em',
+      'i',
+      'u',
+      'a',
+      'ul',
+      'ol',
+      'li',
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'blockquote',
+      'code',
+      'pre',
+      'img',
+      'figure',
+      'figcaption',
+      'table',
+      'thead',
+      'tbody',
+      'tr',
+      'th',
+      'td',
     ],
-    ALLOWED_ATTR: [
-      'href', 'title', 'alt', 'src', 'width', 'height', 'class'
-    ],
+    ALLOWED_ATTR: ['href', 'title', 'alt', 'src', 'width', 'height', 'class'],
     ALLOW_DATA_ATTR: false,
     ALLOW_UNKNOWN_PROTOCOLS: false,
     SANITIZE_DOM: true,
     KEEP_CONTENT: true,
     // Remove any style attributes
-    FORBID_ATTR: ['style', 'on*']
+    FORBID_ATTR: ['style', 'on*'],
   });
 
   return cleanContent;
@@ -58,7 +87,7 @@ export function sanitizeText(text: string): string {
   const cleanText = purify.sanitize(text, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
-    KEEP_CONTENT: true
+    KEEP_CONTENT: true,
   });
 
   return cleanText.trim();

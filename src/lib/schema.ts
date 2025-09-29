@@ -59,12 +59,12 @@ export function orgSchema(): OrganizationSchema {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'AI Studio',
-    url: 'https://ai-studio44.be',
-    logo: 'https://ai-studio44.be/favicon.svg',
+    url: 'https://ai-studio44.com',
+    logo: 'https://ai-studio44.com/favicon.svg',
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer service',
-      email: 'info@ai-studio44.be',
+      email: 'info@ai-studio44.com',
     },
     address: {
       '@type': 'PostalAddress',
@@ -96,7 +96,7 @@ export function articleSchema(
       name: 'AI Studio',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://ai-studio44.be/favicon.svg',
+        url: 'https://ai-studio44.com/favicon.svg',
       },
     },
     datePublished: publishedDate,
@@ -119,7 +119,7 @@ export function breadcrumbsSchema(
       '@type': 'ListItem',
       position: index + 1,
       name: segment.name,
-      item: `https://ai-studio44.be${segment.url}`,
+      item: `https://ai-studio44.com${segment.url}`,
     })),
   };
 }

@@ -37,6 +37,13 @@
     scroll-behavior: smooth;
   }
 
+  /* GPU acceleration for better performance */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Reduced motion preferences and performance optimization */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -51,13 +58,35 @@
     }
   }
 
+  /* Performance optimization for lower-end devices */
+  @media (max-width: 768px), (prefers-reduced-motion: reduce) {
+    .float,
+    .pulse-glow,
+    .ai-animated-text {
+      animation: none !important;
+    }
+
+    .blur-xl,
+    .blur-2xl {
+      filter: none !important;
+    }
+
+    [class*='animate-pulse']:not(.essential-pulse) {
+      animation: none !important;
+    }
+  }
+
   body {
     @apply font-sans antialiased;
     color: rgb(var(--color-text));
     background: rgb(var(--color-bg));
 
     /* Dark gradient background */
-    background: radial-gradient(ellipse at top, rgb(26 43 43 / 0.3) 0%, rgb(10 15 15) 50%);
+    background: radial-gradient(
+      ellipse at top,
+      rgb(26 43 43 / 0.3) 0%,
+      rgb(10 15 15) 50%
+    );
     min-height: 100vh;
     overflow-x: hidden; /* Prevent horizontal scroll */
   }
@@ -115,7 +144,11 @@
   }
 
   .btn-primary {
-    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-accent)));
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary)),
+      rgb(var(--color-accent))
+    );
     @apply text-gray-900 font-semibold;
     box-shadow:
       0 0 0 1px rgb(var(--color-primary) / 0.5),
@@ -164,7 +197,12 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgb(255 255 255 / 0.02) 0%, transparent 50%, rgb(0 0 0 / 0.02) 100%);
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.02) 0%,
+      transparent 50%,
+      rgb(0 0 0 / 0.02) 100%
+    );
     border-radius: inherit;
     pointer-events: none;
   }
@@ -176,7 +214,12 @@
     left: 0;
     right: 0;
     height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.2) 50%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.2) 50%,
+      transparent 100%
+    );
     border-radius: 1rem 1rem 0 0;
     pointer-events: none;
   }
@@ -198,31 +241,54 @@
   }
 
   .glass-card:hover::before {
-    background: linear-gradient(135deg, rgb(255 255 255 / 0.03) 0%, transparent 50%, rgb(0 0 0 / 0.03) 100%);
+    background: linear-gradient(
+      135deg,
+      rgb(255 255 255 / 0.03) 0%,
+      transparent 50%,
+      rgb(0 0 0 / 0.03) 100%
+    );
   }
 
   .glass-card:hover::after {
-    background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.25) 50%, transparent 100%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(255 255 255 / 0.25) 50%,
+      transparent 100%
+    );
   }
 
   /* Gradient Text */
   .gradient-text {
-    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-accent)));
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary)),
+      rgb(var(--color-accent))
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* Animated AI Text */
+  /* Animated AI Text - Optimized */
   .ai-animated-text {
-    background: linear-gradient(270deg, #2dd4bf, #22d3ee, #06b6d4, #0891b2, #2dd4bf);
+    background: linear-gradient(
+      270deg,
+      #2dd4bf,
+      #22d3ee,
+      #06b6d4,
+      #0891b2,
+      #2dd4bf
+    );
     background-size: 400% 400%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: aiGradientFlow 3s ease-in-out infinite;
+    animation: aiGradientFlow 4s ease-in-out infinite;
     font-weight: 800;
     text-shadow: 0 0 30px rgba(45, 212, 191, 0.3);
+    transform: translateZ(0); /* GPU acceleration */
+    will-change: background-position;
   }
 
   @keyframes aiGradientFlow {
@@ -249,9 +315,15 @@
     position: absolute;
     inset: 0;
     padding: 1px;
-    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-accent)));
+    background: linear-gradient(
+      135deg,
+      rgb(var(--color-primary)),
+      rgb(var(--color-accent))
+    );
     border-radius: inherit;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
     mask-composite: xor;
     -webkit-mask-composite: xor;
   }
@@ -308,83 +380,101 @@
     box-shadow: 0 0 0 3px rgb(var(--color-primary) / 0.1);
   }
 
-  /* Loading Animation */
+  /* Loading Animation - Optimized */
   @keyframes pulse-glow {
-    0%, 100% {
+    0%,
+    100% {
       opacity: 1;
-      transform: scale(1);
+      transform: scale3d(1, 1, 1);
     }
     50% {
       opacity: 0.8;
-      transform: scale(1.05);
+      transform: scale3d(1.05, 1.05, 1);
     }
   }
 
   .pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
+    animation: pulse-glow 3s ease-in-out infinite;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
 
-  /* Floating Animation */
+  /* Floating Animation - Optimized */
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
     }
     50% {
-      transform: translateY(-10px);
+      transform: translate3d(0, -10px, 0);
     }
   }
 
   .float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
-  /* Simple Scroll Animation Classes */
+  /* Simple Scroll Animation Classes - Optimized */
   .scroll-animate {
     opacity: 0;
-    transform: translateY(16px);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translate3d(0, 16px, 0);
+    transition:
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
   .scroll-animate.animate-in {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
   }
 
   .scroll-animate-slide-left {
     opacity: 0;
-    transform: translateX(-24px);
-    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translate3d(-24px, 0, 0);
+    transition:
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
   .scroll-animate-slide-left.animate-in {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
   }
 
   .scroll-animate-slide-right {
     opacity: 0;
-    transform: translateX(24px);
-    transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translate3d(24px, 0, 0);
+    transition:
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
   .scroll-animate-slide-right.animate-in {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
   }
 
   .scroll-animate-scale {
     opacity: 0;
-    transform: scale(0.98);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: scale3d(0.98, 0.98, 1);
+    transition:
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
   .scroll-animate-scale.animate-in {
     opacity: 1;
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
+    will-change: auto;
   }
 
   .scroll-animate-fade {
@@ -400,7 +490,9 @@
   .scroll-animate-blur {
     opacity: 0;
     transform: translateY(14px);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
@@ -412,7 +504,9 @@
   .scroll-animate-flip {
     opacity: 0;
     transform: translateY(14px);
-    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    transition:
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: transform, opacity;
   }
 
@@ -423,8 +517,11 @@
 
   /* Subtle Grid Pattern */
   .grid-pattern {
-    background-image:
-      radial-gradient(circle at 1px 1px, rgb(var(--color-primary) / 0.1) 1px, transparent 0);
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgb(var(--color-primary) / 0.1) 1px,
+      transparent 0
+    );
     background-size: 24px 24px;
   }
 }
@@ -449,17 +546,58 @@
   }
 }
 
-
+/* Performance optimizations for low-end devices and reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .float,
   .pulse-glow,
   .animate-bounce,
-  .animate-pulse {
+  .animate-pulse,
+  .ai-animated-text {
     animation: none !important;
   }
-  [class*="scroll-animate"] {
+  [class*='scroll-animate'] {
     transition: none !important;
     transform: none !important;
     opacity: 1 !important;
   }
+}
+
+/* Optimize for lower-end devices */
+@media (max-width: 768px) {
+  /* Reduce animation complexity on mobile */
+  .float {
+    animation-duration: 10s;
+  }
+  .pulse-glow {
+    animation-duration: 4s;
+  }
+  .ai-animated-text {
+    animation-duration: 6s;
+  }
+
+  /* Simplify blur effects */
+  .blur-xl {
+    filter: blur(8px);
+  }
+  .blur-2xl {
+    filter: blur(12px);
+  }
+}
+
+/* Performance optimization utilities */
+.performance-optimized {
+  contain: layout style paint;
+  transform: translateZ(0);
+}
+
+.animation-paused {
+  animation-play-state: paused !important;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-auto {
+  will-change: auto;
 }
