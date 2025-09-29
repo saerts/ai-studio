@@ -29,7 +29,7 @@ async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     // Todo: get the correct live url
     const baseUrl = process.env.NODE_ENV === 'development'
       ? 'http://localhost:4321'
-      : 'https://ai-studio44.be';
+      : 'https://ai-studio44.com';
 
     const response = await fetch(`${baseUrl}/api/blog`);
 
