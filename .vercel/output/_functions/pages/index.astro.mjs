@@ -1,8 +1,8 @@
 /* empty css                                             */
-import { c as createComponent, r as renderComponent, a as renderScript, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../chunks/astro/server_X5whkWjU.mjs';
+import { c as createComponent, r as renderComponent, a as renderScript, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../chunks/astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
-import { $ as $$BaseLayout, a as $$Button } from '../chunks/BaseLayout_Dm3TLDtu.mjs';
-import { $ as $$Section } from '../chunks/Section_Bl_xe9CF.mjs';
+import { $ as $$BaseLayout, a as $$Button } from '../chunks/BaseLayout_DtB_0che.mjs';
+import { $ as $$Section } from '../chunks/Section_Ci-pej19.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Index = createComponent(($$result, $$props, $$slots) => {

@@ -1,11 +1,11 @@
 /* empty css                                             */
-import { d as createAstro, c as createComponent, m as maybeRenderHead, e as addAttribute, r as renderComponent, b as renderTemplate, a as renderScript } from '../chunks/astro/server_X5whkWjU.mjs';
+import { c as createComponent, d as createAstro, m as maybeRenderHead, e as addAttribute, r as renderComponent, b as renderTemplate, a as renderScript } from '../chunks/astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
-import { a as $$Button, $ as $$BaseLayout } from '../chunks/BaseLayout_Dm3TLDtu.mjs';
+import { a as $$Button, $ as $$BaseLayout } from '../chunks/BaseLayout_DtB_0che.mjs';
 /* empty css                                             */
 export { renderers } from '../renderers.mjs';
 
-const $$Astro = createAstro("https://ai-studio44.com");
+const $$Astro = createAstro();
 const $$AIConsultationCTA = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$AIConsultationCTA;

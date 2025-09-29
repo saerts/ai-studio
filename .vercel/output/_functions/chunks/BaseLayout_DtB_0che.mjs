@@ -1,4 +1,4 @@
-import { d as createAstro, c as createComponent, m as maybeRenderHead, e as addAttribute, b as renderTemplate, r as renderComponent, f as renderSlot, a as renderScript, g as renderHead, u as unescapeHTML } from './astro/server_X5whkWjU.mjs';
+import { c as createComponent, d as createAstro, m as maybeRenderHead, e as addAttribute, b as renderTemplate, r as renderComponent, f as renderSlot, a as renderScript, g as renderHead, u as unescapeHTML } from './astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
 import 'clsx';
 /* empty css                          */
@@ -89,7 +89,7 @@ function breadcrumbsSchema(segments) {
   };
 }
 
-const $$Astro$3 = createAstro("https://ai-studio44.com");
+const $$Astro$3 = createAstro();
 const $$SkipLink = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$3, $$props, $$slots);
   Astro2.self = $$SkipLink;
@@ -97,7 +97,7 @@ const $$SkipLink = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`${maybeRenderHead()}<a${addAttribute(href, "href")} class="skip-link"> ${text} </a>`;
 }, "/Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/components/a11y/SkipLink.astro", void 0);
 
-const $$Astro$2 = createAstro("https://ai-studio44.com");
+const $$Astro$2 = createAstro();
 const $$MainNav = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$2, $$props, $$slots);
   Astro2.self = $$MainNav;
@@ -111,7 +111,7 @@ const $$MainNav = createComponent(($$result, $$props, $$slots) => {
   return renderTemplate`${maybeRenderHead()}<nav role="navigation" aria-label="Hoofdnavigatie"> <ul class="flex space-x-8"> ${navItems.map(({ href, label }) => renderTemplate`<li> <a${addAttribute(href, "href")}${addAttribute(`text-sm font-medium transition-colors hover:text-primary-400 focus:text-primary-400 ${currentPath === href ? "text-primary-400 gradient-text" : "text-white/80 hover:text-white"}`, "class")}${addAttribute(currentPath === href ? "page" : void 0, "aria-current")}> ${label} </a> </li>`)} </ul> </nav>`;
 }, "/Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/components/nav/MainNav.astro", void 0);
 
-const $$Astro$1 = createAstro("https://ai-studio44.com");
+const $$Astro$1 = createAstro();
 const $$Button = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
   Astro2.self = $$Button;
@@ -184,7 +184,7 @@ var __freeze = Object.freeze;
 var __defProp = Object.defineProperty;
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
 var _a;
-const $$Astro = createAstro("https://ai-studio44.com");
+const $$Astro = createAstro();
 const $$BaseLayout = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$BaseLayout;

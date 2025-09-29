@@ -1,6 +1,6 @@
-import { d as createAstro, c as createComponent, r as renderComponent, b as renderTemplate, f as renderSlot, e as addAttribute, m as maybeRenderHead, u as unescapeHTML } from './astro/server_X5whkWjU.mjs';
+import { c as createComponent, d as createAstro, r as renderComponent, b as renderTemplate, f as renderSlot, e as addAttribute, m as maybeRenderHead, u as unescapeHTML } from './astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
-import { b as articleSchema, c as breadcrumbsSchema, $ as $$BaseLayout, a as $$Button } from './BaseLayout_Dm3TLDtu.mjs';
+import { b as articleSchema, c as breadcrumbsSchema, $ as $$BaseLayout, a as $$Button } from './BaseLayout_DtB_0che.mjs';
 import 'clsx';
 import { a as sanitizeHTML } from './security_DM2jXN_m.mjs';
 
@@ -8,7 +8,7 @@ var __freeze = Object.freeze;
 var __defProp = Object.defineProperty;
 var __template = (cooked, raw) => __freeze(__defProp(cooked, "raw", { value: __freeze(cooked.slice()) }));
 var _a;
-const $$Astro$1 = createAstro("https://ai-studio44.com");
+const $$Astro$1 = createAstro();
 const $$BlogLayout = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro$1, $$props, $$slots);
   Astro2.self = $$BlogLayout;
@@ -50,7 +50,7 @@ Lees origineel artikel
   })()) })}`;
 }, "/Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/components/layout/BlogLayout.astro", void 0);
 
-const $$Astro = createAstro("https://ai-studio44.com");
+const $$Astro = createAstro();
 const $$SafeHTML = createComponent(($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$SafeHTML;

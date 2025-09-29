@@ -1,14 +1,14 @@
 /* empty css                                             */
-import { d as createAstro, c as createComponent, r as renderComponent, a as renderScript, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../chunks/astro/server_X5whkWjU.mjs';
+import { c as createComponent, d as createAstro, r as renderComponent, a as renderScript, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../chunks/astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
-import { $ as $$BaseLayout } from '../chunks/BaseLayout_Dm3TLDtu.mjs';
-import { $ as $$Section } from '../chunks/Section_Bl_xe9CF.mjs';
-import { $ as $$Card } from '../chunks/Card_C_RYAaTo.mjs';
+import { $ as $$BaseLayout } from '../chunks/BaseLayout_DtB_0che.mjs';
+import { $ as $$Section } from '../chunks/Section_Ci-pej19.mjs';
+import { $ as $$Card } from '../chunks/Card_EY_JFMb7.mjs';
 import { f as formatDate } from '../chunks/utils_BQgq2xrV.mjs';
 /* empty css                                  */
 export { renderers } from '../renderers.mjs';
 
-const $$Astro = createAstro("https://ai-studio44.com");
+const $$Astro = createAstro();
 const $$Nieuws = createComponent(async ($$result, $$props, $$slots) => {
   const Astro2 = $$result.createAstro($$Astro, $$props, $$slots);
   Astro2.self = $$Nieuws;
@@ -48,7 +48,7 @@ const $$Nieuws = createComponent(async ($$result, $$props, $$slots) => {
       error
     );
     try {
-      const { getCollection } = await import('../chunks/_astro_content_VoNA_GK9.mjs');
+      const { getCollection } = await import('../chunks/_astro_content_D_RE6j3Y.mjs');
       const staticPosts = await getCollection("blog", ({ data }) => !data.draft);
       allPosts = staticPosts.map((post) => ({
         id: post.id,

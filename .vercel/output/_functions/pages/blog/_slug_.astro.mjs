@@ -1,10 +1,10 @@
 /* empty css                                                */
-import { d as createAstro, c as createComponent, r as renderComponent, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../../chunks/astro/server_X5whkWjU.mjs';
+import { c as createComponent, d as createAstro, r as renderComponent, b as renderTemplate, m as maybeRenderHead, e as addAttribute } from '../../chunks/astro/server_CFbGmnFU.mjs';
 import 'kleur/colors';
-import { $ as $$BlogLayout, a as $$SafeHTML } from '../../chunks/SafeHTML_BM1RDypn.mjs';
+import { $ as $$BlogLayout, a as $$SafeHTML } from '../../chunks/SafeHTML_BBeVZF9T.mjs';
 export { renderers } from '../../renderers.mjs';
 
-const $$Astro = createAstro("https://ai-studio44.com");
+const $$Astro = createAstro();
 const getStaticPaths = async () => {
   const paths = [];
   try {
@@ -51,7 +51,7 @@ const getStaticPaths = async () => {
     console.log("No articles found, pages will be rendered on-demand");
   }
   try {
-    const { getCollection } = await import('../../chunks/_astro_content_VoNA_GK9.mjs');
+    const { getCollection } = await import('../../chunks/_astro_content_D_RE6j3Y.mjs');
     const staticPosts = await getCollection("blog", ({ data }) => {
       return !data.draft;
     });

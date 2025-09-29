@@ -5,7 +5,7 @@ import { decodeBase64, encodeBase64, encodeHexUpperCase, decodeHex } from '@oslo
 import { z } from 'zod';
 import 'cssesc';
 
-const ASTRO_VERSION = "5.13.9";
+const ASTRO_VERSION = "5.14.1";
 const REROUTE_DIRECTIVE_HEADER = "X-Astro-Reroute";
 const REWRITE_DIRECTIVE_HEADER_KEY = "X-Astro-Rewrite";
 const REWRITE_DIRECTIVE_HEADER_VALUE = "yes";
@@ -16,6 +16,9 @@ const REDIRECT_STATUS_CODES = [301, 302, 303, 307, 308, 300, 304];
 const REROUTABLE_STATUS_CODES = [404, 500];
 const clientAddressSymbol = Symbol.for("astro.clientAddress");
 const originPathnameSymbol = Symbol.for("astro.originPathname");
+const nodeRequestAbortControllerCleanupSymbol = Symbol.for(
+  "astro.nodeRequestAbortControllerCleanup"
+);
 const responseSentSymbol = Symbol.for("astro.responseSent");
 
 const ClientAddressNotAvailable = {
@@ -288,7 +291,7 @@ const FontFamilyNotFound = {
   name: "FontFamilyNotFound",
   title: "Font family not found",
   message: (family) => `No data was found for the \`"${family}"\` family passed to the \`<Font>\` component.`,
-  hint: "This is often caused by a typo. Check that your Font component is using a `cssVariable` specified in your config."
+  hint: "This is often caused by a typo. Check that the `<Font />` component or `getFontData()` function are using a `cssVariable` specified in your config."
 };
 const CspNotEnabled = {
   name: "CspNotEnabled",
@@ -456,9 +459,7 @@ Use import.meta.glob instead: https://vitejs.dev/guide/features.html#glob-import
 }
 function createAstro(site) {
   return {
-    // TODO: this is no longer necessary for `Astro.site`
-    // but it somehow allows working around caching issues in content collections for some tests
-    site: new URL(site) ,
+    site: void 0,
     generator: `Astro v${ASTRO_VERSION}`,
     glob: createAstroGlobFn()
   };
@@ -2810,4 +2811,4 @@ function spreadAttributes(values = {}, _name, { class: scopedClassName } = {}) {
   return markHTMLString(output);
 }
 
-export { REWRITE_DIRECTIVE_HEADER_VALUE as $, AstroError as A, renderSlotToString as B, renderJSX as C, DEFAULT_404_COMPONENT as D, chunkToString as E, isRenderInstruction as F, GetStaticPathsRequired as G, ForbiddenRewrite as H, InvalidGetStaticPathsReturn as I, SessionStorageSaveError as J, ASTRO_VERSION as K, CspNotEnabled as L, MiddlewareNoDataOrNextCalled as M, NoMatchingStaticPathFound as N, LocalsReassigned as O, PageNumberParamNotFound as P, generateCspDigest as Q, ROUTE_TYPE_HEADER as R, SessionStorageInitError as S, PrerenderClientAddressNotAvailable as T, clientAddressSymbol as U, ClientAddressNotAvailable as V, StaticClientAddressNotAvailable as W, AstroResponseHeadersReassigned as X, responseSentSymbol as Y, renderPage as Z, REWRITE_DIRECTIVE_HEADER_KEY as _, renderScript as a, renderEndpoint as a0, LocalsNotAnObject as a1, REROUTABLE_STATUS_CODES as a2, NOOP_MIDDLEWARE_HEADER as a3, REDIRECT_STATUS_CODES as a4, ActionsReturnedInvalidDataError as a5, MissingSharp as a6, UnknownContentCollectionError as a7, RenderUndefinedEntryError as a8, renderUniqueStylesheet as a9, renderScriptElement as aa, createHeadAndContent as ab, ExpectedImage as ac, LocalImageUsedWrongly as ad, MissingImageDimension as ae, UnsupportedImageFormat as af, IncompatibleDescriptorOptions as ag, UnsupportedImageConversion as ah, toStyleString as ai, NoImageMetadata as aj, FailedToFetchRemoteImageDimensions as ak, ExpectedImageOptions as al, ExpectedNotESMImage as am, InvalidImageService as an, ImageMissingAlt as ao, spreadAttributes as ap, ExperimentalFontsNotEnabled as aq, FontFamilyNotFound as ar, renderTemplate as b, createComponent as c, createAstro as d, addAttribute as e, renderSlot as f, renderHead as g, decodeKey as h, decryptString as i, createSlotValueFromString as j, isAstroComponentFactory as k, REROUTE_DIRECTIVE_HEADER as l, maybeRenderHead as m, i18nNoLocaleFoundInPath as n, ResponseSentError as o, MiddlewareNotAResponse as p, originPathnameSymbol as q, renderComponent as r, RewriteWithBodyUsed as s, InvalidGetStaticPathsEntry as t, unescapeHTML as u, GetStaticPathsExpectedParams as v, GetStaticPathsInvalidRouteParam as w, ActionNotFoundError as x, PrerenderDynamicEndpointPathCollide as y, ReservedSlotName as z };
+export { REWRITE_DIRECTIVE_HEADER_VALUE as $, AstroError as A, renderSlotToString as B, renderJSX as C, DEFAULT_404_COMPONENT as D, chunkToString as E, isRenderInstruction as F, GetStaticPathsRequired as G, ForbiddenRewrite as H, InvalidGetStaticPathsReturn as I, SessionStorageSaveError as J, ASTRO_VERSION as K, CspNotEnabled as L, MiddlewareNoDataOrNextCalled as M, NoMatchingStaticPathFound as N, LocalsReassigned as O, PageNumberParamNotFound as P, generateCspDigest as Q, ROUTE_TYPE_HEADER as R, SessionStorageInitError as S, PrerenderClientAddressNotAvailable as T, clientAddressSymbol as U, ClientAddressNotAvailable as V, StaticClientAddressNotAvailable as W, AstroResponseHeadersReassigned as X, responseSentSymbol as Y, renderPage as Z, REWRITE_DIRECTIVE_HEADER_KEY as _, renderScript as a, renderEndpoint as a0, LocalsNotAnObject as a1, REROUTABLE_STATUS_CODES as a2, nodeRequestAbortControllerCleanupSymbol as a3, NOOP_MIDDLEWARE_HEADER as a4, REDIRECT_STATUS_CODES as a5, ActionsReturnedInvalidDataError as a6, MissingSharp as a7, UnknownContentCollectionError as a8, RenderUndefinedEntryError as a9, renderUniqueStylesheet as aa, renderScriptElement as ab, createHeadAndContent as ac, ExpectedImage as ad, LocalImageUsedWrongly as ae, MissingImageDimension as af, UnsupportedImageFormat as ag, IncompatibleDescriptorOptions as ah, UnsupportedImageConversion as ai, toStyleString as aj, NoImageMetadata as ak, FailedToFetchRemoteImageDimensions as al, ExpectedImageOptions as am, ExpectedNotESMImage as an, InvalidImageService as ao, ImageMissingAlt as ap, spreadAttributes as aq, ExperimentalFontsNotEnabled as ar, FontFamilyNotFound as as, renderTemplate as b, createComponent as c, createAstro as d, addAttribute as e, renderSlot as f, renderHead as g, decodeKey as h, decryptString as i, createSlotValueFromString as j, isAstroComponentFactory as k, REROUTE_DIRECTIVE_HEADER as l, maybeRenderHead as m, i18nNoLocaleFoundInPath as n, ResponseSentError as o, MiddlewareNotAResponse as p, originPathnameSymbol as q, renderComponent as r, RewriteWithBodyUsed as s, InvalidGetStaticPathsEntry as t, unescapeHTML as u, GetStaticPathsExpectedParams as v, GetStaticPathsInvalidRouteParam as w, ActionNotFoundError as x, PrerenderDynamicEndpointPathCollide as y, ReservedSlotName as z };
