@@ -26,7 +26,7 @@ const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
 
 // If a canonical domain is specified, use it for domain normalization
 const CANONICAL_DOMAIN = process.env.CANONICAL_DOMAIN || 'ai-studio44.com';
-const LEGACY_DOMAIN = process.env.LEGACY_DOMAIN || 'ai-studio44.be';
+const LEGACY_DOMAIN = process.env.LEGACY_DOMAIN || 'ai-studio44.com';
 
 // Normalize MCP URL if needed (only if legacy domain is present and canonical is different)
 const normalizedMCPUrl = LEGACY_DOMAIN && CANONICAL_DOMAIN && LEGACY_DOMAIN !== CANONICAL_DOMAIN
