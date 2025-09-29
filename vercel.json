@@ -1,8 +1,9 @@
 {
   "buildCommand": "npm run build",
   "functions": {
-    "**/*.{js,ts,mjs}": {
+    "**": {
       "runtime": "nodejs20.x"
     }
-  }
+  },
+  "framework": null
 }
