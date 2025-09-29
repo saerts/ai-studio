@@ -21,8 +21,17 @@ import {
 } from '../../lib/error-handling.js';
 import type { FetchOptions, MCPDataResponse } from '../../types/api.js';
 
-const RAW_MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
-const MCP_SERVER_URL = RAW_MCP_SERVER_URL.replace('ai-studio44.be', 'ai-studio44.com');
+// Get MCP server URL from environment or use default
+const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
+
+// If a canonical domain is specified, use it for domain normalization
+const CANONICAL_DOMAIN = process.env.CANONICAL_DOMAIN || 'ai-studio44.com';
+const LEGACY_DOMAIN = process.env.LEGACY_DOMAIN || 'ai-studio44.be';
+
+// Normalize MCP URL if needed (only if legacy domain is present and canonical is different)
+const normalizedMCPUrl = LEGACY_DOMAIN && CANONICAL_DOMAIN && LEGACY_DOMAIN !== CANONICAL_DOMAIN
+  ? MCP_SERVER_URL.replace(LEGACY_DOMAIN, CANONICAL_DOMAIN)
+  : MCP_SERVER_URL;
 
 // Types are now imported from validation module
 
@@ -59,7 +68,7 @@ class MCPBlogService {
 
     // If pointing to localhost in a non-development environment, assume unavailable
     if (
-      MCP_SERVER_URL.includes('localhost') &&
+      normalizedMCPUrl.includes('localhost') &&
       process.env.NODE_ENV !== 'development'
     ) {
       this.mcpAvailable = false;
@@ -85,7 +94,7 @@ class MCPBlogService {
       mcpAvailable: this.mcpAvailable,
       lastFetch: this.lastFetch,
       lastHealthCheck: this.lastHealthCheck,
-      mcpServerUrl: MCP_SERVER_URL,
+      mcpServerUrl: normalizedMCPUrl,
     };
   }
 
@@ -93,7 +102,7 @@ class MCPBlogService {
     endpoint: string,
     options: FetchOptions = {}
   ): Promise<Response> {
-    const url = `${MCP_SERVER_URL}${endpoint}`;
+    const url = `${normalizedMCPUrl}${endpoint}`;
 
     try {
       const response = await fetchWithTimeout(
@@ -486,7 +495,7 @@ export const POST: APIRoute = async ({ request }) => {
           return new Response(
             JSON.stringify({
               message: 'MCP server unavailable; refresh deferred/ignored',
-              detail: `MCP server at ${MCP_SERVER_URL} is not reachable. Using cached posts if available.`,
+              detail: `MCP server at ${normalizedMCPUrl} is not reachable. Using cached posts if available.`,
               serviceStatus: blogService.getServiceStatus(),
             }),
             {
@@ -497,7 +506,7 @@ export const POST: APIRoute = async ({ request }) => {
         }
 
         const mcpResponse = await fetchWithTimeout(
-          `${MCP_SERVER_URL}/api/articles/fetch`,
+          `${normalizedMCPUrl}/api/articles/fetch`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -516,7 +525,7 @@ export const POST: APIRoute = async ({ request }) => {
         // Generate images if requested
         if (generateImages) {
           const imageResponse = await fetchWithTimeout(
-            `${MCP_SERVER_URL}/api/images/generate`,
+            `${normalizedMCPUrl}/api/images/generate`,
             {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
