@@ -3,15 +3,17 @@ import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Card from '../components/ui/Card.astro';
 import { formatDate } from '../lib/utils';
+import type { BlogPost } from '../lib/validation';
+import type { BlogApiResponse } from '../types/api';
 
 const seoProps = {
   title: 'Blog',
   description: 'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
-  canonical: 'https://ai-studio.be/blog',
+  canonical: 'https://ai-studio44.be/blog',
 };
 
 // Fetch blog posts from MCP API
-let allPosts: any[] = [];
+let allPosts: BlogPost[] = [];
 let allTags: string[] = [];
 let errorMessage = '';
 
@@ -20,31 +22,31 @@ try {
   const apiUrl = new URL('/api/blog', Astro.site || 'http://localhost:4321');
   const response = await fetch(apiUrl.toString());
 
-  if (response.ok) {
-    const data = await response.json();
-    // Convert date strings back to Date objects
-    allPosts = (data.posts || []).map((post: any) => ({
-      ...post,
-      data: {
-        ...post.data,
-        pubDate: new Date(post.data.pubDate),
-        updatedDate: new Date(post.data.updatedDate),
-      }
-    }));
-    allTags = data.tags || [];
-  } else {
+  if (!response.ok) {
     throw new Error(`API returned ${response.status}: ${response.statusText}`);
   }
+
+  const data = await response.json() as BlogApiResponse;
+  // Convert date strings back to Date objects
+  allPosts = (data.posts || []).map((post: unknown) => {
+    const blogPost = post as BlogPost;
+    return {
+      ...blogPost,
+      data: {
+        ...blogPost.data,
+        pubDate: new Date(blogPost.data.pubDate),
+        updatedDate: new Date(blogPost.data.updatedDate),
+      },
+    };
+  }) as BlogPost[];
+  allTags = data.tags || [];
 } catch (error) {
   console.warn('Failed to fetch from MCP API, falling back to static content:', error);
-  errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
   // Fallback to static content collections if MCP API is not available
   try {
     const { getCollection } = await import('astro:content');
-    const staticPosts = await getCollection('blog', ({ data }) => {
-      return !data.draft;
-    });
+    const staticPosts = await getCollection('blog', ({ data }) => !data.draft);
 
     // Convert static posts to match MCP API format
     allPosts = staticPosts.map(post => ({

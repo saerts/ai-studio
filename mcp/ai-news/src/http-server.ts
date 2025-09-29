@@ -6,9 +6,23 @@ import { spawn, ChildProcess } from 'child_process';
 import { EventEmitter } from 'events';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { writeFile, readFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 import process from 'process';
+import { DataManager, type StoredArticle } from './data-manager.js';
+
+// Setup global error handlers for unhandled promise rejections
+process.on('unhandledRejection', (reason: unknown, promise: Promise<any>) => {
+  console.error('Unhandled Promise Rejection at:', promise, 'reason:', reason);
+  // Don't terminate in production, just log
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
+});
+
+process.on('uncaughtException', (error: Error) => {
+  console.error('Uncaught Exception:', error);
+  process.exit(1);
+});
 
 interface MCPRequest {
   method: string;
@@ -25,23 +39,7 @@ interface MCPResponse {
   }>;
 }
 
-interface StoredArticle {
-  id: string;
-  slug: string;
-  title: string;
-  description: string;
-  link: string;
-  pubDate: string;
-  content: string;
-  source: string;
-  tags: string[];
-  summary: string;
-  guid?: string;
-  cover?: string;
-  coverAlt?: string;
-  coverGenerated?: boolean;
-  fetchedAt: string;
-}
+// StoredArticle interface moved to data-manager.ts
 
 class MCPHttpServer extends EventEmitter {
   private app: express.Application;
@@ -49,37 +47,24 @@ class MCPHttpServer extends EventEmitter {
   private requestId = 0;
   private pendingRequests = new Map<number, { resolve: Function; reject: Function }>();
   private connected = false;
-  private articlesStoragePath: string;
-  private cachedArticles: StoredArticle[] = [];
+  private dataManager: DataManager;
 
   constructor(private port: number = 3001) {
     super();
     this.app = express();
-    this.articlesStoragePath = join(__dirname, '../../data/articles.json');
-    this.loadStoredArticles();
+    const articlesStoragePath = join(__dirname, '../../data/articles.json');
+    this.dataManager = new DataManager(articlesStoragePath);
+    this.initializeDataManager();
     this.setupMiddleware();
     this.setupRoutes();
   }
 
-  // Article storage methods
-  private async loadStoredArticles(): Promise<void> {
+  // Data manager initialization
+  private async initializeDataManager(): Promise<void> {
     try {
-      const data = await readFile(this.articlesStoragePath, 'utf-8');
-      this.cachedArticles = JSON.parse(data);
-      console.log(`Loaded ${this.cachedArticles.length} stored articles`);
+      await this.dataManager.initialize();
     } catch (error) {
-      console.log('No stored articles found, starting with empty cache');
-      this.cachedArticles = [];
-    }
-  }
-
-  private async saveArticles(): Promise<void> {
-    try {
-      await mkdir(dirname(this.articlesStoragePath), { recursive: true });
-      await writeFile(this.articlesStoragePath, JSON.stringify(this.cachedArticles, null, 2));
-      console.log(`Saved ${this.cachedArticles.length} articles to storage`);
-    } catch (error) {
-      console.error('Failed to save articles:', error);
+      console.error('Failed to initialize data manager:', error);
     }
   }
 
@@ -172,31 +157,15 @@ class MCPHttpServer extends EventEmitter {
           if (contentItem.data) {
             const rawArticles = contentItem.data;
 
-            for (const rawArticle of rawArticles) {
-              // Check if we already have this article (by ID or link)
-              const existingIndex = this.cachedArticles.findIndex(
-                existing => existing.id === rawArticle.id || existing.link === rawArticle.link
-              );
-
-              if (existingIndex === -1) {
-                // New article, add it
-                this.cachedArticles.push(rawArticle);
-              } else {
-                // Update existing article with latest data
-                this.cachedArticles[existingIndex] = rawArticle;
-              }
-            }
-
-            // Save to persistent storage
-            await this.saveArticles();
-
-            console.log(`Processed and stored ${rawArticles.length} articles`);
+            // Use DataManager for atomic updates with race condition protection
+            const processedArticles = await this.dataManager.updateArticles(rawArticles);
+            console.log(`Processed and stored ${processedArticles.length} articles`);
           }
         }
 
         res.json({
           fetch_result: fetchResult,
-          articles_processed: this.cachedArticles.length,
+          articles_processed: this.dataManager.getStats().totalArticles,
           timestamp: new Date().toISOString()
         });
       } catch (error) {
@@ -212,37 +181,33 @@ class MCPHttpServer extends EventEmitter {
       try {
         const { limit = 50, offset = 0, tag } = req.query;
 
-        if (this.cachedArticles.length === 0) {
+        const limitNum = parseInt(limit as string) || 50;
+        const offsetNum = parseInt(offset as string) || 0;
+
+        // Use DataManager for efficient filtering and pagination
+        const result = this.dataManager.getArticles({
+          limit: limitNum,
+          offset: offsetNum,
+          tag: tag as string
+        });
+
+        if (result.total === 0) {
           res.json({
             articles: [],
             total: 0,
-            offset: parseInt(offset as string) || 0,
-            limit: parseInt(limit as string) || 50,
+            offset: offsetNum,
+            limit: limitNum,
             message: 'No articles found. Use POST /api/articles/fetch first to load articles.'
           });
           return;
         }
 
-        let articles = [...this.cachedArticles];
-
-        // Filter by tag if specified
-        if (tag && tag !== 'all') {
-          articles = articles.filter(article => article.tags.includes(tag as string));
-        }
-
-        // Sort by publication date (newest first)
-        articles.sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
-
-        // Apply pagination
-        const startIndex = parseInt(offset as string) || 0;
-        const limitNum = parseInt(limit as string) || 50;
-        const paginatedArticles = articles.slice(startIndex, startIndex + limitNum);
-
         res.json({
-          articles: paginatedArticles,
-          total: articles.length,
-          offset: startIndex,
-          limit: limitNum
+          articles: result.articles,
+          total: result.total,
+          offset: offsetNum,
+          limit: limitNum,
+          stats: this.dataManager.getStats()
         });
       } catch (error) {
         res.status(500).json({

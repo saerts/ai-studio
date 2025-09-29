@@ -1,0 +1,15 @@
+---
+import { sanitizeHTML } from '../lib/security.js';
+
+export interface Props {
+  content: string;
+  class?: string;
+}
+
+const { content, class: className = '' } = Astro.props;
+
+// Double-check sanitization at render time for defense in depth
+const sanitizedContent = sanitizeHTML(content || '');
+---
+
+<div class={className} set:html={sanitizedContent} />

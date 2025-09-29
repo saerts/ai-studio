@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ai-studio.be',
+  site: 'https://ai-studio44.be',
   integrations: [
     tailwind(),
     sitemap(),

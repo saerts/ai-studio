@@ -1,13 +1,12 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
-import Card from '../components/ui/Card.astro';
 import Button from '../components/ui/Button.astro';
 
 const seoProps = {
   title: 'AI Studio — Breng AI in je dagelijkse flow',
-  description: 'AI Studio helpt bedrijven bij het implementeren van AI-oplossingen. Van workflow-automations tot training en coaching.',
-  canonical: 'https://ai-studio.be',
+  description: 'AI Studio helpt kmo’s en teams om sneller te schalen met praktische AI-oplossingen. Boek vandaag een gratis adviesgesprek en ontdek je quick wins.',
+  canonical: 'https://ai-studio44.be',
 };
 
 const services = [
@@ -96,12 +95,9 @@ const aiExamples = [
 ---
 
 <BaseLayout {...seoProps}>
-  <!-- Hero Section -->
   <Section class="relative min-h-screen overflow-hidden">
-    <!-- Animated Background -->
     <div class="absolute inset-0 grid-pattern"></div>
 
-    <!-- Floating Geometric Elements -->
     <div class="absolute inset-0 overflow-hidden">
       <div class="absolute top-20 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-xl float"></div>
       <div class="absolute top-40 right-20 w-24 h-24 bg-accent-400/15 rounded-lg blur-lg" style="animation-delay: 2s;"></div>
@@ -119,15 +115,15 @@ const aiExamples = [
             </span>
           </h1>
           <p class="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-zinc-300">
-            AI Studio helpt bedrijven bij het implementeren van AI-oplossingen die écht werken.
-            Van workflow-automations tot training en coaching — we maken AI toegankelijk en praktisch.
+            Versnel groei met AI die wél rendeert. Wij vertalen jouw processen naar concrete automatisaties, training en coaching — snel live en meetbaar resultaat.
+            Klaar om te ontdekken wat AI voor jou kan doen? Plan een gratis adviesgesprek.
           </p>
           <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button href="/contact" variant="primary" size="lg">
-              Start je AI-journey
+              Plan een gratis adviesgesprek
             </Button>
             <Button href="/blog" variant="secondary" size="lg">
-              Lees onze blog
+              Ontdek de mogelijkheden
             </Button>
           </div>
         </div>
@@ -212,16 +208,13 @@ const aiExamples = [
             }`}
             style={`animation-delay: ${index * 100}ms`}
           >
-            <!-- Category Badge -->
             <div class="absolute top-4 right-4 z-10">
               <span class="px-3 py-1 text-xs font-mono font-semibold rounded-full bg-white/10 text-white/70 backdrop-blur-sm border border-white/20">
                 {example.category}
               </span>
             </div>
 
-            <!-- Content Container -->
             <div class="p-6 lg:p-8 h-full flex flex-col">
-              <!-- Duotone Icon -->
               <div class="relative mb-6 flex-shrink-0">
                 <div
                   class="absolute inset-0 blur-xl rounded-full scale-150 group-hover:scale-175 transition-transform duration-500 opacity-30"
@@ -250,7 +243,6 @@ const aiExamples = [
                 </div>
               </div>
 
-              <!-- Text Content -->
               <div class="flex-grow">
                 <h3 class="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-primary-400 transition-colors duration-300">
                   {example.title}
@@ -260,9 +252,8 @@ const aiExamples = [
                 </p>
               </div>
 
-              <!-- Benefits with Modern Styling -->
               <div class="space-y-3 mt-auto">
-                {example.benefits.map((benefit, benefitIndex) => (
+                {example.benefits.map((benefit) => (
                   <div class="flex items-center group/benefit">
                     <div
                       class="w-2 h-2 rounded-full mr-3 transition-all duration-300 group-hover/benefit:scale-125"
@@ -275,7 +266,6 @@ const aiExamples = [
                 ))}
               </div>
 
-              <!-- Animated Border -->
               <div
                 class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={`background: linear-gradient(135deg, ${example.iconPrimary}20, ${example.iconSecondary}20); border: 1px solid ${example.iconPrimary}30`}
@@ -285,12 +275,10 @@ const aiExamples = [
         ))}
       </div>
 
-      <!-- Floating Decorative Elements -->
       <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-400/10 to-cyan-400/10 rounded-full blur-2xl animate-pulse"></div>
       <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl" style="animation-delay: 2s;"></div>
     </div>
 
-    <!-- Call to Action -->
     <div class="mt-16 text-center">
       <div class="inline-flex items-center space-x-4 glass-card px-8 py-4">
         <div class="flex items-center space-x-2 text-primary-400">
@@ -298,7 +286,7 @@ const aiExamples = [
           <span class="text-sm font-mono">READY TO START</span>
         </div>
         <Button href="/contact" variant="primary" size="sm">
-          Plan je AI-transformatie
+          Plan je gratis adviesgesprek
         </Button>
       </div>
     </div>
@@ -346,7 +334,7 @@ const aiExamples = [
       </p>
       <div class="mt-8">
         <Button href="/contact" variant="primary" size="lg">
-          Plan een gesprek
+          Plan een gratis kennismaking
         </Button>
       </div>
     </div>

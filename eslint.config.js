@@ -5,8 +5,25 @@ import astro from 'eslint-plugin-astro';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default [
+  { ignores: ['dist/**', '.astro/**', 'mcp/**/dist/**'] },
   js.configs.recommended,
   ...astro.configs.recommended,
+  // Override for MCP workspace Node scripts and web APIs
+  {
+    files: ['mcp/**'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        setImmediate: 'readonly',
+        fetch: 'readonly',
+        Response: 'readonly',
+        Request: 'readonly',
+        Headers: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+      },
+    },
+  },
   {
     files: ['**/*.{js,mjs,cjs,ts}'],
     plugins: {
@@ -21,6 +38,19 @@ export default [
       },
       globals: {
         NodeJS: 'readonly',
+        AbortSignal: 'readonly',
+        process: 'readonly',
+        Buffer: 'readonly',
+        console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        fetch: 'readonly',
+        Request: 'readonly',
+        Response: 'readonly',
+        Headers: 'readonly',
+        URL: 'readonly',
+        URLSearchParams: 'readonly',
+        AbortController: 'readonly',
       },
     },
     rules: {
