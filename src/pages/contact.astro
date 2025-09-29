@@ -93,19 +93,25 @@ const seoProps = {
       <!-- Contact Form -->
       <Card>
         <form
-          action={import.meta.env.PUBLIC_CONTACT_ENDPOINT || '#'}
+          action="https://api.web3forms.com/submit"
           method="POST"
           class="space-y-6"
           data-contact-form
         >
+          <!-- Web3Forms Access Key -->
+          <input type="hidden" name="access_key" value="9c730d20-daa1-4a92-8c90-a7e123920d14" />
+
+          <!-- Web3Forms Configuration -->
+          <input type="hidden" name="subject" value="Nieuw contactformulier van AI Studio website" />
+          <input type="hidden" name="from_name" value="AI Studio Contact Form" />
+          <input type="hidden" name="to_email" value="hi@ai-studio44.com" />
+
           <!-- Honeypot -->
           <input
-            type="text"
-            name="_human"
-            tabindex="-1"
-            autocomplete="off"
-            style="position: absolute; left: -5000px;"
-            aria-hidden="true"
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none;"
           />
 
           <!-- Time trap -->
@@ -274,8 +280,8 @@ const seoProps = {
       if (!isValid) return;
 
       // Anti-spam checks
-      const honeypot = form.querySelector('[name="_human"]') as HTMLInputElement;
-      if (honeypot?.value) return; // Bot detected
+      const honeypot = form.querySelector('[name="botcheck"]') as HTMLInputElement;
+      if (honeypot?.checked) return; // Bot detected
 
       const timestamp = form.querySelector('[name="_timestamp"]') as HTMLInputElement;
       const submitTime = Date.now();
