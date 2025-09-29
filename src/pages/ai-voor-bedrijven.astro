@@ -5,8 +5,8 @@ import Button from '../components/ui/Button.astro';
 import AIConsultationCTA from '../components/AIConsultationCTA.astro';
 
 const seo = {
-  title: 'AI voor Bedrijven: Transformeer je Organisatie met Kunstmatige Intelligentie',
-  description: 'Ontdek hoe AI je bedrijf naar een hoger niveau tilt. Van procesautomatisering tot datagedreven besluitvorming - wij begeleiden je complete AI-transformatie.',
+  title: 'De Stille Revolutie waar uw Bedrijf aan Voorbijgaat - AI voor KMO\'s',
+  description: 'Terwijl ChatGPT miljoenen gebruikers telt, worstelen Belgische kmo\'s nog met de vraag wat AI voor hen kan betekenen. Ontdek concrete voorbeelden en praktische stappen.',
   image: '/og/ai-voor-bedrijven.jpg',
   type: 'article' as const,
 };
@@ -73,6 +73,8 @@ const seo = {
       background: linear-gradient(135deg, rgba(26, 43, 43, 0.8) 0%, rgba(15, 20, 25, 0.9) 100%);
       border-top: 1px solid rgba(45, 212, 191, 0.1);
       border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+      padding-top: 5rem; /* ensure vertical spacing regardless of utility order */
+      padding-bottom: 5rem;
     }
 
     /* Typography */
@@ -104,8 +106,14 @@ const seo = {
       color: #a1a1aa;
     }
 
+    .article-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
     /* Components */
-    .feature-card {
+    .case-study-card {
       background: linear-gradient(135deg, rgba(26, 43, 43, 0.4) 0%, rgba(35, 51, 51, 0.2) 100%);
       border: 1px solid rgba(45, 212, 191, 0.1);
       border-radius: 12px;
@@ -114,7 +122,7 @@ const seo = {
       backdrop-filter: blur(8px);
     }
 
-    .feature-card:hover {
+    .case-study-card:hover {
       background: linear-gradient(135deg, rgba(26, 43, 43, 0.6) 0%, rgba(35, 51, 51, 0.4) 100%);
       border-color: rgba(45, 212, 191, 0.3);
       transform: translateY(-4px);
@@ -124,6 +132,9 @@ const seo = {
     .stat-card {
       text-align: center;
       padding: 1.5rem;
+      background: rgba(26, 43, 43, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(45, 212, 191, 0.1);
     }
 
     .stat-number {
@@ -131,7 +142,7 @@ const seo = {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      font-size: clamp(3rem, 8vw, 4rem);
+      font-size: clamp(2rem, 6vw, 3rem);
       font-weight: 700;
       line-height: 1;
     }
@@ -144,76 +155,33 @@ const seo = {
       margin: 3rem 0;
     }
 
-    .step-item {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      margin-bottom: 2rem;
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
+      border-left: 4px solid #ef4444;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
     }
 
-    .step-number {
-      flex-shrink: 0;
-      width: 3rem;
-      height: 3rem;
-      background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 100%);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #0a0f0f;
-    }
-
-    .testimonial-card {
+    .success-story {
       background: linear-gradient(135deg, rgba(45, 212, 191, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
       border: 1px solid rgba(45, 212, 191, 0.2);
       border-radius: 12px;
       padding: 2rem;
+      margin: 2rem 0;
     }
 
-    .faq-item {
+    .application-card {
       background: rgba(26, 43, 43, 0.3);
       border: 1px solid rgba(45, 212, 191, 0.1);
       border-radius: 8px;
-      margin-bottom: 1rem;
-      overflow: hidden;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
     }
 
-    .faq-button {
-      width: 100%;
-      padding: 1.5rem 2rem;
-      text-align: left;
-      background: none;
-      border: none;
-      color: #ffffff;
-      font-size: 1.125rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: background-color 0.2s ease;
-    }
-
-    .faq-button:hover {
+    .application-card:hover {
       background: rgba(26, 43, 43, 0.5);
-    }
-
-    .faq-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
-      background: rgba(15, 20, 25, 0.3);
-    }
-
-    .faq-content.open {
-      max-height: 200px;
-    }
-
-    .faq-content-inner {
-      padding: 1.5rem 2rem;
-      color: #a1a1aa;
-      line-height: 1.6;
+      border-color: rgba(45, 212, 191, 0.3);
     }
 
     /* Animations */
@@ -245,17 +213,8 @@ const seo = {
         padding: 3rem 0;
       }
 
-      .feature-card {
+      .case-study-card {
         padding: 1.5rem;
-      }
-
-      .step-item {
-        gap: 1rem;
-      }
-
-      .step-number {
-        width: 2.5rem;
-        height: 2.5rem;
       }
     }
 
@@ -295,30 +254,31 @@ const seo = {
             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
             </svg>
-            De toekomst van ondernemen is hier
+            De stille revolutie is begonnen
           </div>
 
           <!-- Hero Title -->
-          <h1 class="hero-title text-white mt-8">
-            AI voor Bedrijven:<br />
+          <h1 class="hero-title text-white mt-6">
             <span class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent">
-              Transformeer je Organisatie
-            </span>
+              De Stille Revolutie
+            </span><br />
+            waar uw Bedrijf aan Voorbijgaat
           </h1>
 
           <!-- Hero Subtitle -->
-          <p class="hero-subtitle max-w-3xl mx-auto mt-6">
-            Van eerste verkenning tot volledige implementatie. Wij maken AI toegankelijk,
-            meetbaar en waardevol voor jouw onderneming.
+          <p class="hero-subtitle max-w-4xl mx-auto mt-6">
+            Terwijl ChatGPT miljoenen gebruikers telt, worstelen Belgische kmo's nog met de vraag
+            wat AI voor hen kan betekenen. Een gemiste kans, want juist kleinere organisaties kunnen
+            met beperkte middelen grote sprongen maken.
           </p>
 
           <!-- Hero CTA -->
-          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8 mt-8">
             <Button href="#intro" variant="primary" size="lg">
-              Start je AI-reis
+              Start uw AI Journey
             </Button>
             <Button href="#leestijd" variant="secondary" size="lg">
-              <span id="readTime">8 min leestijd</span>
+              <span id="readTime">12 min leestijd</span>
             </Button>
           </div>
         </div>
@@ -329,136 +289,190 @@ const seo = {
   <!-- Introduction Section -->
   <section class="content-section" id="intro">
     <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-      <div class="text-center space-y-8 fade-in">
-        <p class="section-subtitle text-xl leading-relaxed">
-          De wereld van kunstmatige intelligentie evolueert razendsnel. Wat gisteren nog
-          science fiction was, is vandaag realiteit in de boardroom. Bedrijven die AI omarmen
-          zien gemiddeld een <strong class="text-teal-400">productiviteitsstijging van 40%</strong>
-          en <strong class="text-teal-400">kostenbesparingen tot 30%</strong> binnen het eerste jaar.
+      <div class="space-y-8 fade-in">
+        <p class="article-text text-xl leading-relaxed">
+          Het contrast is opvallend. Waar technologiereuzen miljarden investeren in artificiële intelligentie
+          en consumenten massaal AI-tools omarmen, blijft de Belgische kmo-sector opvallend stil. Recent
+          onderzoek toont aan dat slechts <strong class="text-teal-400">15% van de kleine en middelgrote
+          ondernemingen in België</strong> actief AI-toepassingen gebruikt.
         </p>
 
         <div class="quote-box">
           <blockquote class="text-lg italic text-teal-300 mb-4">
-            "AI is niet langer een luxe, maar een noodzaak. Organisaties die nu niet investeren
-            in AI-capaciteiten, lopen het risico binnen 5 jaar irrelevant te worden."
+            "We hebben geen IT-afdeling. AI, dat is toch voor de Googles van deze wereld?"
           </blockquote>
           <cite class="text-sm text-zinc-400">
-            — McKinsey Global Institute, 2024
+            — Vaak gehoorde reactie van KMO-eigenaren
           </cite>
         </div>
+
+        <p class="article-text">
+          Niets is minder waar. Juist voor organisaties met beperkte resources kan AI het verschil maken
+          tussen overleven en floreren in een steeds competitievere markt.
+        </p>
       </div>
     </div>
   </section>
 
-  <!-- Statistics Section -->
+  <!-- Success Stories Section -->
   <section class="stats-section py-20">
-    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 mt-12 mb-12">
-      <h2 class="section-title text-center text-white mb-16 fade-in">
-        De Impact van AI in Cijfers
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <h2 class="section-title text-center text-white fade-in">
+        De Praktijk: AI als Stille Kracht
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="stat-card fade-in">
-          <div class="stat-number" data-target="89">0</div>
-          <p class="text-xl text-teal-300 mt-2">%</p>
-          <p class="text-zinc-400 mt-4">van Fortune 500 bedrijven gebruikt AI</p>
+      <div class="grid md:grid-cols-2 gap-8 mb-24">
+        <div class="success-story scale-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-2">Antwerpse Boekhouder</h3>
+              <p class="text-sm text-teal-300">3 medewerkers</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 leading-relaxed mb-4">
+            Met slechts drie medewerkers verwerkt het kantoor nu <strong class="text-teal-400">40% meer dossiers</strong>
+            dan een jaar geleden. Een AI-assistent categoriseert automatisch facturen, bereidt btw-aangiftes voor en signaleert afwijkingen.
+          </p>
+          <div class="flex items-center text-sm text-zinc-400">
+            <span class="text-teal-400 font-semibold mr-2">Investering:</span>
+            Minder dan een halftijdse kracht
+          </div>
         </div>
 
+        <div class="success-story scale-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-2">Gentse Webshop</h3>
+              <p class="text-sm text-cyan-300">Designmeubelen</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 leading-relaxed mb-4">
+            AI schrijft productbeschrijvingen in vier talen, beantwoordt klantvragen en optimaliseert voorraad.
+            Resultaat: <strong class="text-cyan-400">verdrievoudiging internationale verkoop</strong> in acht maanden.
+          </p>
+          <div class="flex items-center text-sm text-zinc-400">
+            <span class="text-cyan-400 font-semibold mr-2">Investering:</span>
+            Minder dan €200 per maand
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Statistics -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="stat-card fade-in">
-          <div class="stat-number" data-target="15">0</div>
-          <p class="text-xl text-teal-300 mt-2">biljoen</p>
-          <p class="text-zinc-400 mt-4">verwachte economische waarde in 2030</p>
+          <div class="stat-number" data-target="40">0</div>
+          <p class="text-lg text-teal-300 mt-2">% meer</p>
+          <p class="text-zinc-400 mt-2">dossiers verwerkt</p>
         </div>
 
         <div class="stat-card fade-in">
           <div class="stat-number" data-target="3">0</div>
-          <p class="text-xl text-teal-300 mt-2">x sneller</p>
-          <p class="text-zinc-400 mt-4">besluitvorming met AI-analytics</p>
+          <p class="text-lg text-cyan-300 mt-2">x meer</p>
+          <p class="text-zinc-400 mt-2">internationale verkoop</p>
+        </div>
+
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="15">0</div>
+          <p class="text-lg text-teal-300 mt-2">%</p>
+          <p class="text-zinc-400 mt-2">van KMO's gebruikt AI</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Why AI Section -->
-  <section class="content-section">
+  <!-- Applications Section -->
+  <section class="content-section applications-section" id="applications">
     <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
       <div class="space-y-16 fade-in">
         <div class="text-center space-y-6">
           <h2 class="section-title text-white">
-            Waarom AI de Gamechanger is voor Moderne Bedrijven
+            Waar AI Vandaag al het Verschil Maakt
           </h2>
           <p class="section-subtitle max-w-3xl mx-auto">
-            In een wereld waar data exponentieel groeit en markten sneller veranderen dan ooit,
-            is AI de sleutel tot competitief voordeel, operationele excellentie en klantgerichte innovatie.
+            Concrete toepassingen die nu al resultaat opleveren voor kleine en middelgrote bedrijven
           </p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 mt-12">
-          <div class="feature-card scale-in">
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-white mb-3">Automatisering op Schaal</h3>
-                <p class="text-zinc-400 leading-relaxed">
-                  Van facturatie tot klantenservice - AI automatiseert repetitieve taken en
-                  bevrijdt je team voor strategisch werk dat écht waarde toevoegt.
-                </p>
-              </div>
+        <div class="space-y-12">
+          <!-- Customer Communication -->
+          <div class="case-study-card">
+            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+              <svg class="w-8 h-8 text-teal-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Klantencommunicatie zonder Grenzen
+            </h3>
+            <p class="article-text mb-4">
+              Een Brusselse startup in duurzame verpakkingen gebruikt AI om offertes op te stellen,
+              technische vragen te beantwoorden en zelfs complexe onderhandelingen voor te bereiden.
+              De AI analyseert eerdere gesprekken, leert de tone-of-voice van het bedrijf en suggereert
+              antwoorden die de salesmanager alleen nog moet valideren.
+            </p>
+            <div class="bg-teal-500/10 border border-teal-500/20 rounded-lg p-4">
+              <p class="text-teal-400 font-semibold">Tijdswinst: 3 uur per dag</p>
             </div>
           </div>
 
-          <div class="feature-card scale-in">
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-white mb-3">Predictieve Analytics</h3>
-                <p class="text-zinc-400 leading-relaxed">
-                  Voorspel markttrends, klantgedrag en operationele risico's met ongekende
-                  nauwkeurigheid. Neem beslissingen op basis van data, niet intuïtie.
-                </p>
-              </div>
+          <!-- Marketing -->
+          <div class="case-study-card">
+            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+              <svg class="w-8 h-8 text-cyan-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+              </svg>
+              Marketing met de Kracht van een Bureau
+            </h3>
+            <p class="article-text mb-4">
+              Kleine bedrijven kunnen nu campagnes opzetten die vroeger het domein waren van organisaties
+              met marketingteams. AI genereert social media content, schrijft nieuwsbrieven, optimaliseert
+              Google Ads en analyseert welke boodschappen aanslaan.
+            </p>
+            <div class="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
+              <p class="text-cyan-400 font-semibold">Case: Leuvense bakkerij verdubbelde online bestellingen</p>
             </div>
           </div>
 
-          <div class="feature-card scale-in">
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-white mb-3">24/7 Klantinteractie</h3>
-                <p class="text-zinc-400 leading-relaxed">
-                  AI-gestuurde chatbots en virtuele assistenten bieden onmiddellijke,
-                  gepersonaliseerde service - altijd beschikbaar, altijd consistent.
-                </p>
-              </div>
+          <!-- Administration -->
+          <div class="case-study-card">
+            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+              <svg class="w-8 h-8 text-teal-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              Administratie die Zichzelf Doet
+            </h3>
+            <p class="article-text mb-4">
+              Van het scannen en verwerken van documenten tot het opstellen van contracten en rapporten -
+              AI neemt repetitieve taken over. Een Mechelse vastgoedmakelaar besteedt nu 70% minder tijd
+              aan administratie. Die tijd gaat naar waar het echt om draait: klanten ontmoeten en deals sluiten.
+            </p>
+            <div class="bg-teal-500/10 border border-teal-500/20 rounded-lg p-4">
+              <p class="text-teal-400 font-semibold">Tijdsbesparing: 70% minder administratie</p>
             </div>
           </div>
 
-          <div class="feature-card scale-in">
-            <div class="flex items-start space-x-4">
-              <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold text-white mb-3">Innovatie Versnelling</h3>
-                <p class="text-zinc-400 leading-relaxed">
-                  Van productontwerp tot marktlancering - AI verkort ontwikkelcycli en
-                  maximaliseert de kans op succes door datagedreven prototyping.
-                </p>
-              </div>
+          <!-- Innovation -->
+          <div class="case-study-card">
+            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+              <svg class="w-8 h-8 text-cyan-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              Innovatie binnen Handbereik
+            </h3>
+            <p class="article-text mb-4">
+              Een Limburgse producent van industriële componenten gebruikt AI om productiefouten te voorspellen
+              voordat ze optreden. De software analyseert patronen in machinedata en waarschuwt operators preventief.
+            </p>
+            <div class="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-4">
+              <p class="text-cyan-400 font-semibold">Resultaat: 30% minder stilstand, €50.000 besparing per jaar</p>
             </div>
           </div>
         </div>
@@ -466,163 +480,140 @@ const seo = {
     </div>
   </section>
 
-  <!-- Methodology Section -->
+  <!-- Barriers Section -->
   <section class="content-section">
     <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-      <div class="space-y-16 fade-in">
-        <div class="text-center space-y-6">
-          <h2 class="section-title text-white">
-            Onze Bewezen AI-Implementatie Methodologie
-          </h2>
-          <p class="section-subtitle">
-            Elke organisatie is uniek. Daarom hanteren wij een gefaseerde, op maat gemaakte
-            aanpak die aansluit bij jouw specifieke situatie, ambities en mogelijkheden.
-          </p>
+      <div class="space-y-8 fade-in">
+        <h2 class="section-title text-white text-center mb-12">
+          De Drempels zijn Lager dan u Denkt
+        </h2>
+
+        <p class="article-text">
+          De technologische revolutie van vandaag verschilt fundamenteel van die van gisteren.
+          Waar bedrijven vroeger IT-specialisten moesten inhuren voor basale automatisering,
+          zijn AI-tools nu ontworpen voor gebruikers zonder technische achtergrond.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 my-12">
+          <div class="application-card text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-teal-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">ChatGPT</h3>
+            <p class="text-zinc-400 text-sm">Begrijpt gewone spreektaal</p>
+          </div>
+
+          <div class="application-card text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Claude</h3>
+            <p class="text-zinc-400 text-sm">Analyseert complete documenten</p>
+          </div>
+
+          <div class="application-card text-center">
+            <div class="w-16 h-16 mx-auto mb-4 bg-teal-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-8 h-8 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-white mb-2">Perplexity</h3>
+            <p class="text-zinc-400 text-sm">Doorzoekt internet met precisie</p>
+          </div>
         </div>
 
-        <div class="space-y-8 mt-12">
-          <div class="step-item">
-            <div class="step-number">1</div>
-            <div>
-              <h3 class="text-xl font-semibold text-white mb-3">Discovery & Assessment</h3>
-              <p class="text-zinc-400 leading-relaxed">
-                We analyseren je huidige processen, identificeren AI-kansen en creëren een
-                roadmap die aansluit bij je businessdoelen. Geen technologie om de technologie,
-                maar gerichte oplossingen voor echte uitdagingen.
-              </p>
-            </div>
-          </div>
-
-          <div class="step-item">
-            <div class="step-number">2</div>
-            <div>
-              <h3 class="text-xl font-semibold text-white mb-3">Proof of Concept</h3>
-              <p class="text-zinc-400 leading-relaxed">
-                Start klein, denk groot. We ontwikkelen een pilot project dat direct waarde
-                levert en het potentieel van AI binnen jouw organisatie aantoont. Meetbare
-                resultaten binnen 6-8 weken.
-              </p>
-            </div>
-          </div>
-
-          <div class="step-item">
-            <div class="step-number">3</div>
-            <div>
-              <h3 class="text-xl font-semibold text-white mb-3">Schaalbare Implementatie</h3>
-              <p class="text-zinc-400 leading-relaxed">
-                Van pilot naar productie. We bouwen robuuste, schaalbare AI-systemen die
-                naadloos integreren met je bestaande infrastructuur. Cloud-native, veilig
-                en compliant met alle relevante regelgeving.
-              </p>
-            </div>
-          </div>
-
-          <div class="step-item">
-            <div class="step-number">4</div>
-            <div>
-              <h3 class="text-xl font-semibold text-white mb-3">Training & Adoptie</h3>
-              <p class="text-zinc-400 leading-relaxed">
-                Technologie is slechts zo goed als de mensen die ermee werken. We trainen
-                je team, creëren documentatie op maat en zorgen voor een soepele transitie
-                naar AI-gedreven werken.
-              </p>
-            </div>
-          </div>
+        <div class="quote-box bg-green-500/10 border-green-500">
+          <h4 class="text-lg font-semibold text-green-400 mb-2">De Kostprijs?</h4>
+          <p class="text-zinc-300">
+            Voor minder dan wat een bedrijf uitgeeft aan koffie voor de werknemers, heeft u toegang
+            tot AI-capaciteit die vijf jaar geleden miljoenen zou kosten. De meeste tools bieden
+            gratis versies om mee te starten, betaalde plannen beginnen vanaf €20 per maand.
+          </p>
         </div>
       </div>
     </div>
   </section>
+
   
+  <!-- Getting Started Section -->
+  <section class="stats-section py-20">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-8 fade-in text-center">
+        <h2 class="section-title text-white mb-12 mt-12">
+          Uw Eerste Stappen
+        </h2>
 
-  <!-- FAQ Section -->
+        <p class="article-text text-xl">
+          Begin klein. Kies één proces dat tijd vreet maar weinig waarde toevoegt.
+          Experimenteer met een gratis AI-tool. Meet het verschil. Pas aan. Schaal op.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div class="application-card">
+            <h4 class="text-lg font-semibold text-teal-400 mb-2">E-mail Categorisering</h4>
+            <p class="text-zinc-400 text-sm">AI die uw inbox organiseert</p>
+          </div>
+
+          <div class="application-card">
+            <h4 class="text-lg font-semibold text-cyan-400 mb-2">Basis Chatbot</h4>
+            <p class="text-zinc-400 text-sm">Beantwoordt veelgestelde vragen</p>
+          </div>
+
+          <div class="application-card">
+            <h4 class="text-lg font-semibold text-teal-400 mb-2">Meeting Samenvattingen</h4>
+            <p class="text-zinc-400 text-sm">Automatische notities van vergaderingen</p>
+          </div>
+        </div>
+
+        <div class="quote-box bg-blue-500/10 border-blue-500">
+          <p class="text-blue-300 text-lg">
+            De transformatie van uw bedrijf hoeft geen big bang te zijn.
+            Het kan beginnen met één kleine, slimme stap.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conclusion Section -->
   <section class="content-section">
     <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
-      <div class="space-y-12 fade-in">
-        <div class="text-center">
-          <h2 class="section-title text-white mb-6">
-            Veelgestelde Vragen over AI-Implementatie
-          </h2>
-        </div>
+      <div class="space-y-8 fade-in text-center">
+        <h2 class="section-title text-white mb-12">
+          De Toekomst is Nu
+        </h2>
 
-        <div class="space-y-4" id="faqAccordion">
-          <div class="faq-item">
-            <button class="faq-button accordion-trigger">
-              <span class="font-medium">Hoeveel kost een AI-implementatie gemiddeld?</span>
-              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            <div class="faq-content">
-              <div class="faq-content-inner">
-                De investering varieert sterk afhankelijk van scope en complexiteit. Een proof of concept
-                start vanaf €5.000, terwijl enterprise-implementaties €100.000+ kunnen bedragen.
-                De gemiddelde ROI ligt tussen 3-10x binnen 18 maanden.
-              </div>
-            </div>
-          </div>
+        <p class="article-text text-xl leading-relaxed mt-6">
+          De digitale kloof van morgen loopt niet tussen bedrijven mét en zonder computers,
+          maar tussen organisaties die AI omarmen en die dat niet doen.
+        </p>
 
-          <div class="faq-item">
-            <button class="faq-button accordion-trigger">
-              <span class="font-medium">Hoe lang duurt een typische implementatie?</span>
-              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            <div class="faq-content">
-              <div class="faq-content-inner">
-                Een proof of concept levert resultaten binnen 6-8 weken. Volledige implementatie
-                van enterprise AI-oplossingen duurt gemiddeld 3-6 maanden, afhankelijk van
-                integratie-complexiteit en schaal.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-button accordion-trigger">
-              <span class="font-medium">Wat gebeurt er met onze data?</span>
-              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            <div class="faq-content">
-              <div class="faq-content-inner">
-                Data-privacy en security staan centraal. We werken volledig GDPR-compliant,
-                implementeren enterprise-grade encryptie, en kunnen on-premise oplossingen
-                bieden waarbij data nooit je infrastructuur verlaat.
-              </div>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-button accordion-trigger">
-              <span class="font-medium">Hebben we AI-experts nodig in ons team?</span>
-              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-              </svg>
-            </button>
-            <div class="faq-content">
-              <div class="faq-content-inner">
-                Nee, dat is niet noodzakelijk. We ontwerpen gebruiksvriendelijke oplossingen
-                die je bestaande team kan beheren. Training en ongoing support zijn standaard
-                onderdeel van onze service.
-              </div>
-            </div>
-          </div>
-        </div>
+        <p class="article-text text-2xl font-semibold text-teal-400">
+          De keuze is aan u: meebewegen met de golf of erdoor overspoeld worden.
+        </p>
       </div>
     </div>
   </section>
 
   <!-- CTA Section -->
-  <AIConsultationCTA />
+  <AIConsultationCTA
+    title="Klaar om de Sprong te Wagen?"
+    subtitle="Voor bedrijven die de sprong willen wagen maar niet weten waar te beginnen, organiseren wij vrijblijvende gesprekken. Geen verkooppraatjes, wel concrete voorbeelden en praktische roadmaps."
+    primaryButtonText="Plan een vrijblijvend gesprek"
+    primaryButtonHref="/contact"
+  />
 
   <!-- Schema.org Article Markup -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": "AI voor Bedrijven: Transformeer je Organisatie met Kunstmatige Intelligentie",
-    "description": "Ontdek hoe AI je bedrijf naar een hoger niveau tilt. Van procesautomatisering tot datagedreven besluitvorming.",
+    "headline": "De Stille Revolutie waar uw Bedrijf aan Voorbijgaat - AI voor KMO's",
+    "description": "Terwijl ChatGPT miljoenen gebruikers telt, worstelen Belgische kmo's nog met de vraag wat AI voor hen kan betekenen. Ontdek concrete voorbeelden en praktische stappen.",
     "author": {
       "@type": "Organization",
       "name": "AI Studio"
@@ -711,27 +702,6 @@ const seo = {
 
       document.querySelectorAll('.stat-number').forEach(el => {
         counterObserver.observe(el);
-      });
-
-      // FAQ Accordion
-      document.querySelectorAll('.accordion-trigger').forEach(button => {
-        button.addEventListener('click', () => {
-          const content = button.nextElementSibling;
-          const icon = button.querySelector('.accordion-icon');
-
-          // Close all other accordions
-          document.querySelectorAll('.faq-content').forEach(otherContent => {
-            if (otherContent !== content) {
-              otherContent.classList.remove('open');
-              const otherIcon = otherContent.previousElementSibling.querySelector('.accordion-icon');
-              otherIcon.classList.remove('rotate-180');
-            }
-          });
-
-          // Toggle current accordion
-          content.classList.toggle('open');
-          icon.classList.toggle('rotate-180');
-        });
       });
 
       // Reading time calculation
