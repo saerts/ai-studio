@@ -21,7 +21,8 @@ import {
 } from '../../lib/error-handling.js';
 import type { FetchOptions, MCPDataResponse } from '../../types/api.js';
 
-const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
+const RAW_MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
+const MCP_SERVER_URL = RAW_MCP_SERVER_URL.replace('ai-studio44.be', 'ai-studio44.com');
 
 // Types are now imported from validation module
 
@@ -481,13 +482,15 @@ export const POST: APIRoute = async ({ request }) => {
         const healthy =
           (await blogService['checkHealth']?.call(blogService, true)) ?? false;
         if (!healthy) {
+          // Graceful degrade: accept the request but skip contacting MCP
           return new Response(
             JSON.stringify({
-              error: 'MCP server unavailable',
-              message: `Cannot refresh articles because MCP server at ${MCP_SERVER_URL} is not reachable.`,
+              message: 'MCP server unavailable; refresh deferred/ignored',
+              detail: `MCP server at ${MCP_SERVER_URL} is not reachable. Using cached posts if available.`,
+              serviceStatus: blogService.getServiceStatus(),
             }),
             {
-              status: 503,
+              status: 202,
               headers: { 'Content-Type': 'application/json' },
             }
           );
@@ -545,13 +548,15 @@ export const POST: APIRoute = async ({ request }) => {
           }
         );
       } catch (error) {
+        // Graceful degrade: accept but report deferred due to error
         return new Response(
           JSON.stringify({
-            error: 'Failed to fetch and generate articles',
-            message: error instanceof Error ? error.message : 'Unknown error',
+            message: 'Fetch/generate skipped due to MCP error; using cached posts if available',
+            detail: error instanceof Error ? error.message : 'Unknown error',
+            serviceStatus: blogService.getServiceStatus(),
           }),
           {
-            status: 503,
+            status: 202,
             headers: {
               'Content-Type': 'application/json',
             },
