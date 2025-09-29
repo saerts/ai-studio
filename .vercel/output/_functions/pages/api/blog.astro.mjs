@@ -254,6 +254,71 @@ class MCPBlogService {
   lastFetch = 0;
   cacheTimeout = 5 * 60 * 1e3;
   // 5 minutes cache
+  getStaticFallbackPosts() {
+    console.log("Generating static fallback content for production");
+    return [
+      {
+        id: "welcome-ai-studio",
+        slug: "welcome-to-ai-studio",
+        data: {
+          title: "Welkom bij AI Studio - Uw Partner in AI Innovatie",
+          description: "Ontdek hoe AI Studio bedrijven helpt met cutting-edge kunstmatige intelligentie oplossingen en strategisch advies.",
+          pubDate: /* @__PURE__ */ new Date("2024-01-15"),
+          updatedDate: /* @__PURE__ */ new Date("2024-01-15"),
+          tags: ["AI", "Innovatie", "Bedrijfsadvies", "Nederland"],
+          source: "AI Studio",
+          canonicalUrl: "https://ai-studio44.com/blog/welcome-to-ai-studio",
+          draft: false
+        },
+        body: `
+          <h2>AI Studio: Uw strategische partner voor AI-transformatie</h2>
+          <p>In een wereld waar kunstmatige intelligentie de manier waarop we werken drastisch verandert, staat AI Studio aan de voorhoede van innovatie. Wij helpen bedrijven om de kracht van AI te benutten voor duurzame groei en concurrentievoordeel.</p>
+
+          <h3>Onze expertise</h3>
+          <ul>
+            <li><strong>AI Strategie & Consultancy</strong> - Ontwikkeling van op maat gemaakte AI-strategieën</li>
+            <li><strong>Machine Learning Oplossingen</strong> - Implementatie van geavanceerde ML-modellen</li>
+            <li><strong>Process Automation</strong> - Automatisering van bedrijfsprocessen met AI</li>
+            <li><strong>Data Analytics</strong> - Inzichten genereren uit complexe datasets</li>
+          </ul>
+
+          <p>Neem contact met ons op om te ontdekken hoe AI uw bedrijf kan transformeren.</p>
+        `
+      },
+      {
+        id: "ai-trends-2024",
+        slug: "ai-trends-nederland-2024",
+        data: {
+          title: "AI Trends 2024: De Toekomst van Kunstmatige Intelligentie in Nederland",
+          description: "Een overzicht van de belangrijkste AI-trends die de Nederlandse bedrijfswereld in 2024 zullen beïnvloeden.",
+          pubDate: /* @__PURE__ */ new Date("2024-02-01"),
+          updatedDate: /* @__PURE__ */ new Date("2024-02-01"),
+          tags: ["AI Trends", "2024", "Nederland", "Technologie"],
+          source: "AI Studio",
+          canonicalUrl: "https://ai-studio44.com/blog/ai-trends-nederland-2024",
+          draft: false
+        },
+        body: `
+          <h2>De AI-revolutie in Nederland: Trends voor 2024</h2>
+          <p>Nederlandse bedrijven omarmen AI in een ongekend tempo. Hier zijn de belangrijkste trends die we in 2024 verwachten:</p>
+
+          <h3>1. Generative AI wordt mainstream</h3>
+          <p>Van content creatie tot code generatie, generative AI-tools worden standaard in Nederlandse bedrijven.</p>
+
+          <h3>2. AI-gedreven klantenservice</h3>
+          <p>Chatbots en virtuele assistenten worden steeds geavanceerder en menselijker.</p>
+
+          <h3>3. Ethische AI en compliance</h3>
+          <p>Met nieuwe EU-regelgeving wordt verantwoorde AI-implementatie cruciaal.</p>
+
+          <h3>4. AI in de zorg en onderwijs</h3>
+          <p>Sectoren zoals zorg en onderwijs ontdekken nieuwe mogelijkheden met AI.</p>
+
+          <p>Wilt u weten hoe deze trends uw bedrijf kunnen beïnvloeden? Neem contact op met AI Studio.</p>
+        `
+      }
+    ];
+  }
   async checkHealth(force = false) {
     const now = Date.now();
     if (!force && this.lastHealthCheck && now - this.lastHealthCheck < 3e4) {
@@ -372,8 +437,11 @@ class MCPBlogService {
         )
       ]);
       if (!healthy) {
-        console.warn("MCP server not healthy, returning cached posts");
-        return this.cachedPosts || [];
+        console.warn("MCP server not healthy, returning fallback content");
+        if (!this.cachedPosts) {
+          this.cachedPosts = this.getStaticFallbackPosts();
+        }
+        return this.cachedPosts;
       }
       let fetchResult;
       try {
