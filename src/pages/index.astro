@@ -95,16 +95,16 @@ const aiExamples = [
 ---
 
 <BaseLayout {...seoProps}>
-  <Section class="relative min-h-screen overflow-hidden">
+  <Section class="relative pt-20 min-h-[calc(100vh-5rem)] overflow-hidden">
     <div class="absolute inset-0 grid-pattern"></div>
 
     <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute top-20 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-xl float"></div>
-      <div class="absolute top-40 right-20 w-24 h-24 bg-accent-400/15 rounded-lg blur-lg" style="animation-delay: 2s;"></div>
-      <div class="absolute bottom-32 left-1/4 w-16 h-16 bg-primary-300/20 rounded-full blur-md" style="animation-delay: 4s;"></div>
+      <div class="absolute top-20 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-lg float performance-optimized"></div>
+      <div class="absolute top-40 right-20 w-24 h-24 bg-accent-400/15 rounded-lg blur-md pulse-glow performance-optimized" style="animation-delay: 3s;"></div>
+      <div class="absolute bottom-32 left-1/4 w-16 h-16 bg-primary-300/20 rounded-full blur-sm essential-pulse performance-optimized" style="animation-delay: 6s;"></div>
     </div>
 
-    <div class="relative z-10 flex min-h-screen items-center">
+    <div class="relative z-10 flex items-center min-h-full" id="intro">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="text-center">
           <h1 class="mx-auto max-w-4xl text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl text-shadow-lg">
@@ -131,9 +131,9 @@ const aiExamples = [
     </div>
 
     <!-- Scroll indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce performance-optimized z-20">
       <div class="w-6 h-10 border-2 border-primary-400/50 rounded-full relative">
-        <div class="w-1 h-3 bg-primary-400 rounded-full absolute top-2 left-1/2 -translate-x-1/2 animate-pulse"></div>
+        <div class="w-1 h-3 bg-primary-400 rounded-full absolute top-2 left-1/2 -translate-x-1/2 essential-pulse"></div>
       </div>
     </div>
   </Section>
@@ -183,8 +183,8 @@ const aiExamples = [
   <Section class="py-24 relative overflow-hidden scroll-animate-slide-left" id="ai-examples" aria-labelledby="ai-examples-heading">
     <!-- Background Elements -->
     <div class="absolute inset-0 opacity-20">
-      <div class="absolute top-10 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-20 w-24 h-24 bg-cyan-400/15 rounded-lg blur-lg" style="animation-delay: 3s;"></div>
+      <div class="absolute top-10 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-lg pulse-glow performance-optimized"></div>
+      <div class="absolute bottom-20 right-20 w-24 h-24 bg-cyan-400/15 rounded-lg blur-md performance-optimized" style="animation-delay: 4s;"></div>
     </div>
 
     <div class="relative text-center mb-16">
@@ -202,11 +202,11 @@ const aiExamples = [
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
         {aiExamples.map((example, index) => (
           <div
-            class={`glass-card group relative overflow-hidden transition-all duration-500 hover:scale-105 ${
+            class={`glass-card group relative overflow-hidden transition-all duration-300 hover:scale-105 performance-optimized ${
               index === 0 ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' :
               index === 2 ? 'lg:col-span-2' : ''
             }`}
-            style={`animation-delay: ${index * 100}ms`}
+            style={`animation-delay: ${index * 120}ms`}
           >
             <div class="absolute top-4 right-4 z-10">
               <span class="px-3 py-1 text-xs font-mono font-semibold rounded-full bg-white/10 text-white/70 backdrop-blur-sm border border-white/20">
@@ -217,12 +217,12 @@ const aiExamples = [
             <div class="p-6 lg:p-8 h-full flex flex-col">
               <div class="relative mb-6 flex-shrink-0">
                 <div
-                  class="absolute inset-0 blur-xl rounded-full scale-150 group-hover:scale-175 transition-transform duration-500 opacity-30"
+                  class="absolute inset-0 blur-lg rounded-full scale-150 group-hover:scale-165 transition-transform duration-300 opacity-30 performance-optimized"
                   style={`background: linear-gradient(135deg, ${example.iconPrimary}, ${example.iconSecondary})`}
                 ></div>
                 <div class="relative w-16 h-16 mx-auto lg:mx-0 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/20 flex items-center justify-center backdrop-blur-sm">
                   <svg
-                    class="w-8 h-8 transition-transform duration-300 group-hover:scale-110"
+                    class="w-8 h-8 transition-transform duration-200 group-hover:scale-110 will-change-transform"
                     viewBox="0 0 24 24"
                     fill="none"
                   >
@@ -244,7 +244,7 @@ const aiExamples = [
               </div>
 
               <div class="flex-grow">
-                <h3 class="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-primary-400 transition-colors duration-300">
+                <h3 class="text-xl lg:text-2xl font-bold text-white mb-4 group-hover:text-primary-400 transition-colors duration-200">
                   {example.title}
                 </h3>
                 <p class="text-zinc-300 mb-6 leading-relaxed text-sm lg:text-base">
@@ -256,10 +256,10 @@ const aiExamples = [
                 {example.benefits.map((benefit) => (
                   <div class="flex items-center group/benefit">
                     <div
-                      class="w-2 h-2 rounded-full mr-3 transition-all duration-300 group-hover/benefit:scale-125"
+                      class="w-2 h-2 rounded-full mr-3 transition-all duration-200 group-hover/benefit:scale-125 will-change-transform"
                       style={`background: linear-gradient(135deg, ${example.iconPrimary}, ${example.iconSecondary})`}
                     ></div>
-                    <span class="text-sm text-zinc-400 group-hover/benefit:text-zinc-300 transition-colors">
+                    <span class="text-sm text-zinc-400 group-hover/benefit:text-zinc-300 transition-colors duration-200">
                       {benefit}
                     </span>
                   </div>
@@ -267,7 +267,7 @@ const aiExamples = [
               </div>
 
               <div
-                class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none performance-optimized"
                 style={`background: linear-gradient(135deg, ${example.iconPrimary}20, ${example.iconSecondary}20); border: 1px solid ${example.iconPrimary}30`}
               ></div>
             </div>
@@ -275,14 +275,14 @@ const aiExamples = [
         ))}
       </div>
 
-      <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-400/10 to-cyan-400/10 rounded-full blur-2xl animate-pulse"></div>
-      <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl" style="animation-delay: 2s;"></div>
+      <div class="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-primary-400/10 to-cyan-400/10 rounded-full blur-lg pulse-glow performance-optimized"></div>
+      <div class="absolute -bottom-10 -left-10 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-md performance-optimized" style="animation-delay: 3s;"></div>
     </div>
 
     <div class="mt-16 text-center">
       <div class="inline-flex items-center space-x-4 glass-card px-8 py-4">
         <div class="flex items-center space-x-2 text-primary-400">
-          <div class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
+          <div class="w-2 h-2 bg-primary-400 rounded-full essential-pulse performance-optimized"></div>
           <span class="text-sm font-mono">READY TO START</span>
         </div>
         <Button href="/contact" variant="primary" size="sm">
@@ -343,5 +343,15 @@ const aiExamples = [
 
 <script>
   import { initScrollAnimations } from '../lib/scrollAnimations.js';
+  import { testAnimationPerformance, monitorAnimationPerformance } from '../lib/performanceTest.js';
+
   initScrollAnimations();
+
+  // Run performance test in development
+  if (import.meta.env.DEV) {
+    setTimeout(() => {
+      testAnimationPerformance();
+      monitorAnimationPerformance(3000);
+    }, 2000);
+  }
 </script>
