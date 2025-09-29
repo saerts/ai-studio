@@ -20,7 +20,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const baseUrl =
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:4321'
-        : 'https://ai-studio44.be';
+        : 'https://ai-studio44.com';
 
     const response = await fetch(`${baseUrl}/api/blog`);
 
@@ -108,6 +108,9 @@ if (!isMCPPost && post && 'render' in post) {
     console.error('Failed to render static post content:', error);
   }
 }
+
+// Cast to any to satisfy Astro's type checker for dynamic components
+const DynamicContent = Content as any;
 ---
 
 <BlogLayout post={post as any} isMCPPost={isMCPPost}>
@@ -176,7 +179,7 @@ if (!isMCPPost && post && 'render' in post) {
         </div>
       </div>
     ) : (
-      <div>{Content && <Content />}</div>
+      <div>{DynamicContent ? <DynamicContent /> : null}</div>
     )
   }
 </BlogLayout>

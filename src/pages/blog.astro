@@ -10,7 +10,7 @@ const seoProps = {
   title: 'Blog',
   description:
     'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
-  canonical: 'https://ai-studio44.be/blog',
+  canonical: 'https://ai-studio44.com/blog',
 };
 
 // Fetch blog posts from MCP API
@@ -56,9 +56,13 @@ try {
     allPosts = staticPosts.map((post) => ({
       id: post.id,
       slug: post.slug,
-      data: post.data,
+      data: {
+        ...post.data,
+        // Ensure updatedDate exists as required by BlogPost type
+        updatedDate: post.data.updatedDate ?? post.data.pubDate,
+      },
       body: '', // Body would be rendered separately for static posts
-    }));
+    })) as BlogPost[];
 
     allTags = [
       ...new Set(staticPosts.flatMap((post) => post.data.tags)),

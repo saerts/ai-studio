@@ -5,8 +5,8 @@ import node from '@astrojs/node';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://ai-studio44.be',
-  output: 'hybrid',
+  site: 'https://ai-studio44.com',
+  output: 'server',
   adapter: node({
     mode: 'standalone',
   }),

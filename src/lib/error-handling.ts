@@ -4,9 +4,9 @@
 
 export interface ErrorDetails {
   message: string;
-  stack?: string;
-  code?: string;
-  statusCode?: number;
+  stack?: string | undefined;
+  code?: string | undefined;
+  statusCode?: number | undefined;
   timestamp: string;
 }
 
@@ -15,7 +15,7 @@ export interface ErrorDetails {
  */
 export class AppError extends Error {
   public readonly statusCode: number;
-  public readonly code?: string;
+  public readonly code: string | undefined;
   public readonly isOperational: boolean;
 
   constructor(
@@ -32,8 +32,10 @@ export class AppError extends Error {
     // Ensure proper prototype chain
     Object.setPrototypeOf(this, AppError.prototype);
 
-    // Capture stack trace
-    Error.captureStackTrace(this, this.constructor);
+    // Capture stack trace when available in environment
+    if ('captureStackTrace' in Error && typeof (Error as any).captureStackTrace === 'function') {
+      (Error as any).captureStackTrace(this, this.constructor);
+    }
   }
 }
 

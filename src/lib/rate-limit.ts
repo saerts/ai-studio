@@ -34,7 +34,10 @@ function getClientId(request: Request): string {
 
   if (cfConnectingIp) return cfConnectingIp;
   if (realIp) return realIp;
-  if (forwardedFor) return forwardedFor.split(',')[0].trim();
+  if (forwardedFor) {
+    const first = forwardedFor.split(',')[0];
+    if (first) return first.trim();
+  }
 
   // Fallback to connection info (limited in serverless environments)
   return 'unknown';

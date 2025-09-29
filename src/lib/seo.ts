@@ -12,7 +12,7 @@ const defaultSEO = {
   description:
     'AI Studio helpt bedrijven bij het implementeren van AI-oplossingen. Van workflow-automations tot training en coaching.',
   image: '/og-image.jpg',
-  canonical: 'https://ai-studio44.be',
+  canonical: 'https://ai-studio44.com',
   type: 'website' as const,
 };
 
@@ -32,7 +32,7 @@ export function getSEOProps(props: SEOProps = {}) {
     title: fullTitle,
     description,
     canonical,
-    image: image.startsWith('http') ? image : `https://ai-studio44.be${image}`,
+    image: image.startsWith('http') ? image : `https://ai-studio44.com${image}`,
     noindex,
     type,
   };

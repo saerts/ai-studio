@@ -8,8 +8,13 @@ const purify = DOMPurify(window);
 // Configure DOMPurify for blog content
 purify.addHook('beforeSanitizeElements', (node, data) => {
   // Remove any script tags entirely
-  if (data.tagName === 'script') {
-    node.remove();
+  if (data && (data as any).tagName === 'script') {
+    const el = node as any;
+    if (typeof el.remove === 'function') {
+      (el as any).remove();
+    } else if (el.parentNode) {
+      el.parentNode.removeChild(el);
+    }
     return;
   }
 });

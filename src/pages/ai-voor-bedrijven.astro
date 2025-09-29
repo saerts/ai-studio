@@ -968,7 +968,7 @@ const seo = {
       });
 
       // Animated counters
-      const animateCounter = (element) => {
+      const animateCounter = (element: any) => {
         const target = parseInt(element.dataset.target || '0');
         const duration = 2000;
         const step = target / (duration / 16);

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ai-studio44.be/sitemap-index.xml
+Sitemap: https://ai-studio44.com/sitemap-index.xml

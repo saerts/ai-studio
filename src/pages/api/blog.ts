@@ -130,11 +130,15 @@ class MCPBlogService {
     const articles: unknown[] = mcpData.articles || [];
 
     return articles
-      .map((article, index): BlogPost => {
+      .map((article, index): BlogPost | null => {
+        // Narrow unknown to object shape safely
+        const base: Record<string, any> =
+          typeof article === 'object' && article !== null ? (article as Record<string, any>) : {};
+
         // Validate the MCP article structure
         const validation = validateMCPArticle({
-          ...article,
-          id: article.id || article.guid || `${article.slug}-${index}`,
+          ...base,
+          id: base.id || base.guid || `${base.slug || 'article'}-${index}`,
         });
 
         if (!validation.success) {
