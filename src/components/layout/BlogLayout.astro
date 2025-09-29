@@ -26,16 +26,17 @@ export interface Props {
         body?: string;
       };
   isMCPPost?: boolean;
+  basePath?: string;
 }
 
-const { post, isMCPPost = false } = Astro.props;
+const { post, isMCPPost = false, basePath = '/blog' } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, source, canonicalUrl } =
   post.data;
 
 const seoProps = {
   title,
   description,
-  canonical: `https://ai-studio44.com/blog/${post.slug}`,
+  canonical: `https://ai-studio44.com${basePath}/${post.slug}`,
   type: 'article' as const,
 };
 
@@ -49,8 +50,8 @@ const schema = articleSchema(
 
 const breadcrumbs = breadcrumbsSchema([
   { name: 'Home', url: '/' },
-  { name: 'Blog', url: '/blog' },
-  { name: title, url: `/blog/${post.slug}` },
+  { name: 'Nieuws', url: basePath },
+  { name: title, url: `${basePath}/${post.slug}` },
 ]);
 
 const formatDate = (date: Date) => {
@@ -96,7 +97,7 @@ const formatDate = (date: Date) => {
           </svg>
         </li>
         <li>
-          <a href="/blog" class="hover:text-teal-400 transition-colors">Blog</a>
+          <a href={basePath} class="hover:text-teal-400 transition-colors">Nieuws</a>
         </li>
         <li>
           <svg
@@ -235,9 +236,9 @@ const formatDate = (date: Date) => {
           )
         }
 
-        <Button href="/blog" variant="primary" size="sm">
-          Terug naar blog
-        </Button>
+        {(() => { const backLabel = basePath === '/news' ? 'Terug naar nieuws' : 'Terug naar blog'; return (
+          <Button href={basePath} variant="primary" size="sm">{backLabel}</Button>
+        ); })()}
       </div>
     </footer>
   </article>

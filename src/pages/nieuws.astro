@@ -1,5 +1,4 @@
 ---
-Astro.redirect('/news');
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Card from '../components/ui/Card.astro';
@@ -11,7 +10,7 @@ const seoProps = {
   title: 'Nieuws',
   description:
     'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
-  canonical: 'https://ai-studio44.com/blog',
+  canonical: 'https://ai-studio44.com/news',
 };
 
 // Fetch blog posts from MCP API
@@ -258,7 +257,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
                     <div class="flex-1">
                       <h2 class="text-xl font-semibold text-white">
                         <a
-                          href={`/blog/${post.slug}`}
+                          href={`/news/${post.slug}`}
                           class="hover:text-primary-400 focus:text-primary-400 transition-colors"
                         >
                           {post.data.title}
@@ -317,7 +316,7 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                 (page) => (
                   <a
-                    href={page === 1 ? '/blog' : `/blog/page/${page}`}
+                    href={page === 1 ? '/news' : `/news/page/${page}`}
                     class={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                       page === currentPage
                         ? 'bg-primary-400 text-black'

@@ -457,7 +457,7 @@ export const POST: APIRoute = async ({ request }) => {
 
       return new Response(
         JSON.stringify({
-          message: 'Blog posts refreshed successfully',
+          message: 'News posts refreshed successfully',
           count: posts.length,
           posts,
         }),
