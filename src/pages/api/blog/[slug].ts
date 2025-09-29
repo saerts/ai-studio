@@ -26,7 +26,6 @@ interface BlogPost {
 async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     // For individual posts, we need to use the Astro site URL correctly
-    // Todo: get the correct live url
     const baseUrl =
       process.env.NODE_ENV === 'development'
         ? 'http://localhost:4321'
