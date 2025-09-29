@@ -1,11 +1,5 @@
 {
   "buildCommand": "npm run build",
-  "functions": {
-    "**": {
-      "runtime": "nodejs20.x"
-    }
-  },
-  "framework": null,
-  "outputDirectory": null,
-  "installCommand": "npm ci"
+  "installCommand": "npm ci",
+  "framework": null
 }
