@@ -93,6 +93,6 @@ npm run content:check # Valideer Astro content
 ## 📞 Support
 
 Voor vragen over de website implementatie:
-- 📧 Email: info@ai-studio.be
-- 🌐 Website: https://ai-studio.be
+- 📧 Email: hi@ai-studio44.com
+- 🌐 Website: https://ai-studio44.com
 - 📖 Documentatie: [docs/README.md](./docs/README.md)

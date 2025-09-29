@@ -1,0 +1,753 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Section from '../components/ui/Section.astro';
+import Button from '../components/ui/Button.astro';
+import AIConsultationCTA from '../components/AIConsultationCTA.astro';
+
+const seo = {
+  title: 'AI voor Bedrijven: Transformeer je Organisatie met Kunstmatige Intelligentie',
+  description: 'Ontdek hoe AI je bedrijf naar een hoger niveau tilt. Van procesautomatisering tot datagedreven besluitvorming - wij begeleiden je complete AI-transformatie.',
+  image: '/og/ai-voor-bedrijven.jpg',
+  type: 'article' as const,
+};
+---
+
+<BaseLayout {...seo}>
+  <style>
+    /* Reading Progress Bar */
+    .reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2dd4bf 0%, #22d3ee 100%);
+      transition: width 0.2s ease-out;
+      z-index: 9999;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, #0d9488 0%, #06b6d4 50%, #0891b2 100%);
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(10, 15, 15, 0.3) 50%,
+        rgba(10, 15, 15, 0.8) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-badge {
+      animation: float 3s ease-in-out infinite;
+      background: rgba(10, 15, 15, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Content Sections */
+    .content-section {
+      background-color: #0a0f0f;
+      padding: 4rem 0;
+    }
+
+    .stats-section {
+      background: linear-gradient(135deg, rgba(26, 43, 43, 0.8) 0%, rgba(15, 20, 25, 0.9) 100%);
+      border-top: 1px solid rgba(45, 212, 191, 0.1);
+      border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+    }
+
+    /* Typography */
+    .hero-title {
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .section-title {
+      font-size: clamp(1.875rem, 4vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: #a1a1aa;
+    }
+
+    /* Components */
+    .feature-card {
+      background: linear-gradient(135deg, rgba(26, 43, 43, 0.4) 0%, rgba(35, 51, 51, 0.2) 100%);
+      border: 1px solid rgba(45, 212, 191, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .feature-card:hover {
+      background: linear-gradient(135deg, rgba(26, 43, 43, 0.6) 0%, rgba(35, 51, 51, 0.4) 100%);
+      border-color: rgba(45, 212, 191, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+
+    .stat-number {
+      background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: clamp(3rem, 8vw, 4rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .quote-box {
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.1) 0%, rgba(34, 211, 238, 0.05) 100%);
+      border-left: 4px solid #2dd4bf;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .step-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 3rem;
+      height: 3rem;
+      background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0a0f0f;
+    }
+
+    .testimonial-card {
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .faq-item {
+      background: rgba(26, 43, 43, 0.3);
+      border: 1px solid rgba(45, 212, 191, 0.1);
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+
+    .faq-button {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      text-align: left;
+      background: none;
+      border: none;
+      color: #ffffff;
+      font-size: 1.125rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .faq-button:hover {
+      background: rgba(26, 43, 43, 0.5);
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+      background: rgba(15, 20, 25, 0.3);
+    }
+
+    .faq-content.open {
+      max-height: 200px;
+    }
+
+    .faq-content-inner {
+      padding: 1.5rem 2rem;
+      color: #a1a1aa;
+      line-height: 1.6;
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .content-section {
+        padding: 3rem 0;
+      }
+
+      .feature-card {
+        padding: 1.5rem;
+      }
+
+      .step-item {
+        gap: 1rem;
+      }
+
+      .step-number {
+        width: 2.5rem;
+        height: 2.5rem;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in,
+      .scale-in,
+      .hero-badge {
+        animation: none;
+        transition: none;
+      }
+    }
+  </style>
+
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <!-- Hero Background Image -->
+    <div class="absolute inset-0 opacity-20">
+      <img
+        src="https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2832&auto=format&fit=crop"
+        alt="Futuristic AI cityscape with digital networks"
+        class="w-full h-full object-cover object-center"
+        loading="eager"
+      />
+    </div>
+
+    <div class="hero-content w-full">
+      <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
+        <div class="text-center space-y-8 fade-in">
+
+          <!-- Hero Badge -->
+          <div class="inline-flex items-center px-4 py-2 rounded-full text-sm text-teal-300 hero-badge">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd" />
+            </svg>
+            De toekomst van ondernemen is hier
+          </div>
+
+          <!-- Hero Title -->
+          <h1 class="hero-title text-white mt-8">
+            AI voor Bedrijven:<br />
+            <span class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent">
+              Transformeer je Organisatie
+            </span>
+          </h1>
+
+          <!-- Hero Subtitle -->
+          <p class="hero-subtitle max-w-3xl mx-auto mt-6">
+            Van eerste verkenning tot volledige implementatie. Wij maken AI toegankelijk,
+            meetbaar en waardevol voor jouw onderneming.
+          </p>
+
+          <!-- Hero CTA -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+            <Button href="#intro" variant="primary" size="lg">
+              Start je AI-reis
+            </Button>
+            <Button href="#leestijd" variant="secondary" size="lg">
+              <span id="readTime">8 min leestijd</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section class="content-section" id="intro">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="text-center space-y-8 fade-in">
+        <p class="section-subtitle text-xl leading-relaxed">
+          De wereld van kunstmatige intelligentie evolueert razendsnel. Wat gisteren nog
+          science fiction was, is vandaag realiteit in de boardroom. Bedrijven die AI omarmen
+          zien gemiddeld een <strong class="text-teal-400">productiviteitsstijging van 40%</strong>
+          en <strong class="text-teal-400">kostenbesparingen tot 30%</strong> binnen het eerste jaar.
+        </p>
+
+        <div class="quote-box">
+          <blockquote class="text-lg italic text-teal-300 mb-4">
+            "AI is niet langer een luxe, maar een noodzaak. Organisaties die nu niet investeren
+            in AI-capaciteiten, lopen het risico binnen 5 jaar irrelevant te worden."
+          </blockquote>
+          <cite class="text-sm text-zinc-400">
+            — McKinsey Global Institute, 2024
+          </cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="stats-section py-20">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 mt-12 mb-12">
+      <h2 class="section-title text-center text-white mb-16 fade-in">
+        De Impact van AI in Cijfers
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="89">0</div>
+          <p class="text-xl text-teal-300 mt-2">%</p>
+          <p class="text-zinc-400 mt-4">van Fortune 500 bedrijven gebruikt AI</p>
+        </div>
+
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="15">0</div>
+          <p class="text-xl text-teal-300 mt-2">biljoen</p>
+          <p class="text-zinc-400 mt-4">verwachte economische waarde in 2030</p>
+        </div>
+
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="3">0</div>
+          <p class="text-xl text-teal-300 mt-2">x sneller</p>
+          <p class="text-zinc-400 mt-4">besluitvorming met AI-analytics</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why AI Section -->
+  <section class="content-section">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-16 fade-in">
+        <div class="text-center space-y-6">
+          <h2 class="section-title text-white">
+            Waarom AI de Gamechanger is voor Moderne Bedrijven
+          </h2>
+          <p class="section-subtitle max-w-3xl mx-auto">
+            In een wereld waar data exponentieel groeit en markten sneller veranderen dan ooit,
+            is AI de sleutel tot competitief voordeel, operationele excellentie en klantgerichte innovatie.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+          <div class="feature-card scale-in">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">Automatisering op Schaal</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                  Van facturatie tot klantenservice - AI automatiseert repetitieve taken en
+                  bevrijdt je team voor strategisch werk dat écht waarde toevoegt.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card scale-in">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">Predictieve Analytics</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                  Voorspel markttrends, klantgedrag en operationele risico's met ongekende
+                  nauwkeurigheid. Neem beslissingen op basis van data, niet intuïtie.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card scale-in">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">24/7 Klantinteractie</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                  AI-gestuurde chatbots en virtuele assistenten bieden onmiddellijke,
+                  gepersonaliseerde service - altijd beschikbaar, altijd consistent.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-card scale-in">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">Innovatie Versnelling</h3>
+                <p class="text-zinc-400 leading-relaxed">
+                  Van productontwerp tot marktlancering - AI verkort ontwikkelcycli en
+                  maximaliseert de kans op succes door datagedreven prototyping.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Methodology Section -->
+  <section class="content-section">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-16 fade-in">
+        <div class="text-center space-y-6">
+          <h2 class="section-title text-white">
+            Onze Bewezen AI-Implementatie Methodologie
+          </h2>
+          <p class="section-subtitle">
+            Elke organisatie is uniek. Daarom hanteren wij een gefaseerde, op maat gemaakte
+            aanpak die aansluit bij jouw specifieke situatie, ambities en mogelijkheden.
+          </p>
+        </div>
+
+        <div class="space-y-8 mt-12">
+          <div class="step-item">
+            <div class="step-number">1</div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-3">Discovery & Assessment</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                We analyseren je huidige processen, identificeren AI-kansen en creëren een
+                roadmap die aansluit bij je businessdoelen. Geen technologie om de technologie,
+                maar gerichte oplossingen voor echte uitdagingen.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">2</div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-3">Proof of Concept</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                Start klein, denk groot. We ontwikkelen een pilot project dat direct waarde
+                levert en het potentieel van AI binnen jouw organisatie aantoont. Meetbare
+                resultaten binnen 6-8 weken.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">3</div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-3">Schaalbare Implementatie</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                Van pilot naar productie. We bouwen robuuste, schaalbare AI-systemen die
+                naadloos integreren met je bestaande infrastructuur. Cloud-native, veilig
+                en compliant met alle relevante regelgeving.
+              </p>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <div class="step-number">4</div>
+            <div>
+              <h3 class="text-xl font-semibold text-white mb-3">Training & Adoptie</h3>
+              <p class="text-zinc-400 leading-relaxed">
+                Technologie is slechts zo goed als de mensen die ermee werken. We trainen
+                je team, creëren documentatie op maat en zorgen voor een soepele transitie
+                naar AI-gedreven werken.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- FAQ Section -->
+  <section class="content-section">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-12 fade-in">
+        <div class="text-center">
+          <h2 class="section-title text-white mb-6">
+            Veelgestelde Vragen over AI-Implementatie
+          </h2>
+        </div>
+
+        <div class="space-y-4" id="faqAccordion">
+          <div class="faq-item">
+            <button class="faq-button accordion-trigger">
+              <span class="font-medium">Hoeveel kost een AI-implementatie gemiddeld?</span>
+              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                De investering varieert sterk afhankelijk van scope en complexiteit. Een proof of concept
+                start vanaf €5.000, terwijl enterprise-implementaties €100.000+ kunnen bedragen.
+                De gemiddelde ROI ligt tussen 3-10x binnen 18 maanden.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-button accordion-trigger">
+              <span class="font-medium">Hoe lang duurt een typische implementatie?</span>
+              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                Een proof of concept levert resultaten binnen 6-8 weken. Volledige implementatie
+                van enterprise AI-oplossingen duurt gemiddeld 3-6 maanden, afhankelijk van
+                integratie-complexiteit en schaal.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-button accordion-trigger">
+              <span class="font-medium">Wat gebeurt er met onze data?</span>
+              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                Data-privacy en security staan centraal. We werken volledig GDPR-compliant,
+                implementeren enterprise-grade encryptie, en kunnen on-premise oplossingen
+                bieden waarbij data nooit je infrastructuur verlaat.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-button accordion-trigger">
+              <span class="font-medium">Hebben we AI-experts nodig in ons team?</span>
+              <svg class="w-5 h-5 text-teal-400 transform transition-transform accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                Nee, dat is niet noodzakelijk. We ontwerpen gebruiksvriendelijke oplossingen
+                die je bestaande team kan beheren. Training en ongoing support zijn standaard
+                onderdeel van onze service.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <AIConsultationCTA />
+
+  <!-- Schema.org Article Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AI voor Bedrijven: Transformeer je Organisatie met Kunstmatige Intelligentie",
+    "description": "Ontdek hoe AI je bedrijf naar een hoger niveau tilt. Van procesautomatisering tot datagedreven besluitvorming.",
+    "author": {
+      "@type": "Organization",
+      "name": "AI Studio"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "AI Studio",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://aistudio.nl/logo.png"
+      }
+    },
+    "datePublished": "2024-01-15",
+    "dateModified": "2024-01-15",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://aistudio.nl/ai-voor-bedrijven"
+    }
+  }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Reading Progress Bar
+      const progressBar = document.getElementById('readingProgress');
+
+      const updateProgress = () => {
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPosition = window.scrollY;
+        const progress = (scrollPosition / scrollHeight) * 100;
+
+        if (progressBar) {
+          progressBar.style.width = `${progress}%`;
+        }
+      };
+
+      window.addEventListener('scroll', updateProgress);
+
+      // Intersection Observer for animations
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, observerOptions);
+
+      // Observe all animated elements
+      document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Animated counters
+      const animateCounter = (element) => {
+        const target = parseInt(element.dataset.target || '0');
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+
+        const updateCounter = () => {
+          current += step;
+          if (current < target) {
+            element.textContent = Math.floor(current).toString();
+            requestAnimationFrame(updateCounter);
+          } else {
+            element.textContent = target.toString();
+          }
+        };
+
+        updateCounter();
+      };
+
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            counterObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      document.querySelectorAll('.stat-number').forEach(el => {
+        counterObserver.observe(el);
+      });
+
+      // FAQ Accordion
+      document.querySelectorAll('.accordion-trigger').forEach(button => {
+        button.addEventListener('click', () => {
+          const content = button.nextElementSibling;
+          const icon = button.querySelector('.accordion-icon');
+
+          // Close all other accordions
+          document.querySelectorAll('.faq-content').forEach(otherContent => {
+            if (otherContent !== content) {
+              otherContent.classList.remove('open');
+              const otherIcon = otherContent.previousElementSibling.querySelector('.accordion-icon');
+              otherIcon.classList.remove('rotate-180');
+            }
+          });
+
+          // Toggle current accordion
+          content.classList.toggle('open');
+          icon.classList.toggle('rotate-180');
+        });
+      });
+
+      // Reading time calculation
+      const calculateReadingTime = () => {
+        const text = document.querySelector('main')?.textContent || '';
+        const wordsPerMinute = 200;
+        const words = text.trim().split(/\s+/).length;
+        const readingTime = Math.ceil(words / wordsPerMinute);
+
+        const readTimeElement = document.getElementById('readTime');
+        if (readTimeElement) {
+          readTimeElement.textContent = `${readingTime} min leestijd`;
+        }
+      };
+
+      calculateReadingTime();
+    });
+  </script>
+</BaseLayout>
