@@ -11,7 +11,9 @@ export function initScrollAnimations() {
   if (window.__aiScrollAnimationsInit) return;
   window.__aiScrollAnimationsInit = true;
 
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced =
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isLowEndDevice = detectLowEndDevice();
   const isMobile = window.innerWidth <= 768;
 
@@ -22,8 +24,8 @@ export function initScrollAnimations() {
 
   // Smooth scrolling for anchor links (respect reduced motion)
   const scrollLinks = document.querySelectorAll('a[href^="#"]');
-  scrollLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
+  scrollLinks.forEach((link) => {
+    link.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
       if (!href || href === '#') return;
       e.preventDefault();
@@ -33,7 +35,7 @@ export function initScrollAnimations() {
       if (targetElement) {
         targetElement.scrollIntoView({
           behavior: prefersReduced ? 'auto' : 'smooth',
-          block: 'start'
+          block: 'start',
         });
       }
     });
@@ -48,20 +50,24 @@ export function initScrollAnimations() {
   // Intersection Observer tuned for performance and smooth reveals
   const observerOptions = {
     threshold: isLowEndDevice ? 0.1 : 0.12,
-    rootMargin: isLowEndDevice ? '0px 0px -10% 0px' : '0px 0px -15% 0px'
+    rootMargin: isLowEndDevice ? '0px 0px -10% 0px' : '0px 0px -15% 0px',
   };
 
   const observer = new IntersectionObserver((entries) => {
     // Batch DOM updates for better performance
     requestAnimationFrame(() => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const element = entry.target;
 
           // Reduced stagger for low-end devices
-          const idx = Array.from(element.parentElement?.children || []).indexOf(element);
+          const idx = Array.from(element.parentElement?.children || []).indexOf(
+            element
+          );
           if (idx > -1) {
-            const delay = isLowEndDevice ? Math.min(idx * 50, 200) : Math.min(idx * 80, 400);
+            const delay = isLowEndDevice
+              ? Math.min(idx * 50, 200)
+              : Math.min(idx * 80, 400);
             element.style.transitionDelay = `${delay}ms`;
           }
 
@@ -69,9 +75,12 @@ export function initScrollAnimations() {
           element.classList.add('animate-in', 'performance-optimized');
 
           // Clean up will-change after animation
-          setTimeout(() => {
-            element.style.willChange = 'auto';
-          }, isLowEndDevice ? 300 : 700);
+          setTimeout(
+            () => {
+              element.style.willChange = 'auto';
+            },
+            isLowEndDevice ? 300 : 700
+          );
 
           observer.unobserve(element);
         }
@@ -87,12 +96,12 @@ export function initScrollAnimations() {
     '.scroll-animate-scale',
     '.scroll-animate-fade',
     '.scroll-animate-blur',
-    '.scroll-animate-flip'
+    '.scroll-animate-flip',
   ];
 
   // Batch DOM operations
   const allElements = [];
-  animationSelectors.forEach(selector => {
+  animationSelectors.forEach((selector) => {
     const elements = document.querySelectorAll(selector);
     allElements.push(...elements);
   });
@@ -121,12 +130,13 @@ export function initScrollAnimations() {
       const delay = isLowEndDevice ? index * 50 : index * 80;
       card.style.transitionDelay = `${delay}ms`;
 
-      if (!card.classList.contains('scroll-animate') &&
-          !card.classList.contains('scroll-animate-fade') &&
-          !card.classList.contains('scroll-animate-scale') &&
-          !card.classList.contains('scroll-animate-slide-left') &&
-          !card.classList.contains('scroll-animate-slide-right')) {
-
+      if (
+        !card.classList.contains('scroll-animate') &&
+        !card.classList.contains('scroll-animate-fade') &&
+        !card.classList.contains('scroll-animate-scale') &&
+        !card.classList.contains('scroll-animate-slide-left') &&
+        !card.classList.contains('scroll-animate-slide-right')
+      ) {
         card.classList.add('scroll-animate-fade');
         if (!isLowEndDevice) {
           card.style.willChange = 'opacity';
@@ -153,13 +163,16 @@ function detectLowEndDevice() {
 
   // Check connection (if available)
   const connection = navigator.connection;
-  const slowConnection = connection &&
+  const slowConnection =
+    connection &&
     (connection.effectiveType === 'slow-2g' ||
-     connection.effectiveType === '2g' ||
-     connection.saveData);
+      connection.effectiveType === '2g' ||
+      connection.saveData);
 
   // Detect old mobile devices by user agent
-  const oldMobile = /Android [1-4]|iPhone OS [1-9]_|iPad.*OS [1-9]_/.test(navigator.userAgent);
+  const oldMobile = /Android [1-4]|iPhone OS [1-9]_|iPad.*OS [1-9]_/.test(
+    navigator.userAgent
+  );
 
   return cores <= 2 || memory <= 2 || slowConnection || oldMobile;
 }
@@ -194,20 +207,26 @@ function optimizeForLowEndDevice() {
 
 // Intersection Observer polyfill check
 function supportsIntersectionObserver() {
-  return 'IntersectionObserver' in window &&
-         'IntersectionObserverEntry' in window &&
-         'intersectionRatio' in window.IntersectionObserverEntry.prototype;
+  return (
+    'IntersectionObserver' in window &&
+    'IntersectionObserverEntry' in window &&
+    'intersectionRatio' in window.IntersectionObserverEntry.prototype
+  );
 }
 
 // Auto-initialize when DOM is ready (guarded)
 if (typeof document !== 'undefined') {
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      // Only initialize if browser supports Intersection Observer
-      if (supportsIntersectionObserver()) {
-        initScrollAnimations();
-      }
-    }, { once: true });
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        // Only initialize if browser supports Intersection Observer
+        if (supportsIntersectionObserver()) {
+          initScrollAnimations();
+        }
+      },
+      { once: true }
+    );
   } else {
     if (supportsIntersectionObserver()) {
       initScrollAnimations();

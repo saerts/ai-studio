@@ -8,7 +8,8 @@ import type { BlogApiResponse } from '../types/api';
 
 const seoProps = {
   title: 'Blog',
-  description: 'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
+  description:
+    'Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.',
   canonical: 'https://ai-studio44.be/blog',
 };
 
@@ -26,7 +27,7 @@ try {
     throw new Error(`API returned ${response.status}: ${response.statusText}`);
   }
 
-  const data = await response.json() as BlogApiResponse;
+  const data = (await response.json()) as BlogApiResponse;
   // Convert date strings back to Date objects
   allPosts = (data.posts || []).map((post: unknown) => {
     const blogPost = post as BlogPost;
@@ -41,7 +42,10 @@ try {
   }) as BlogPost[];
   allTags = data.tags || [];
 } catch (error) {
-  console.warn('Failed to fetch from MCP API, falling back to static content:', error);
+  console.warn(
+    'Failed to fetch from MCP API, falling back to static content:',
+    error
+  );
 
   // Fallback to static content collections if MCP API is not available
   try {
@@ -49,25 +53,30 @@ try {
     const staticPosts = await getCollection('blog', ({ data }) => !data.draft);
 
     // Convert static posts to match MCP API format
-    allPosts = staticPosts.map(post => ({
+    allPosts = staticPosts.map((post) => ({
       id: post.id,
       slug: post.slug,
       data: post.data,
       body: '', // Body would be rendered separately for static posts
     }));
 
-    allTags = [...new Set(staticPosts.flatMap(post => post.data.tags))].sort();
+    allTags = [
+      ...new Set(staticPosts.flatMap((post) => post.data.tags)),
+    ].sort();
   } catch (staticError) {
     console.error('Failed to load static content as fallback:', staticError);
     allPosts = [];
     allTags = [];
-    errorMessage = 'Unable to load blog posts from both MCP API and static content';
+    errorMessage =
+      'Unable to load blog posts from both MCP API and static content';
   }
 }
 
 // Sort posts by publication date (newest first)
 const sortedPosts = allPosts.sort((a, b) => {
-  return new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime();
+  return (
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  );
 });
 
 // Pagination (can be enhanced)
@@ -80,34 +89,60 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 <BaseLayout {...seoProps}>
   <Section class="scroll-animate">
     <div class="text-center">
-      <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl gradient-text">
+      <h1
+        class="text-4xl font-bold tracking-tight text-white sm:text-5xl gradient-text"
+      >
         Blog
       </h1>
       <p class="mx-auto mt-6 max-w-2xl text-lg leading-8 text-zinc-300">
-        Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en automatisering.
-        Praktische tips, case studies en inzichten van experts.
+        Blijf op de hoogte van de laatste ontwikkelingen op het gebied van AI en
+        automatisering. Praktische tips, case studies en inzichten van experts.
       </p>
 
       {/* Debug/Status Section */}
       <div class="mt-4 flex justify-center">
         <div class="glass-card px-4 py-2 text-sm">
-          {errorMessage ? (
-            <div class="text-amber-400 flex items-center gap-2">
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-              </svg>
-              Fallback mode (static content)
-            </div>
-          ) : (
-            <div class="text-teal-400 flex items-center gap-2">
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Live content from MCP API
-            </div>
-          )}
+          {
+            errorMessage ? (
+              <div class="text-amber-400 flex items-center gap-2">
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
+                  />
+                </svg>
+                Fallback mode (static content)
+              </div>
+            ) : (
+              <div class="text-teal-400 flex items-center gap-2">
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                Live content from MCP API
+              </div>
+            )
+          }
           <div class="mt-1 text-xs text-zinc-400">
-            {paginatedPosts.length} artikel{paginatedPosts.length !== 1 ? 'en' : ''} geladen
+            {paginatedPosts.length} artikel{
+              paginatedPosts.length !== 1 ? 'en' : ''
+            } geladen
           </div>
         </div>
       </div>
@@ -118,36 +153,48 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
           id="refresh-posts"
           class="glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-teal-400 hover:border-teal-400/30 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2"
         >
-          <svg class="inline-block h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          <svg
+            class="inline-block h-4 w-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            ></path>
           </svg>
           Vernieuw artikelen
         </button>
       </div>
     </div>
 
-    {allTags.length > 0 && (
-      <div class="mt-12">
-        <h2 class="sr-only">Filter op tags</h2>
-        <div class="flex flex-wrap justify-center gap-2">
-          <button
-            class="filter-tag glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-primary-400 hover:border-primary-400/30 data-[active]:bg-primary-400/20 data-[active]:text-primary-400 data-[active]:border-primary-400"
-            data-tag="all"
-            data-active="true"
-          >
-            Alle artikelen
-          </button>
-          {allTags.map((tag: string) => (
+    {
+      allTags.length > 0 && (
+        <div class="mt-12">
+          <h2 class="sr-only">Filter op tags</h2>
+          <div class="flex flex-wrap justify-center gap-2">
             <button
               class="filter-tag glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-primary-400 hover:border-primary-400/30 data-[active]:bg-primary-400/20 data-[active]:text-primary-400 data-[active]:border-primary-400"
-              data-tag={tag}
+              data-tag="all"
+              data-active="true"
             >
-              {tag}
+              Alle artikelen
             </button>
-          ))}
+            {allTags.map((tag: string) => (
+              <button
+                class="filter-tag glass-card px-4 py-2 text-sm font-medium text-white/80 transition-all hover:text-primary-400 hover:border-primary-400/30 data-[active]:bg-primary-400/20 data-[active]:text-primary-400 data-[active]:border-primary-400"
+                data-tag={tag}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-    )}
+      )
+    }
 
     <!-- Search (Progressive Enhancement) -->
     <div class="mt-8">
@@ -160,9 +207,20 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
             placeholder="Zoek artikelen..."
             class="form-input pl-10"
           />
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <svg class="h-5 w-5 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <div
+            class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+          >
+            <svg
+              class="h-5 w-5 text-white/40"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
             </svg>
           </div>
         </div>
@@ -172,63 +230,69 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
 
   <Section class="pt-0 scroll-animate-fade">
     <div id="posts-container">
-      {paginatedPosts.length === 0 ? (
-        <div class="text-center py-12">
-          <p class="text-zinc-400">
-            Nog geen artikelen beschikbaar. Check binnenkort terug!
-          </p>
-        </div>
-      ) : (
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {paginatedPosts.map((post) => (
-            <article data-tags={post.data.tags.join(',')} data-title={post.data.title.toLowerCase()} data-description={post.data.description.toLowerCase()}>
-              <Card>
-                <div class="flex flex-col h-full">
-                  <div class="flex-1">
-                    <h2 class="text-xl font-semibold text-white">
-                      <a
-                        href={`/blog/${post.slug}`}
-                        class="hover:text-primary-400 focus:text-primary-400 transition-colors"
-                      >
-                        {post.data.title}
-                      </a>
-                    </h2>
+      {
+        paginatedPosts.length === 0 ? (
+          <div class="text-center py-12">
+            <p class="text-zinc-400">
+              Nog geen artikelen beschikbaar. Check binnenkort terug!
+            </p>
+          </div>
+        ) : (
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {paginatedPosts.map((post) => (
+              <article
+                data-tags={post.data.tags.join(',')}
+                data-title={post.data.title.toLowerCase()}
+                data-description={post.data.description.toLowerCase()}
+              >
+                <Card>
+                  <div class="flex flex-col h-full">
+                    <div class="flex-1">
+                      <h2 class="text-xl font-semibold text-white">
+                        <a
+                          href={`/blog/${post.slug}`}
+                          class="hover:text-primary-400 focus:text-primary-400 transition-colors"
+                        >
+                          {post.data.title}
+                        </a>
+                      </h2>
 
-                    <p class="mt-3 text-zinc-300 line-clamp-3">
-                      {post.data.description}
-                    </p>
+                      <p class="mt-3 text-zinc-300 line-clamp-3">
+                        {post.data.description}
+                      </p>
 
-                    {post.data.tags.length > 0 && (
-                      <div class="mt-4 flex flex-wrap gap-2">
-                        {post.data.tags.slice(0, 3).map((tag: string) => (
-                          <span class="inline-flex items-center rounded-full bg-primary-400/20 px-2.5 py-0.5 text-xs font-medium text-primary-400">
-                            {tag}
-                          </span>
-                        ))}
-                        {post.data.tags.length > 3 && (
-                          <span class="inline-flex items-center rounded-full bg-zinc-600/30 px-2.5 py-0.5 text-xs font-medium text-zinc-400">
-                            +{post.data.tags.length - 3}
-                          </span>
-                        )}
+                      {post.data.tags.length > 0 && (
+                        <div class="mt-4 flex flex-wrap gap-2">
+                          {post.data.tags.slice(0, 3).map((tag: string) => (
+                            <span class="inline-flex items-center rounded-full bg-primary-400/20 px-2.5 py-0.5 text-xs font-medium text-primary-400">
+                              {tag}
+                            </span>
+                          ))}
+                          {post.data.tags.length > 3 && (
+                            <span class="inline-flex items-center rounded-full bg-zinc-600/30 px-2.5 py-0.5 text-xs font-medium text-zinc-400">
+                              +{post.data.tags.length - 3}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <div class="mt-6 flex items-center justify-between">
+                      <div class="flex items-center text-sm text-zinc-400">
+                        <time datetime={post.data.pubDate.toISOString()}>
+                          {formatDate(post.data.pubDate)}
+                        </time>
+                        <span class="mx-2">·</span>
+                        <span>{post.data.source}</span>
                       </div>
-                    )}
-                  </div>
-
-                  <div class="mt-6 flex items-center justify-between">
-                    <div class="flex items-center text-sm text-zinc-400">
-                      <time datetime={post.data.pubDate.toISOString()}>
-                        {formatDate(post.data.pubDate)}
-                      </time>
-                      <span class="mx-2">·</span>
-                      <span>{post.data.source}</span>
                     </div>
                   </div>
-                </div>
-              </Card>
-            </article>
-          ))}
-        </div>
-      )}
+                </Card>
+              </article>
+            ))}
+          </div>
+        )
+      }
 
       <div id="no-results" class="hidden text-center py-12">
         <p class="text-zinc-400">
@@ -237,36 +301,46 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
       </div>
     </div>
 
-    {totalPages > 1 && (
-      <div class="mt-12 flex justify-center">
-        <nav aria-label="Paginering">
-          <div class="flex space-x-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <a
-                href={page === 1 ? '/blog' : `/blog/page/${page}`}
-                class={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                  page === currentPage
-                    ? 'bg-primary-400 text-black'
-                    : 'glass-card text-white/80 hover:text-primary-400 hover:border-primary-400/30'
-                }`}
-                aria-current={page === currentPage ? 'page' : undefined}
-              >
-                {page}
-              </a>
-            ))}
-          </div>
-        </nav>
-      </div>
-    )}
+    {
+      totalPages > 1 && (
+        <div class="mt-12 flex justify-center">
+          <nav aria-label="Paginering">
+            <div class="flex space-x-2">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <a
+                    href={page === 1 ? '/blog' : `/blog/page/${page}`}
+                    class={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                      page === currentPage
+                        ? 'bg-primary-400 text-black'
+                        : 'glass-card text-white/80 hover:text-primary-400 hover:border-primary-400/30'
+                    }`}
+                    aria-current={page === currentPage ? 'page' : undefined}
+                  >
+                    {page}
+                  </a>
+                )
+              )}
+            </div>
+          </nav>
+        </div>
+      )
+    }
   </Section>
 </BaseLayout>
 
 <script>
-  document.addEventListener('DOMContentLoaded', async function() {
-    const searchInput = document.getElementById('search') as HTMLInputElement | null;
+  document.addEventListener('DOMContentLoaded', async function () {
+    const searchInput = document.getElementById(
+      'search'
+    ) as HTMLInputElement | null;
     const filterTags = document.querySelectorAll('.filter-tag');
-    const postsContainer = document.getElementById('posts-container') as HTMLElement | null;
-    const noResults = document.getElementById('no-results') as HTMLElement | null;
+    const postsContainer = document.getElementById(
+      'posts-container'
+    ) as HTMLElement | null;
+    const noResults = document.getElementById(
+      'no-results'
+    ) as HTMLElement | null;
 
     if (!searchInput || !postsContainer || !noResults) return;
 
@@ -278,17 +352,18 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
       const posts = postsContainer!.querySelectorAll('article');
       let visibleCount = 0;
 
-      posts.forEach(post => {
+      posts.forEach((post) => {
         const postElement = post as HTMLElement;
         const tags = postElement.dataset.tags?.split(',') || [];
         const title = postElement.dataset.title || '';
         const description = postElement.dataset.description || '';
 
         const matchesTag = currentTag === 'all' || tags.includes(currentTag);
-        const matchesSearch = !searchTerm ||
+        const matchesSearch =
+          !searchTerm ||
           title.includes(searchTerm) ||
           description.includes(searchTerm) ||
-          tags.some(tag => tag.toLowerCase().includes(searchTerm));
+          tags.some((tag) => tag.toLowerCase().includes(searchTerm));
 
         if (matchesTag && matchesSearch) {
           postElement.style.display = '';
@@ -317,10 +392,10 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
     });
 
     // Tag filtering
-    filterTags.forEach(tag => {
+    filterTags.forEach((tag) => {
       tag.addEventListener('click', () => {
         // Update active tag
-        filterTags.forEach(t => {
+        filterTags.forEach((t) => {
           t.removeAttribute('data-active');
         });
         tag.setAttribute('data-active', 'true');
@@ -338,11 +413,14 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
     initScrollAnimations();
 
     // Refresh posts functionality
-    const refreshButton = document.getElementById('refresh-posts') as HTMLButtonElement | null;
+    const refreshButton = document.getElementById(
+      'refresh-posts'
+    ) as HTMLButtonElement | null;
     if (refreshButton) {
       refreshButton.addEventListener('click', async () => {
         const originalText = refreshButton.innerHTML;
-        refreshButton.innerHTML = '<svg class="inline-block h-4 w-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>Artikelen ophalen...';
+        refreshButton.innerHTML =
+          '<svg class="inline-block h-4 w-4 mr-2 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>Artikelen ophalen...';
         refreshButton.disabled = true;
 
         try {
@@ -373,7 +451,8 @@ const paginatedPosts = sortedPosts.slice(0, postsPerPage);
           // Show error message
           const errorDiv = document.createElement('div');
           errorDiv.className = 'mt-2 text-sm text-red-400';
-          errorDiv.textContent = 'Kon artikelen niet vernieuwen. Probeer het opnieuw.';
+          errorDiv.textContent =
+            'Kon artikelen niet vernieuwen. Probeer het opnieuw.';
           refreshButton.parentNode?.appendChild(errorDiv);
 
           // Remove error after 5 seconds

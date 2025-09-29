@@ -3,22 +3,37 @@ import MainNav from './MainNav.astro';
 import Button from '../ui/Button.astro';
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-strong border-b border-primary-400/20">
+<header
+  class="sticky top-0 z-50 backdrop-blur-strong border-b border-primary-400/20"
+>
   <!-- Advanced Background with Geometric Elements -->
   <div class="absolute inset-0 bg-dark-900/80"></div>
 
   <!-- Animated Grid Background -->
   <div class="absolute inset-0 opacity-30">
-    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(45, 212, 191, 0.15) 1px, transparent 0); background-size: 40px 40px;"></div>
+    <div
+      class="absolute inset-0"
+      style="background-image: radial-gradient(circle at 1px 1px, rgba(45, 212, 191, 0.15) 1px, transparent 0); background-size: 40px 40px;"
+    >
+    </div>
   </div>
 
   <!-- Geometric Accent Lines -->
   <div class="absolute inset-0 overflow-hidden">
     <!-- Top accent line -->
-    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-400/50 to-transparent"></div>
+    <div
+      class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-primary-400/50 to-transparent"
+    >
+    </div>
     <!-- Floating geometric elements -->
-    <div class="absolute top-2 right-20 w-2 h-2 bg-primary-400/40 rotate-45 animate-pulse"></div>
-    <div class="absolute top-4 right-32 w-1 h-8 bg-gradient-to-b from-primary-400/30 to-transparent"></div>
+    <div
+      class="absolute top-2 right-20 w-2 h-2 bg-primary-400/40 rotate-45 animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute top-4 right-32 w-1 h-8 bg-gradient-to-b from-primary-400/30 to-transparent"
+    >
+    </div>
     <div class="absolute top-1 left-1/3 w-3 h-px bg-cyan-400/50"></div>
   </div>
 
@@ -28,13 +43,18 @@ import Button from '../ui/Button.astro';
       <div class="flex items-center space-x-3">
         <div class="relative">
           <!-- Subtle glow around logo -->
-          <div class="absolute inset-0 bg-primary-400/20 blur-md rounded-full scale-150"></div>
+          <div
+            class="absolute inset-0 bg-primary-400/20 blur-md rounded-full scale-150"
+          >
+          </div>
           <a href="/" class="relative flex items-center">
             <img src="/logo.svg" alt="AIStudio Logo" class="h-14 w-auto" />
           </a>
         </div>
         <!-- Status indicator -->
-        <div class="hidden lg:flex items-center space-x-2 text-xs text-primary-400/80">
+        <div
+          class="hidden lg:flex items-center space-x-2 text-xs text-primary-400/80"
+        >
           <div class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></div>
           <span class="font-mono">ONLINE</span>
         </div>
@@ -44,26 +64,43 @@ import Button from '../ui/Button.astro';
       <div class="hidden md:block">
         <div class="relative">
           <!-- Liquid glass background with multiple layers -->
-          <div class="absolute inset-0 bg-white/[0.03] backdrop-blur-2xl rounded-2xl border border-white/[0.08]"></div>
-          <div class="absolute inset-0 bg-gradient-to-r from-white/[0.02] via-transparent to-white/[0.02] rounded-2xl"></div>
-          <div class="absolute inset-0 bg-gradient-to-b from-white/[0.05] via-transparent to-black/[0.05] rounded-2xl"></div>
+          <div
+            class="absolute inset-0 bg-white/[0.03] backdrop-blur-2xl rounded-2xl border border-white/[0.08]"
+          >
+          </div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-white/[0.02] via-transparent to-white/[0.02] rounded-2xl"
+          >
+          </div>
+          <div
+            class="absolute inset-0 bg-gradient-to-b from-white/[0.05] via-transparent to-black/[0.05] rounded-2xl"
+          >
+          </div>
 
           <!-- Inner content with subtle shadow -->
           <div class="relative px-8 py-3 rounded-2xl">
             <!-- Inner glass reflection -->
-            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"></div>
+            <div
+              class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full"
+            >
+            </div>
             <MainNav />
           </div>
 
           <!-- Subtle outer glow -->
-          <div class="absolute -inset-px bg-gradient-to-r from-primary-400/10 via-transparent to-cyan-400/10 rounded-2xl blur-sm -z-10"></div>
+          <div
+            class="absolute -inset-px bg-gradient-to-r from-primary-400/10 via-transparent to-cyan-400/10 rounded-2xl blur-sm -z-10"
+          >
+          </div>
         </div>
       </div>
 
       <!-- Right Section with Tech Elements -->
       <div class="flex items-center space-x-4">
         <!-- Status Indicators -->
-        <div class="hidden lg:flex items-center space-x-4 text-xs text-white/60">
+        <div
+          class="hidden lg:flex items-center space-x-4 text-xs text-white/60"
+        >
           <div class="flex items-center space-x-1">
             <div class="w-1 h-1 bg-primary-400 rounded-full"></div>
             <span class="font-mono">AI</span>
@@ -78,8 +115,16 @@ import Button from '../ui/Button.astro';
         <div class="hidden sm:block">
           <div class="relative group">
             <!-- Button glow effect -->
-            <div class="absolute -inset-0.5 bg-gradient-to-r from-primary-400 to-cyan-400 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-300"></div>
-            <Button href="/contact" variant="primary" size="sm" class="relative">
+            <div
+              class="absolute -inset-0.5 bg-gradient-to-r from-primary-400 to-cyan-400 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-300"
+            >
+            </div>
+            <Button
+              href="/contact"
+              variant="primary"
+              size="sm"
+              class="relative"
+            >
               Start gesprek
             </Button>
           </div>
@@ -95,12 +140,30 @@ import Button from '../ui/Button.astro';
         >
           <span class="sr-only">Open main menu</span>
           <!-- Menu icon (hamburger) -->
-          <svg class="menu-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+          <svg
+            class="menu-icon h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
           </svg>
           <!-- Close icon (X) -->
-          <svg class="close-icon hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          <svg
+            class="close-icon hidden h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"></path>
           </svg>
         </button>
       </div>
@@ -150,11 +213,17 @@ import Button from '../ui/Button.astro';
 </header>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.querySelector('.mobile-menu-button') as HTMLButtonElement | null;
-    const mobileMenu = document.querySelector('.mobile-menu') as HTMLElement | null;
+  document.addEventListener('DOMContentLoaded', function () {
+    const menuButton = document.querySelector(
+      '.mobile-menu-button'
+    ) as HTMLButtonElement | null;
+    const mobileMenu = document.querySelector(
+      '.mobile-menu'
+    ) as HTMLElement | null;
     const menuIcon = document.querySelector('.menu-icon') as SVGElement | null;
-    const closeIcon = document.querySelector('.close-icon') as SVGElement | null;
+    const closeIcon = document.querySelector(
+      '.close-icon'
+    ) as SVGElement | null;
 
     if (!menuButton || !mobileMenu || !menuIcon || !closeIcon) return;
 
@@ -162,12 +231,14 @@ import Button from '../ui/Button.astro';
     const currentPath = window.location.pathname;
     const mobileLinks = mobileMenu.querySelectorAll('a[data-current-class]');
 
-    mobileLinks.forEach(link => {
+    mobileLinks.forEach((link) => {
       const href = link.getAttribute('href');
       const currentClass = link.getAttribute('data-current-class') || '';
 
       if (href === currentPath || (currentPath === '/' && href === '/')) {
-        link.className = link.className.replace(/text-white\/80.*?(?=\s|$)/g, '').trim();
+        link.className = link.className
+          .replace(/text-white\/80.*?(?=\s|$)/g, '')
+          .trim();
         link.className += ` ${currentClass}`;
         link.setAttribute('aria-current', 'page');
       }
@@ -195,7 +266,7 @@ import Button from '../ui/Button.astro';
     menuButton.addEventListener('click', toggleMobileMenu);
 
     // Close menu when clicking on a link
-    mobileLinks.forEach(link => {
+    mobileLinks.forEach((link) => {
       link.addEventListener('click', () => {
         if (!mobileMenu.classList.contains('hidden')) {
           toggleMobileMenu();
@@ -206,8 +277,10 @@ import Button from '../ui/Button.astro';
     // Close menu when clicking outside
     document.addEventListener('click', (event) => {
       const target = event.target;
-      const node = (target && target instanceof Node) ? target : null;
-      const isClickInsideNav = (node ? menuButton.contains(node) : false) || (node ? mobileMenu.contains(node) : false);
+      const node = target && target instanceof Node ? target : null;
+      const isClickInsideNav =
+        (node ? menuButton.contains(node) : false) ||
+        (node ? mobileMenu.contains(node) : false);
 
       if (!isClickInsideNav && !mobileMenu.classList.contains('hidden')) {
         toggleMobileMenu();
@@ -216,7 +289,11 @@ import Button from '../ui/Button.astro';
 
     // Close menu on escape key
     document.addEventListener('keydown', (event) => {
-      if ((event instanceof KeyboardEvent) && event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+      if (
+        event instanceof KeyboardEvent &&
+        event.key === 'Escape' &&
+        !mobileMenu.classList.contains('hidden')
+      ) {
         toggleMobileMenu();
         if (menuButton) menuButton.focus(); // Return focus to menu button
       }
@@ -227,8 +304,12 @@ import Button from '../ui/Button.astro';
       if (!(event instanceof KeyboardEvent)) return;
       if (event.key === 'Tab') {
         const focusableElements = mobileMenu.querySelectorAll('a, button');
-        const firstElement = (focusableElements[0] as unknown) as HTMLElement | undefined;
-        const lastElement = (focusableElements[focusableElements.length - 1] as unknown) as HTMLElement | undefined;
+        const firstElement = focusableElements[0] as unknown as
+          | HTMLElement
+          | undefined;
+        const lastElement = focusableElements[
+          focusableElements.length - 1
+        ] as unknown as HTMLElement | undefined;
 
         if (event.shiftKey) {
           if (document.activeElement === firstElement) {

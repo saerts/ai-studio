@@ -1,8 +1,24 @@
 import type { APIRoute } from 'astro';
 import { sanitizeHTML, sanitizeText, sanitizeURL } from '../../lib/security.js';
-import { checkApiRateLimit, checkRefreshRateLimit, checkMCPRateLimit, createRateLimitResponse } from '../../lib/rate-limit.js';
-import { validateBlogQuery, validateBlogRefresh, validateMCPArticle, type BlogPost, type MCPArticle } from '../../lib/validation.js';
-import { createErrorResponse, withTimeout, withRetry, extractErrorDetails } from '../../lib/error-handling.js';
+import {
+  checkApiRateLimit,
+  checkRefreshRateLimit,
+  checkMCPRateLimit,
+  createRateLimitResponse,
+} from '../../lib/rate-limit.js';
+import {
+  validateBlogQuery,
+  validateBlogRefresh,
+  validateMCPArticle,
+  type BlogPost,
+  type MCPArticle,
+} from '../../lib/validation.js';
+import {
+  createErrorResponse,
+  withTimeout,
+  withRetry,
+  extractErrorDetails,
+} from '../../lib/error-handling.js';
 import type { FetchOptions, MCPDataResponse } from '../../types/api.js';
 
 const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
@@ -10,7 +26,11 @@ const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:3001';
 // Types are now imported from validation module
 
 // Simple fetch with timeout to avoid hanging when MCP is down
-async function fetchWithTimeout(url: string, options: FetchOptions = {}, timeoutMs = 2000): Promise<Response> {
+async function fetchWithTimeout(
+  url: string,
+  options: FetchOptions = {},
+  timeoutMs = 2000
+): Promise<Response> {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -37,7 +57,10 @@ class MCPBlogService {
     }
 
     // If pointing to localhost in a non-development environment, assume unavailable
-    if (MCP_SERVER_URL.includes('localhost') && process.env.NODE_ENV !== 'development') {
+    if (
+      MCP_SERVER_URL.includes('localhost') &&
+      process.env.NODE_ENV !== 'development'
+    ) {
       this.mcpAvailable = false;
       this.lastHealthCheck = now;
       return false;
@@ -65,20 +88,29 @@ class MCPBlogService {
     };
   }
 
-  private async fetchFromMCP(endpoint: string, options: FetchOptions = {}): Promise<Response> {
+  private async fetchFromMCP(
+    endpoint: string,
+    options: FetchOptions = {}
+  ): Promise<Response> {
     const url = `${MCP_SERVER_URL}${endpoint}`;
 
     try {
-      const response = await fetchWithTimeout(url, {
-        ...options,
-        headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
+      const response = await fetchWithTimeout(
+        url,
+        {
+          ...options,
+          headers: {
+            'Content-Type': 'application/json',
+            ...options.headers,
+          },
         },
-      }, 2000);
+        2000
+      );
 
       if (!response.ok) {
-        throw new Error(`MCP server responded with ${response.status}: ${response.statusText}`);
+        throw new Error(
+          `MCP server responded with ${response.status}: ${response.statusText}`
+        );
       }
 
       return response as Response;
@@ -97,57 +129,76 @@ class MCPBlogService {
     // Extract articles from MCP response
     const articles: unknown[] = mcpData.articles || [];
 
-    return articles.map((article, index): BlogPost => {
-      // Validate the MCP article structure
-      const validation = validateMCPArticle({
-        ...article,
-        id: article.id || article.guid || `${article.slug}-${index}`,
-      });
+    return articles
+      .map((article, index): BlogPost => {
+        // Validate the MCP article structure
+        const validation = validateMCPArticle({
+          ...article,
+          id: article.id || article.guid || `${article.slug}-${index}`,
+        });
 
-      if (!validation.success) {
-        console.warn('Invalid MCP article structure:', validation.error.errors);
-        // Skip invalid articles
-        return null;
-      }
+        if (!validation.success) {
+          console.warn(
+            'Invalid MCP article structure:',
+            validation.error.errors
+          );
+          // Skip invalid articles
+          return null;
+        }
 
-      const validatedArticle = validation.data;
+        const validatedArticle = validation.data;
 
-      // Sanitize all content before processing
-      const sanitizedTitle = sanitizeText(validatedArticle.title);
-      const sanitizedDescription = sanitizeText(validatedArticle.summary || validatedArticle.description);
-      const sanitizedContent = sanitizeHTML(validatedArticle.content);
-      const sanitizedSource = sanitizeText(validatedArticle.source);
-      const sanitizedCanonicalUrl = sanitizeURL(validatedArticle.link);
-      const sanitizedCover = validatedArticle.cover ? sanitizeURL(validatedArticle.cover) : undefined;
-      const sanitizedCoverAlt = validatedArticle.coverAlt ? sanitizeText(validatedArticle.coverAlt) : undefined;
-      const sanitizedTags = validatedArticle.tags.map(tag => sanitizeText(tag)).filter(tag => tag.length > 0);
+        // Sanitize all content before processing
+        const sanitizedTitle = sanitizeText(validatedArticle.title);
+        const sanitizedDescription = sanitizeText(
+          validatedArticle.summary || validatedArticle.description
+        );
+        const sanitizedContent = sanitizeHTML(validatedArticle.content);
+        const sanitizedSource = sanitizeText(validatedArticle.source);
+        const sanitizedCanonicalUrl = sanitizeURL(validatedArticle.link);
+        const sanitizedCover = validatedArticle.cover
+          ? sanitizeURL(validatedArticle.cover)
+          : undefined;
+        const sanitizedCoverAlt = validatedArticle.coverAlt
+          ? sanitizeText(validatedArticle.coverAlt)
+          : undefined;
+        const sanitizedTags = validatedArticle.tags
+          .map((tag) => sanitizeText(tag))
+          .filter((tag) => tag.length > 0);
 
-      return {
-        id: validatedArticle.id,
-        slug: validatedArticle.slug,
-        data: {
-          title: sanitizedTitle,
-          description: sanitizedDescription,
-          pubDate: new Date(validatedArticle.pubDate),
-          updatedDate: new Date(validatedArticle.pubDate),
-          tags: sanitizedTags,
-          source: sanitizedSource,
-          canonicalUrl: sanitizedCanonicalUrl || validatedArticle.link,
-          ...(sanitizedCover ? { cover: sanitizedCover } : {}),
-          ...(sanitizedCoverAlt ? { coverAlt: sanitizedCoverAlt } : {}),
-          ...(validatedArticle.coverGenerated !== undefined ? { coverGenerated: validatedArticle.coverGenerated } : {}),
-          draft: false,
-        },
-        body: sanitizedContent,
-      };
-    }).filter((post): post is BlogPost => post !== null);
+        return {
+          id: validatedArticle.id,
+          slug: validatedArticle.slug,
+          data: {
+            title: sanitizedTitle,
+            description: sanitizedDescription,
+            pubDate: new Date(validatedArticle.pubDate),
+            updatedDate: new Date(validatedArticle.pubDate),
+            tags: sanitizedTags,
+            source: sanitizedSource,
+            canonicalUrl: sanitizedCanonicalUrl || validatedArticle.link,
+            ...(sanitizedCover ? { cover: sanitizedCover } : {}),
+            ...(sanitizedCoverAlt ? { coverAlt: sanitizedCoverAlt } : {}),
+            ...(validatedArticle.coverGenerated !== undefined
+              ? { coverGenerated: validatedArticle.coverGenerated }
+              : {}),
+            draft: false,
+          },
+          body: sanitizedContent,
+        };
+      })
+      .filter((post): post is BlogPost => post !== null);
   }
 
   async getPosts(forceRefresh: boolean = false): Promise<BlogPost[]> {
     const now = Date.now();
 
     // Return cached posts if they're still fresh and not forcing refresh
-    if (!forceRefresh && this.cachedPosts && (now - this.lastFetch) < this.cacheTimeout) {
+    if (
+      !forceRefresh &&
+      this.cachedPosts &&
+      now - this.lastFetch < this.cacheTimeout
+    ) {
       return this.cachedPosts;
     }
 
@@ -157,7 +208,7 @@ class MCPBlogService {
         this.checkHealth(true),
         new Promise<boolean>((_, reject) =>
           setTimeout(() => reject(new Error('Health check timeout')), 5000)
-        )
+        ),
       ]);
 
       if (!healthy) {
@@ -173,17 +224,20 @@ class MCPBlogService {
             method: 'POST',
             body: JSON.stringify({
               sinceDays: 30, // Get articles from last 30 days
-              limit: 50,     // Limit to 50 articles
+              limit: 50, // Limit to 50 articles
             }),
           }),
           new Promise<never>((_, reject) =>
             setTimeout(() => reject(new Error('Fetch timeout')), 10000)
-          )
+          ),
         ]);
         fetchResult = await fetchResponse.json();
         console.log('MCP fetch result:', fetchResult);
       } catch (fetchError) {
-        console.warn('Failed to fetch new articles, using existing cache:', fetchError);
+        console.warn(
+          'Failed to fetch new articles, using existing cache:',
+          fetchError
+        );
       }
 
       // Get the stored articles from the MCP server
@@ -191,33 +245,37 @@ class MCPBlogService {
         this.fetchFromMCP('/api/articles?limit=50'),
         new Promise<never>((_, reject) =>
           setTimeout(() => reject(new Error('Articles fetch timeout')), 5000)
-        )
+        ),
       ]);
       const articlesData = await articlesResponse.json();
 
       if (articlesData.articles && articlesData.articles.length > 0) {
         // Convert stored articles to blog post format
-        const storedArticles: MCPArticle[] = articlesData.articles.map((article: unknown) => {
-          const articleData = article as Record<string, unknown>;
-          return {
-            id: (articleData.id as string) || (articleData.guid as string),
-            title: articleData.title as string,
-            description: articleData.description as string,
-            link: articleData.link as string,
-            pubDate: new Date(articleData.pubDate as string),
-            content: articleData.content as string,
-            source: articleData.source as string,
-            slug: articleData.slug as string,
-            tags: (articleData.tags as string[]) || [],
-            summary: (articleData.summary as string) || '',
-            cover: articleData.cover as string | undefined,
-            coverAlt: articleData.coverAlt as string | undefined,
-            coverGenerated: articleData.coverGenerated as boolean | undefined,
-            guid: articleData.id as string,
-          };
-        });
+        const storedArticles: MCPArticle[] = articlesData.articles.map(
+          (article: unknown) => {
+            const articleData = article as Record<string, unknown>;
+            return {
+              id: (articleData.id as string) || (articleData.guid as string),
+              title: articleData.title as string,
+              description: articleData.description as string,
+              link: articleData.link as string,
+              pubDate: new Date(articleData.pubDate as string),
+              content: articleData.content as string,
+              source: articleData.source as string,
+              slug: articleData.slug as string,
+              tags: (articleData.tags as string[]) || [],
+              summary: (articleData.summary as string) || '',
+              cover: articleData.cover as string | undefined,
+              coverAlt: articleData.coverAlt as string | undefined,
+              coverGenerated: articleData.coverGenerated as boolean | undefined,
+              guid: articleData.id as string,
+            };
+          }
+        );
 
-        this.cachedPosts = this.convertMCPToBlogPost({ articles: storedArticles });
+        this.cachedPosts = this.convertMCPToBlogPost({
+          articles: storedArticles,
+        });
       } else {
         // Fallback to empty array if no articles found
         this.cachedPosts = [];
@@ -225,7 +283,6 @@ class MCPBlogService {
 
       this.lastFetch = now;
       return this.cachedPosts;
-
     } catch (error) {
       console.error('Failed to fetch from MCP server:', error);
 
@@ -234,7 +291,7 @@ class MCPBlogService {
         console.error('Error details:', {
           message: error.message,
           stack: error.stack,
-          name: error.name
+          name: error.name,
         });
       }
 
@@ -245,22 +302,24 @@ class MCPBlogService {
       }
 
       // Return cached posts if MCP server is unavailable but we have cached data
-      console.log(`Returning ${this.cachedPosts.length} cached posts due to MCP server error`);
+      console.log(
+        `Returning ${this.cachedPosts.length} cached posts due to MCP server error`
+      );
       return this.cachedPosts;
     }
   }
 
   async getPost(slug: string): Promise<BlogPost | null> {
     const posts = await this.getPosts();
-    return posts.find(post => post.slug === slug) || null;
+    return posts.find((post) => post.slug === slug) || null;
   }
 
   async getTags(): Promise<string[]> {
     const posts = await this.getPosts();
     const tagSet = new Set<string>();
 
-    posts.forEach(post => {
-      post.data.tags.forEach(tag => tagSet.add(tag));
+    posts.forEach((post) => {
+      post.data.tags.forEach((tag) => tagSet.add(tag));
     });
 
     return Array.from(tagSet).sort();
@@ -268,6 +327,9 @@ class MCPBlogService {
 }
 
 const blogService = new MCPBlogService();
+
+// Disable prerendering for this API route to allow access to request headers
+export const prerender = false;
 
 // Helper function to extract query parameters from headers (workaround for dev server)
 function extractFromHeaders(headers: Headers, param: string): string | null {
@@ -287,13 +349,16 @@ export const GET: APIRoute = async ({ url, request }) => {
     // Validate query parameters
     const queryValidation = validateBlogQuery(url.searchParams);
     if (!queryValidation.success) {
-      return new Response(JSON.stringify({
-        error: 'Invalid query parameters',
-        details: queryValidation.error.errors,
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid query parameters',
+          details: queryValidation.error.errors,
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const { limit, offset, tag, refresh } = queryValidation.data;
@@ -303,7 +368,7 @@ export const GET: APIRoute = async ({ url, request }) => {
 
     // Filter by tag if specified
     if (tag && tag !== 'all') {
-      posts = posts.filter(post => post.data.tags.includes(tag));
+      posts = posts.filter((post) => post.data.tags.includes(tag));
     }
 
     // Sort by publication date (newest first)
@@ -316,29 +381,32 @@ export const GET: APIRoute = async ({ url, request }) => {
     const allTags = await blogService.getTags();
 
     // Ensure dates are properly serialized
-    const serializedPosts = paginatedPosts.map(post => ({
+    const serializedPosts = paginatedPosts.map((post) => ({
       ...post,
       data: {
         ...post.data,
         pubDate: post.data.pubDate.toISOString(),
         updatedDate: post.data.updatedDate.toISOString(),
-      }
+      },
     }));
 
-    return new Response(JSON.stringify({
-      posts: serializedPosts,
-      tags: allTags,
-      total: posts.length,
-      offset,
-      limit,
-      serviceStatus: blogService.getServiceStatus(),
-    }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=300', // 5 minute cache
-      },
-    });
+    return new Response(
+      JSON.stringify({
+        posts: serializedPosts,
+        tags: allTags,
+        total: posts.length,
+        offset,
+        limit,
+        serviceStatus: blogService.getServiceStatus(),
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'public, max-age=300', // 5 minute cache
+        },
+      }
+    );
   } catch (error) {
     console.error('Error in GET /api/blog:', extractErrorDetails(error));
     return createErrorResponse(error, 500);
@@ -359,30 +427,42 @@ export const POST: APIRoute = async ({ request }) => {
     const validation = validateBlogRefresh(body);
 
     if (!validation.success) {
-      return new Response(JSON.stringify({
-        error: 'Invalid request body',
-        details: validation.error.errors,
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid request body',
+          details: validation.error.errors,
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
     }
 
-    const { action, sinceDays, limit: requestLimit, generateImages, imageStyle } = validation.data;
+    const {
+      action,
+      sinceDays,
+      limit: requestLimit,
+      generateImages,
+      imageStyle,
+    } = validation.data;
 
     if (action === 'refresh') {
       const posts = await blogService.getPosts(true);
 
-      return new Response(JSON.stringify({
-        message: 'Blog posts refreshed successfully',
-        count: posts.length,
-        posts,
-      }), {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      return new Response(
+        JSON.stringify({
+          message: 'Blog posts refreshed successfully',
+          count: posts.length,
+          posts,
+        }),
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
     }
 
     if (action === 'fetch_and_generate') {
@@ -394,25 +474,33 @@ export const POST: APIRoute = async ({ request }) => {
 
       // Trigger the full MCP workflow if available
       try {
-        const healthy = await blogService['checkHealth']?.call(blogService, true) ?? false;
+        const healthy =
+          (await blogService['checkHealth']?.call(blogService, true)) ?? false;
         if (!healthy) {
-          return new Response(JSON.stringify({
-            error: 'MCP server unavailable',
-            message: `Cannot refresh articles because MCP server at ${MCP_SERVER_URL} is not reachable.`,
-          }), {
-            status: 503,
-            headers: { 'Content-Type': 'application/json' },
-          });
+          return new Response(
+            JSON.stringify({
+              error: 'MCP server unavailable',
+              message: `Cannot refresh articles because MCP server at ${MCP_SERVER_URL} is not reachable.`,
+            }),
+            {
+              status: 503,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
         }
 
-        const mcpResponse = await fetchWithTimeout(`${MCP_SERVER_URL}/api/articles/fetch`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sinceDays,
-            limit: requestLimit,
-          }),
-        }, 3000);
+        const mcpResponse = await fetchWithTimeout(
+          `${MCP_SERVER_URL}/api/articles/fetch`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sinceDays,
+              limit: requestLimit,
+            }),
+          },
+          3000
+        );
 
         if (!mcpResponse.ok) {
           throw new Error('Failed to fetch articles from MCP');
@@ -420,14 +508,18 @@ export const POST: APIRoute = async ({ request }) => {
 
         // Generate images if requested
         if (generateImages) {
-          const imageResponse = await fetchWithTimeout(`${MCP_SERVER_URL}/api/images/generate`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              style: imageStyle,
-              regenerate: false,
-            }),
-          }, 3000);
+          const imageResponse = await fetchWithTimeout(
+            `${MCP_SERVER_URL}/api/images/generate`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                style: imageStyle,
+                regenerate: false,
+              }),
+            },
+            3000
+          );
 
           if (!imageResponse.ok) {
             console.warn('Image generation failed, continuing without images');
@@ -436,39 +528,46 @@ export const POST: APIRoute = async ({ request }) => {
 
         const posts = await blogService.getPosts(true);
 
-        return new Response(JSON.stringify({
-          message: 'Articles fetched and processed successfully',
-          count: posts.length,
-        }), {
-          status: 200,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
+        return new Response(
+          JSON.stringify({
+            message: 'Articles fetched and processed successfully',
+            count: posts.length,
+          }),
+          {
+            status: 200,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
       } catch (error) {
-        return new Response(JSON.stringify({
-          error: 'Failed to fetch and generate articles',
-          message: error instanceof Error ? error.message : 'Unknown error',
-        }), {
-          status: 503,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Failed to fetch and generate articles',
+            message: error instanceof Error ? error.message : 'Unknown error',
+          }),
+          {
+            status: 503,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
       }
     }
 
-    return new Response(JSON.stringify({
-      error: 'Invalid action',
-      availableActions: ['refresh', 'fetch_and_generate'],
-    }), {
-      status: 400,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
+    return new Response(
+      JSON.stringify({
+        error: 'Invalid action',
+        availableActions: ['refresh', 'fetch_and_generate'],
+      }),
+      {
+        status: 400,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
   } catch (error) {
     console.error('Error in POST /api/blog:', extractErrorDetails(error));
     return createErrorResponse(error, 500);

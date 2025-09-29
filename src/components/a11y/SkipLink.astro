@@ -4,7 +4,8 @@ export interface Props {
   text?: string;
 }
 
-const { href = '#main-content', text = 'Spring naar hoofdinhoud' } = Astro.props;
+const { href = '#main-content', text = 'Spring naar hoofdinhoud' } =
+  Astro.props;
 ---
 
 <a href={href} class="skip-link">

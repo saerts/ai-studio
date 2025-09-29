@@ -49,7 +49,7 @@ export function extractErrorDetails(error: unknown): ErrorDetails {
       stack: error.stack,
       code: error.code,
       statusCode: error.statusCode,
-      timestamp
+      timestamp,
     };
   }
 
@@ -57,14 +57,14 @@ export function extractErrorDetails(error: unknown): ErrorDetails {
     return {
       message: error.message,
       stack: error.stack,
-      timestamp
+      timestamp,
     };
   }
 
   if (typeof error === 'string') {
     return {
       message: error,
-      timestamp
+      timestamp,
     };
   }
 
@@ -75,20 +75,23 @@ export function extractErrorDetails(error: unknown): ErrorDetails {
       stack: errorObj.stack,
       code: errorObj.code,
       statusCode: errorObj.statusCode,
-      timestamp
+      timestamp,
     };
   }
 
   return {
     message: 'Unknown error occurred',
-    timestamp
+    timestamp,
   };
 }
 
 /**
  * Create standardized error response for API endpoints
  */
-export function createErrorResponse(error: unknown, defaultStatus: number = 500): Response {
+export function createErrorResponse(
+  error: unknown,
+  defaultStatus: number = 500
+): Response {
   const errorDetails = extractErrorDetails(error);
   const statusCode = errorDetails.statusCode || defaultStatus;
 
@@ -97,14 +100,16 @@ export function createErrorResponse(error: unknown, defaultStatus: number = 500)
     message: errorDetails.message,
     code: errorDetails.code,
     timestamp: errorDetails.timestamp,
-    ...(process.env.NODE_ENV === 'development' && { stack: errorDetails.stack })
+    ...(process.env.NODE_ENV === 'development' && {
+      stack: errorDetails.stack,
+    }),
   };
 
   return new Response(JSON.stringify(response), {
     status: statusCode,
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   });
 }
 
@@ -136,8 +141,11 @@ export function withTimeout<T>(
   return Promise.race([
     promise,
     new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new AppError(errorMessage, 408, 'TIMEOUT')), timeoutMs)
-    )
+      setTimeout(
+        () => reject(new AppError(errorMessage, 408, 'TIMEOUT')),
+        timeoutMs
+      )
+    ),
   ]);
 }
 
@@ -163,9 +171,12 @@ export async function withRetry<T>(
       }
 
       const delay = delayMs * Math.pow(backoffMultiplier, attempt);
-      console.warn(`Operation failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms:`, extractErrorDetails(error));
+      console.warn(
+        `Operation failed (attempt ${attempt + 1}/${maxRetries + 1}), retrying in ${delay}ms:`,
+        extractErrorDetails(error)
+      );
 
-      await new Promise(resolve => setTimeout(resolve, delay));
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
 
