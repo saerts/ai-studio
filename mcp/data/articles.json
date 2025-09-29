@@ -15,7 +15,7 @@
     ],
     "summary": "SAP and OpenAI launch OpenAI for Germany, a 2026 partnership to bring secure, sovereign AI to Germany’s public sector, enabling safe, efficient public services.",
     "guid": "https://openai.com/global-affairs/openai-for-germany",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "bb4b9e46c2132483bc095ffbb30a0998",
@@ -33,7 +33,7 @@
     ],
     "summary": "OpenAI, Oracle, and SoftBank announce five new Stargate AI datacenter sites, accelerating a $500B, 10-gigawatt U.S. infrastructure buildout to power next-gen...",
     "guid": "https://openai.com/index/five-new-stargate-sites",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "5358957dd0a14a6f68b95f4717838ab3",
@@ -51,7 +51,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/smol2operator",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "ca2cfcbfccb26e00be9d2e7ffe0313cc",
@@ -69,7 +69,7 @@
     ],
     "summary": "In this Executive Function series from OpenAI, discover how CNA is transforming its newsroom with AI. Editor-in-Chief Walter Fernandez shares insights on AI ...",
     "guid": "https://openai.com/index/cna-walter-fernandez",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "c8840ffc3643245f2c946678d7554351",
@@ -87,7 +87,7 @@
     ],
     "summary": "American-made innovation",
     "guid": "https://openai.com/global-affairs/american-made-innovation",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "49b689f818647964c26ced3b636878e5",
@@ -106,7 +106,7 @@
     ],
     "summary": "Discover how SchoolAI, built on OpenAI’s GPT-4.1, image generation, and TTS, powers safe, teacher-guided AI tools for 1 million classrooms worldwide—boosting...",
     "guid": "https://openai.com/index/schoolai",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "e07f36f3d6e67db381d895c9ab4bd2c8",
@@ -124,7 +124,7 @@
     ],
     "summary": "OpenAI and NVIDIA announce a strategic partnership to deploy 10 gigawatts of AI datacenters powered by NVIDIA systems, with the first phase launching in 2026.",
     "guid": "https://openai.com/index/openai-nvidia-systems-partnership",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "44961a24a76d46222df33aafb6501b9c",
@@ -143,7 +143,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/gaia2",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "14871fff58b9031c442938fb313c1f3d",
@@ -162,7 +162,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/inference-providers-scaleway",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "5dbfba19469b2209c9bf06fec8aa84d7",
@@ -180,7 +180,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/riskrubric",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "8745e0c0120ef5fb2a4702dc2356431f",
@@ -198,7 +198,7 @@
     ],
     "summary": "Economics doctoral student Whitney Zhang investigates how technologies and organizational decisions shape labor markets.",
     "guid": "https://news.mit.edu/2025/improving-workplace-future-whitney-zhang-0924",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "078eaf79218d09e59cee7d5ea7d85e49",
@@ -217,7 +217,7 @@
     ],
     "summary": "Department of Mathematics researchers David Roe and Andrew Sutherland seek to advance automated theorem proving; four additional MIT alumni also awarded.",
     "guid": "https://news.mit.edu/2025/ai-for-math-grants-accelerate-mathematical-discovery-0922",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "8a3e7b6760dd6c7564ff2248814e250e",
@@ -293,7 +293,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/inference-providers-publicai",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "b27a67426a99465b36c9ab7421414526",
@@ -312,7 +312,7 @@
     ],
     "summary": "Apollo Research and OpenAI developed evaluations for hidden misalignment (“scheming”) and found behaviors consistent with scheming in controlled tests across...",
     "guid": "https://openai.com/index/detecting-and-reducing-scheming-in-ai-models",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "ba1cbc0dfc369283acfa0592b4964881",
@@ -350,7 +350,7 @@
     ],
     "summary": "OpenAI, NVIDIA, and Nscale launch Stargate UK, a sovereign AI infrastructure partnership delivering up to 50,000 GPUs and the UK’s largest supercomputer to p...",
     "guid": "https://openai.com/index/introducing-stargate-uk",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "1351b504447507853c6b9c7ff12b373c",
@@ -368,7 +368,7 @@
     ],
     "summary": "Learn how OpenAI is building age prediction and parental controls in ChatGPT to create safer, age-appropriate experiences for teens while supporting families...",
     "guid": "https://openai.com/index/building-towards-age-prediction",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "4db6860842ed4f2450a751743472b5ca",
@@ -386,7 +386,7 @@
     ],
     "summary": "Explore OpenAI’s approach to balancing teen safety, freedom, and privacy in AI use.",
     "guid": "https://openai.com/index/teen-safety-freedom-and-privacy",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "fca67d3e029464a0eec8a59f1bdcc13b",
@@ -405,7 +405,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/lerobot-datasets-v3",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "b80af934aba39c3ecd7d551a152162de",
@@ -442,7 +442,7 @@
     ],
     "summary": "Codex just got faster, more reliable, and better at real-time collaboration and tackling tasks independently anywhere you develop—whether via the terminal, I...",
     "guid": "https://openai.com/index/introducing-upgrades-to-codex",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "7dbf0396020b7b9a134c6a4cdfc0a2af",
@@ -461,7 +461,7 @@
     ],
     "summary": "New research from the largest study of ChatGPT use shows how the tool creates economic value through both personal and professional use. Adoption is broadeni...",
     "guid": "https://openai.com/index/how-people-are-using-chatgpt",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "65fca3bec0c5ae4d523a5c87c35ab7ef",
@@ -479,7 +479,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/watermarking-with-gradio",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "83e9410ad8a5eda824e76b9e50415f41",
@@ -497,7 +497,7 @@
     ],
     "summary": "This addendum to the GPT-5 system card shares a new model: GPT-5-Codex, a version of GPT-5 further optimized for agentic coding in Codex. GPT-5-Codex adjusts...",
     "guid": "https://openai.com/index/gpt-5-system-card-addendum-gpt-5-codex",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "571c993126ccef6269457eb3d409b5fd",
@@ -515,7 +515,7 @@
     ],
     "summary": "OpenAI shares progress on the partnership with the US CAISI and UK AISI to strengthen AI safety and security. The collaboration is setting new standards for ...",
     "guid": "https://openai.com/index/us-caisi-uk-aisi-ai-update",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "24a2c8779b33e9d23556c9ee0a07d98c",
@@ -533,7 +533,7 @@
     ],
     "summary": "Applications are now open for OpenAI Grove, a 5-week founder program designed for individuals at any stage, from pre-idea to product. Participants receive $5...",
     "guid": "https://openai.com/index/openai-grove",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "4b245ae256a83b9210ca2e26d7938e57",
@@ -551,7 +551,7 @@
     ],
     "summary": "OpenAI and Microsoft sign a new MOU, reinforcing their partnership and shared commitment to AI safety and innovation.",
     "guid": "https://openai.com/index/joint-statement-from-openai-and-microsoft",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "793937f55589c85759ff98f2daa54649",
@@ -569,7 +569,7 @@
     ],
     "summary": "OpenAI reaffirms its nonprofit leadership with a new structure granting equity in its PBC, enabling over $100B in resources to advance safe, beneficial AI fo...",
     "guid": "https://openai.com/index/statement-on-openai-nonprofit-and-pbc",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "b56ea32285794ea796bc28168b35168b",
@@ -588,7 +588,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/faster-transformers",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "5f5c7a382c69fa2b596fc3658fbffd1a",
@@ -625,7 +625,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/jupyter-agent-2",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "54a599dd5680b11cefa21d02dcb68312",
@@ -643,7 +643,7 @@
     ],
     "summary": "Discover how SafetyKit leverages OpenAI GPT-5 to enhance content moderation, enforce compliance, and outpace legacy safety systems with greater accuracy .",
     "guid": "https://openai.com/index/safetykit",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "253900a6d76c06d89ad58848a49d7896",
@@ -661,7 +661,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/mmbert",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "73efdbd9974f6be290966d017aa59db3",
@@ -679,7 +679,7 @@
     ],
     "summary": "Applications are now open for OpenAI’s People-First AI Fund, a $50M initiative supporting U.S. nonprofits advancing education, community innovation, and econ...",
     "guid": "https://openai.com/index/people-first-ai-fund",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "f9fe5061b13ba0206c87b5a69379af3b",
@@ -699,7 +699,7 @@
     ],
     "summary": "OpenAI’s new research explains why language models hallucinate. The findings show how improved evaluations can enhance AI reliability, honesty, and safety.",
     "guid": "https://openai.com/index/why-language-models-hallucinate",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "04a7177b21192362f7a01c0bdf2aa4a2",
@@ -718,7 +718,7 @@
     ],
     "summary": "OpenAI invites researchers to its Bio Bug Bounty. Test GPT-5’s safety with a universal jailbreak prompt and win up to $25,000.",
     "guid": "https://openai.com/gpt-5-bio-bug-bounty",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "068b06ba3f93c7b8b5468a7b888e17d8",
@@ -736,7 +736,7 @@
     ],
     "summary": "OpenAI and the Greek Government have launched “OpenAI for Greece” to bring ChatGPT Edu into secondary schools and support responsible AI learning. This partn...",
     "guid": "https://openai.com/global-affairs/openai-for-greece",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "d1f8a21baab903e54001cfbd1ce49b62",
@@ -754,7 +754,7 @@
     ],
     "summary": "OpenAI is launching a Jobs Platform and new Certifications to connect workers with jobs, training, and certifications. Learn how we’re expanding economic opp...",
     "guid": "https://openai.com/index/expanding-economic-opportunity-with-ai",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "ec71c3e0c179b8c046040bf75f6c7ff0",
@@ -772,7 +772,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/embeddinggemma",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "42f39a305797f110de8e0d8757bacbf2",
@@ -790,7 +790,7 @@
     ],
     "summary": "Vijaye Raji will step into a new role as CTO of Applications, reporting to CEO of Applications, Fidji Simo, following the acquisition of Statsig.",
     "guid": "https://openai.com/index/vijaye-raji-to-become-cto-of-applications-with-acquisition-of-statsig",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "54faa4c6b346cb514785055d6d19c8ba",
@@ -808,7 +808,7 @@
     ],
     "summary": "We’re partnering with experts, strengthening protections for teens with parental controls, and routing sensitive conversations to reasoning models in ChatGPT.",
     "guid": "https://openai.com/index/building-more-helpful-chatgpt-experiences-for-everyone",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "d430cc362e2326b7bb3d4f3d3c946c6c",
@@ -826,7 +826,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/zerogpu-aoti",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "0811437b3cc858ef848755a88982b7b3",
@@ -936,7 +936,7 @@
     ],
     "summary": "We’re rolling out parental controls and a new parent resource page to help families guide how ChatGPT works in their homes.",
     "guid": "https://openai.com/index/introducing-parental-controls",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "9c28fca218d6ef47cae45fa2106a2cf7",
@@ -955,7 +955,7 @@
     ],
     "summary": "Discover how OpenAI combats online child sexual exploitation and abuse with strict usage policies, advanced detection tools, and industry collaboration to bl...",
     "guid": "https://openai.com/index/combating-online-child-sexual-exploitation-abuse",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "40a6ef9676e382afc24fdeaf8a78e694",
@@ -973,7 +973,7 @@
     ],
     "summary": "OpenAI and AARP are partnering to help older adults stay safe online with new AI training, scam-spotting tools, and nationwide programs through OpenAI Academ...",
     "guid": "https://openai.com/index/aarp-partnership-older-adults-online-safety",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "a8d97144a6ab583adc048a25da4ee9df",
@@ -992,7 +992,7 @@
     ],
     "summary": "",
     "guid": "https://huggingface.co/blog/swift-transformers",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "6cff8a4428ac8baad117113782db5013",
@@ -1010,7 +1010,7 @@
     ],
     "summary": "The new “CRESt” platform could help find solutions to real-world energy problems that have plagued the materials science and engineering community for decades.",
     "guid": "https://news.mit.edu/2025/ai-system-learns-many-types-scientific-information-and-runs-experiments-discovering-new-materials-0925",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "b371d39261981488802b4917f2a97176",
@@ -1029,7 +1029,7 @@
     ],
     "summary": "ChatGPT business plans now support shared projects, smarter connectors, and enhanced compliance features to help teams work faster and more securely.",
     "guid": "https://openai.com/index/more-ways-to-work-with-your-team",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "21234653878edbbb8ea968504ae8c270",
@@ -1047,7 +1047,7 @@
     ],
     "summary": "OpenAI introduces GDPval, a new evaluation that measures model performance on real-world economically valuable tasks across 44 occupations.",
     "guid": "https://openai.com/index/gdpval",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "07eda58b6fa5f1b2b75512715a3dd8bf",
@@ -1067,7 +1067,7 @@
     ],
     "summary": "By enabling rapid annotation of areas of interest in medical images, the tool can help scientists study new treatments or map disease progression.",
     "guid": "https://news.mit.edu/2025/new-ai-system-could-accelerate-clinical-research-0925",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "e8821eece03e947708810e5e6451ce07",
@@ -1086,7 +1086,7 @@
     ],
     "summary": "Today we're releasing a preview of ChatGPT Pulse to Pro users on mobile. Pulse is a new experience where ChatGPT proactively does research to deliver persona...",
     "guid": "https://openai.com/index/introducing-chatgpt-pulse",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "ae248684c8bb6906a372226ff7103690",
@@ -1107,7 +1107,7 @@
     ],
     "summary": "By deploying ChatGPT Enterprise, ENEOS Materials transformed operations with faster research, safer plant design, and streamlined HR processes. Over 80% of e...",
     "guid": "https://openai.com/index/eneos-materials",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   },
   {
     "id": "8571f4d4d1a2ff775614c8a186ba62a0",
@@ -1126,6 +1126,6 @@
     ],
     "summary": "We’re taking first steps toward agentic commerce in ChatGPT with new ways for people, AI agents, and businesses to shop together.",
     "guid": "https://openai.com/index/buy-it-in-chatgpt",
-    "fetchedAt": "2025-09-29T17:01:09.293Z"
+    "fetchedAt": "2025-09-29T17:06:53.887Z"
   }
 ]
