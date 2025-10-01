@@ -32,22 +32,12 @@ export interface BlogApiResponse {
   };
 }
 
-// MCP specific interfaces
-export interface MCPDataResponse {
-  articles?: unknown[];
-  [key: string]: unknown;
-}
-
-export interface MCPHealthResponse {
-  status: string;
-  [key: string]: unknown;
-}
 
 // Static path generation
 export interface StaticPath {
   params: { slug: string };
   props: {
-    isMCPPost: boolean;
+    isStaticPost: boolean;
     post: unknown;
   };
 }

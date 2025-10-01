@@ -13,8 +13,7 @@
     "astro": "astro",
     "lint": "eslint . && prettier -c .",
     "format": "prettier -w .",
-    "content:check": "astro check",
-    "mcp:dev": "pnpm --filter ai-studio-ai-news dev"
+    "content:check": "astro check"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
