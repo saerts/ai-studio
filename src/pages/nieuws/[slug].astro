@@ -31,7 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     console.log(`Generated ${paths.length} static paths for nieuws articles`);
   } catch (error) {
-    console.warn('Could not load static nieuws:', error);
+    console.warn('Could not load static posts:', error);
   }
 
   return paths;
