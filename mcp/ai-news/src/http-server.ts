@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import express from 'express';
+import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import { spawn, ChildProcess } from 'child_process';
 import { EventEmitter } from 'events';
@@ -74,7 +74,7 @@ class MCPHttpServer extends EventEmitter {
     this.app.use(express.json());
 
     // Logging middleware
-    this.app.use((req, _res, next) => {
+    this.app.use((req: Request, _res: Response, next) => {
       console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
       next();
     });
@@ -82,7 +82,7 @@ class MCPHttpServer extends EventEmitter {
 
   private setupRoutes() {
     // Health check
-    this.app.get('/health', (_req, res) => {
+    this.app.get('/health', (_req: Request, res: Response) => {
       res.json({
         status: 'ok',
         mcp_connected: this.connected,
@@ -91,7 +91,7 @@ class MCPHttpServer extends EventEmitter {
     });
 
     // List available RSS feeds
-    this.app.get('/api/feeds', async (_req, res) => {
+    this.app.get('/api/feeds', async (_req: Request, res: Response) => {
       try {
         const result = await this.callMCPTool('list_feeds', {});
         res.json(result);
@@ -205,7 +205,7 @@ class MCPHttpServer extends EventEmitter {
     });
 
     // Get usage statistics
-    this.app.get('/api/usage', async (_req, res) => {
+    this.app.get('/api/usage', async (_req: Request, res: Response) => {
       try {
         const result = await this.callMCPTool('get_usage_stats', {});
         res.json(result);
