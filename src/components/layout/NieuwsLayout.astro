@@ -6,7 +6,7 @@ import Button from '../ui/Button.astro';
 
 export interface Props {
   post:
-    | CollectionEntry<'blog'>
+    | CollectionEntry<'nieuws'>
     | {
         id: string;
         slug: string;
@@ -29,7 +29,7 @@ export interface Props {
   basePath?: string;
 }
 
-const { post, isMCPPost = false, basePath = '/blog' } = Astro.props;
+const { post, isMCPPost = false, basePath = '/nieuws' } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, source, canonicalUrl } =
   post.data;
 
@@ -236,9 +236,7 @@ const formatDate = (date: Date) => {
           )
         }
 
-        {(() => { const backLabel = basePath === '/news' ? 'Terug naar nieuws' : 'Terug naar blog'; return (
-          <Button href={basePath} variant="primary" size="sm">{backLabel}</Button>
-        ); })()}
+        <Button href={basePath} variant="primary" size="sm">Terug naar nieuws</Button>
       </div>
     </footer>
   </article>

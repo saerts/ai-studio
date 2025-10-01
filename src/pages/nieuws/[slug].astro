@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro';
-import BlogLayout from '../../components/layout/BlogLayout.astro';
+import NieuwsLayout from '../../components/layout/NieuwsLayout.astro';
 import SafeHTML from '../../components/SafeHTML.astro';
 import type { BlogPost } from '../../lib/validation';
 import type {
@@ -11,67 +11,12 @@ import type {
 } from '../../types/api';
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Generate paths for both MCP posts and static posts
+  // Generate paths only from static posts for reliable builds
   const paths: StaticPath[] = [];
 
-  // Fetch real articles from the API
-  try {
-    // Use the same API endpoint that the website uses
-    const baseUrl =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:4321'
-        : 'https://ai-studio44.com';
-
-    const response = await fetch(`${baseUrl}/api/blog`);
-
-    if (response.ok) {
-      const data = (await response.json()) as BlogApiResponse;
-      const posts = data.posts || [];
-
-      // Add all posts from the API
-      posts.forEach((post: unknown) => {
-        const blogPost = post as BlogPost;
-        paths.push({
-          params: { slug: blogPost.slug },
-          props: {
-            isMCPPost: true, // All API posts are MCP posts
-            post: {
-              id: blogPost.id,
-              slug: blogPost.slug,
-              data: {
-                title: blogPost.data.title,
-                description: blogPost.data.description,
-                pubDate: new Date(blogPost.data.pubDate),
-                updatedDate: new Date(blogPost.data.updatedDate),
-                tags: blogPost.data.tags,
-                source: blogPost.data.source,
-                canonicalUrl: blogPost.data.canonicalUrl,
-                cover: blogPost.data.cover,
-                coverAlt: blogPost.data.coverAlt,
-                coverGenerated: blogPost.data.coverGenerated,
-                draft: blogPost.data.draft,
-              },
-              body: blogPost.body,
-            },
-          },
-        });
-      });
-    } else {
-      console.warn('Could not fetch articles from API, using fallback');
-    }
-  } catch (error) {
-    console.warn('Error fetching articles for static paths:', error);
-  }
-
-  // If no articles were loaded, return empty array for server-side rendering
-  if (paths.length === 0) {
-    console.log('No articles found, pages will be rendered on-demand');
-  }
-
-  // Add static posts as fallback
   try {
     const { getCollection } = await import('astro:content');
-    const staticPosts = await getCollection('blog', ({ data }) => {
+    const staticPosts = await getCollection('nieuws', ({ data }) => {
       return !data.draft;
     });
 
@@ -84,6 +29,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
         },
       });
     });
+
+    console.log(`Generated ${paths.length} static paths for nieuws articles`);
   } catch (error) {
     console.warn('Could not load static posts:', error);
   }
@@ -113,7 +60,7 @@ if (!isMCPPost && post && 'render' in post) {
 const DynamicContent = Content as any;
 ---
 
-<BlogLayout post={post as any} isMCPPost={isMCPPost} basePath="/news">
+<NieuwsLayout post={post as any} isMCPPost={isMCPPost} basePath="/nieuws">
   {
     isMCPPost ? (
       <div class="prose prose-invert prose-lg max-w-none">
@@ -182,4 +129,4 @@ const DynamicContent = Content as any;
       <div>{DynamicContent ? <DynamicContent /> : null}</div>
     )
   }
-</BlogLayout>
+</NieuwsLayout>
