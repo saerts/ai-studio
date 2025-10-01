@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection('blog', (entry) => {
+  const posts = await getCollection('nieuws', (entry) => {
     return !entry.data.draft;
   });
 
@@ -22,7 +22,7 @@ export async function GET(context: APIContext) {
       title: post.data.title,
       pubDate: post.data.pubDate,
       description: post.data.description,
-      link: `/blog/${post.slug}/`,
+      link: `/nieuws/${post.slug}/`,
       categories: post.data.tags,
     })),
     customData: `<language>nl-be</language>`,
