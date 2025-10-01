@@ -15,8 +15,6 @@ import {
 } from '../../lib/validation.js';
 import {
   createErrorResponse,
-  withTimeout,
-  withRetry,
   extractErrorDetails,
 } from '../../lib/error-handling.js';
 import type { FetchOptions, MCPDataResponse } from '../../types/api.js';
@@ -415,11 +413,6 @@ const blogService = new MCPBlogService();
 // Disable prerendering for this API route to allow access to request headers
 export const prerender = false;
 
-// Helper function to extract query parameters from headers (workaround for dev server)
-function extractFromHeaders(headers: Headers, param: string): string | null {
-  // This is a placeholder - in a real scenario you might implement more sophisticated parsing
-  return null;
-}
 
 // GET /api/blog - List all blog posts
 export const GET: APIRoute = async ({ url, request }) => {
