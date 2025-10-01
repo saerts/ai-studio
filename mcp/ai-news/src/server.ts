@@ -284,7 +284,7 @@ class AINewsServer {
     let imagesGenerated = 0;
     const errors: string[] = [];
 
-    for (const [hash, article] of this.processedArticles) {
+    for (const [_hash, article] of this.processedArticles) {
       try {
         const filename = `${article.slug}.md`;
         const filepath = join(outputDir, filename);

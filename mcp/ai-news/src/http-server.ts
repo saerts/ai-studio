@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { join } from 'path';
 import process from 'process';
-import { DataManager, type StoredArticle } from './data-manager.js';
+import { DataManager } from './data-manager.js';
 
 // Setup global error handlers for unhandled promise rejections
 process.on('unhandledRejection', (reason: unknown, promise: Promise<any>) => {
@@ -68,51 +68,13 @@ class MCPHttpServer extends EventEmitter {
     }
   }
 
-  private generateSlug(title: string): string {
-    return title
-      .toLowerCase()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '')
-      .substring(0, 100);
-  }
-
-  private generateTags(source: string, content: string): string[] {
-    const tags: Set<string> = new Set(['ai', 'news']);
-
-    // Add source-based tag
-    const sourceTag = source.toLowerCase().replace(/[^\w]/g, '-');
-    tags.add(`source-${sourceTag}`);
-
-    // Extract tags from content
-    const text = content.toLowerCase();
-
-    const keywordMap = {
-      'machine-learning': ['machine learning', 'ml', 'neural network'],
-      'deep-learning': ['deep learning', 'neural', 'cnn', 'rnn', 'transformer'],
-      'nlp': ['natural language', 'nlp', 'language model', 'text'],
-      'computer-vision': ['computer vision', 'image', 'visual', 'cv'],
-      'robotics': ['robot', 'robotics', 'autonomous'],
-      'research': ['research', 'paper', 'study', 'arxiv'],
-      'industry': ['industry', 'business', 'commercial', 'enterprise'],
-      'opensource': ['open source', 'github', 'hugging face'],
-    };
-
-    for (const [tag, keywords] of Object.entries(keywordMap)) {
-      if (keywords.some(keyword => text.includes(keyword))) {
-        tags.add(tag);
-      }
-    }
-
-    return Array.from(tags).slice(0, 8);
-  }
 
   private setupMiddleware() {
     this.app.use(cors());
     this.app.use(express.json());
 
     // Logging middleware
-    this.app.use((req, res, next) => {
+    this.app.use((req, _res, next) => {
       console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
       next();
     });
@@ -120,7 +82,7 @@ class MCPHttpServer extends EventEmitter {
 
   private setupRoutes() {
     // Health check
-    this.app.get('/health', (req, res) => {
+    this.app.get('/health', (_req, res) => {
       res.json({
         status: 'ok',
         mcp_connected: this.connected,
@@ -129,7 +91,7 @@ class MCPHttpServer extends EventEmitter {
     });
 
     // List available RSS feeds
-    this.app.get('/api/feeds', async (req, res) => {
+    this.app.get('/api/feeds', async (_req, res) => {
       try {
         const result = await this.callMCPTool('list_feeds', {});
         res.json(result);
@@ -243,7 +205,7 @@ class MCPHttpServer extends EventEmitter {
     });
 
     // Get usage statistics
-    this.app.get('/api/usage', async (req, res) => {
+    this.app.get('/api/usage', async (_req, res) => {
       try {
         const result = await this.callMCPTool('get_usage_stats', {});
         res.json(result);
@@ -340,7 +302,7 @@ class MCPHttpServer extends EventEmitter {
       this.mcpProcess = null;
 
       // Reject all pending requests
-      for (const [id, { reject }] of this.pendingRequests) {
+      for (const [_id, { reject }] of this.pendingRequests) {
         reject(new Error('MCP server disconnected'));
       }
       this.pendingRequests.clear();

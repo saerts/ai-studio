@@ -1,10 +1,10 @@
 import OpenAI from 'openai';
 import sharp from 'sharp';
-import { writeFile, mkdir, access } from 'fs/promises';
+import { mkdir, access } from 'fs/promises';
 import { createHash } from 'crypto';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import type { ArticleData, ProcessedArticle } from './types.js';
+import type { ProcessedArticle } from './types.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
