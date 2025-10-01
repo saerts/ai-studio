@@ -17,24 +17,6 @@ export const blogRefreshSchema = z.object({
   imageStyle: z.string().optional().default('corporate'),
 });
 
-// MCP Article validation
-export const mcpArticleSchema = z.object({
-  id: z.string(),
-  slug: z.string(),
-  title: z.string().min(1).max(300),
-  description: z.string().max(1000),
-  link: z.string().url(),
-  pubDate: z.string().datetime().or(z.date()),
-  content: z.string(),
-  source: z.string(),
-  tags: z.array(z.string()).default([]),
-  summary: z.string().max(1000).default(''),
-  guid: z.string().optional(),
-  cover: z.string().url().optional(),
-  coverAlt: z.string().max(200).optional(),
-  coverGenerated: z.boolean().optional(),
-  fetchedAt: z.string().datetime().optional(),
-});
 
 // Blog post data validation
 export const blogPostDataSchema = z.object({
@@ -69,9 +51,6 @@ export function validateBlogRefresh(body: unknown) {
   return blogRefreshSchema.safeParse(body);
 }
 
-export function validateMCPArticle(article: unknown) {
-  return mcpArticleSchema.safeParse(article);
-}
 
 export function validateBlogPost(post: unknown) {
   return blogPostSchema.safeParse(post);
@@ -80,6 +59,5 @@ export function validateBlogPost(post: unknown) {
 // Type exports for TypeScript usage
 export type BlogQuery = z.infer<typeof blogQuerySchema>;
 export type BlogRefresh = z.infer<typeof blogRefreshSchema>;
-export type MCPArticle = z.infer<typeof mcpArticleSchema>;
 export type BlogPost = z.infer<typeof blogPostSchema>;
 export type BlogPostData = z.infer<typeof blogPostDataSchema>;

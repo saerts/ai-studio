@@ -15,12 +15,6 @@ const refreshRateLimiter = new RateLimiterMemory({
   blockDuration: 300, // Block for 5 minutes if limit is reached
 });
 
-// Rate limiter for MCP operations (very restrictive)
-const mcpRateLimiter = new RateLimiterMemory({
-  points: 5, // Number of MCP requests
-  duration: 600, // Per 10 minutes
-  blockDuration: 600, // Block for 10 minutes if limit is reached
-});
 
 /**
  * Get client identifier from request
@@ -83,25 +77,6 @@ export async function checkRefreshRateLimit(
   }
 }
 
-/**
- * Check rate limit for MCP operations
- */
-export async function checkMCPRateLimit(
-  request: Request
-): Promise<{ allowed: boolean; resetTime?: Date }> {
-  const clientId = getClientId(request);
-
-  try {
-    await mcpRateLimiter.consume(clientId);
-    return { allowed: true };
-  } catch (rateLimiterRes: unknown) {
-    const rateLimitResult = rateLimiterRes as RateLimiterResult;
-    const resetTime = new Date(
-      Date.now() + (rateLimitResult.msBeforeNext || 600000)
-    );
-    return { allowed: false, resetTime };
-  }
-}
 
 /**
  * Create rate limit error response

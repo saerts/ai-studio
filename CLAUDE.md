@@ -6,7 +6,6 @@ AI Studio is a production-ready AI consultancy website built with modern web tec
 
 - **Astro + TypeScript** - Static site generation with type safety
 - **Full WCAG 2.2 AA accessibility compliance** - Inclusive design principles
-- **MCP AI Tools** - Automated content import with DALL-E 3 image generation
 - **SEO-optimized** - JSON-LD structured data and Open Graph meta
 - **Responsive design** - Mobile-first approach with Tailwind CSS
 - **World-class design standards** - Following Stripe/Airbnb/Linear methodologies
@@ -24,21 +23,6 @@ npm run lint         # ESLint + Prettier check
 npm run typecheck    # TypeScript validation
 ```
 
-### MCP AI Tools
-
-```bash
-# AI News Import Tool
-cd mcp/ai-news
-npm run build        # Compile TypeScript
-npm run dev          # Development mode
-npm start           # Run MCP server
-
-# MCP Commands (when connected to Claude Desktop)
-mcp fetch_articles --since-days 7
-mcp write_markdown --include-images true
-mcp generate_images --style corporate
-mcp get_usage_stats
-```
 
 ## 📁 Project Architecture
 
@@ -53,7 +37,6 @@ ai-studio/
 │   ├── pages/          # Route pages and API endpoints
 │   ├── styles/         # Global CSS and design tokens
 │   └── lib/           # Utilities and schemas
-├── mcp/ai-news/        # MCP tool for AI content automation
 ├── public/             # Static assets
 └── docs/               # Comprehensive documentation
     ├── general/        # Design review and standards
@@ -244,54 +227,7 @@ Use `@agent-design-review` for thorough validation covering:
 - **[Blocker]**: Critical failures requiring immediate fix
 - **[High-Priority]**: Significant issues to fix before merge
 - **[Medium-Priority]**: Improvements for follow-up
-- **[Nitpick]**: Minor aesthetic details (prefix with "Nit:")
-
-## 🤖 MCP AI Content Tools
-
-### AI News Import Workflow
-
-```javascript
-// Automated content pipeline
-1. RSS feed monitoring (Hugging Face, OpenAI, Google AI, Meta AI)
-2. Article extraction and processing
-3. AI image generation with DALL-E 3
-4. Markdown file creation with frontmatter
-5. Quality review and publication
-```
-
-### Image Generation Standards
-
-```bash
-# Corporate style with green brand colors
-DEFAULT_IMAGE_STYLE=corporate
-BRAND_COLORS=green-500,green-600,slate-700
-IMAGE_MONTHLY_BUDGET=50
-IMAGE_BATCH_SIZE=3
-CACHE_DURATION=90_days
-```
-
-### Content Quality Guidelines
-
-- **High-commercial-intent** keywords and topics
-- **Source attribution** with canonical URLs
-- **Brand voice**: Professional, authoritative, accessible
-- **SEO optimization**: Strategic keyword placement, meta descriptions
-
-## 🔒 Security & Configuration
-
-### Environment Variables
-
-```bash
-# Required for MCP image generation
-OPENAI_API_KEY=sk-your-key
-OPENAI_ORG_ID=org-your-org  # Optional
-
-# Image generation settings
-IMAGE_GENERATION_ENABLED=true
-DEFAULT_IMAGE_STYLE=corporate
-IMAGE_MONTHLY_BUDGET=50
-IMAGE_BATCH_SIZE=3
-```
+- **[Nitpick]**: Minor aesthetic details (prefix with "Nit:")```
 
 ### Security Best Practices
 
@@ -307,7 +243,6 @@ IMAGE_BATCH_SIZE=3
 // astro.config.ts - Astro configuration with integrations
 // tailwind.config.js - Design system tokens and utilities
 // tsconfig.json - TypeScript strict mode configuration
-// mcp/ai-news/package.json - MCP tool dependencies
 ```
 
 ## 📋 Development Workflow

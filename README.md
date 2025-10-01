@@ -10,7 +10,6 @@ Een productieklare website voor AI Studio gebouwd met Astro, TypeScript en Tailw
 - 🔍 **SEO-geoptimaliseerd** - Open Graph, JSON-LD, sitemap
 - 📱 **Responsive design** - Werkt perfect op alle apparaten
 - 📊 **Content Collections** - Type-safe content management
-- 🤖 **MCP Blog Import** - Automatische AI-nieuws import via RSS
 - ⚡ **Performance-first** - Lighthouse score 95+
 
 ## 🚀 Quick Start
@@ -50,17 +49,6 @@ Uitgebreide documentatie is beschikbaar in de [`docs/`](./docs/) folder:
 - **[Full Documentation Index](./docs/README.md)** - Overzicht van alle documentatie
 - **[Troubleshooting](./docs/development/troubleshooting.md)** - Veelvoorkomende problemen en oplossingen
 
-## 🤖 MCP AI News Tool
-
-Automatische import van AI-nieuws uit RSS feeds:
-
-```bash
-mcp list_feeds                          # Toon beschikbare feeds
-mcp fetch_articles --sinceDays 7        # Haal recente artikelen op
-mcp write_markdown                      # Schrijf naar blog directory
-```
-
-**Bronnen**: Hugging Face, OpenAI, Google AI, Meta AI, MIT News, Papers with Code, en meer.
 
 ## 🛠️ Scripts
 
@@ -80,7 +68,6 @@ npm run content:check # Valideer Astro content
 - Full accessibility compliance (WCAG 2.2 AA)
 - SEO optimization met JSON-LD schemas
 - Responsive design met mobile navigation
-- MCP tool voor automated content import
 - Blog systeem met filtering en zoekfunctionaliteit
 
 ### 🔄 Current Development

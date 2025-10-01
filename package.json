@@ -13,15 +13,14 @@
     "astro": "astro",
     "lint": "eslint . && prettier -c .",
     "format": "prettier -w .",
-    "content:check": "astro check",
-    "mcp:dev": "pnpm --filter ai-studio-ai-news dev"
+    "content:check": "astro check"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.2",
-    "@astrojs/vercel": "^8.2.8",
+    "@astrojs/vercel": "^8.0.4",
     "@types/dompurify": "^3.0.5",
     "@types/jsdom": "^21.1.7",
     "astro": "^5.13.9",

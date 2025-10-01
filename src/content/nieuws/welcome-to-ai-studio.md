@@ -5,7 +5,7 @@ pubDate: 2025-01-15T09:00:00.000Z
 updatedDate: 2025-01-15T09:00:00.000Z
 tags: ['ai', 'automatisering', 'bedrijfstransformatie', 'ai-studio44']
 source: 'AI Studio'
-canonicalUrl: 'https://ai-studio44.com/blog/welcome-to-ai-studio'
+canonicalUrl: 'https://ai-studio44.com/nieuws/welcome-to-ai-studio'
 draft: false
 ---
 
@@ -50,4 +50,4 @@ De AI-revolutie is hier, en de bedrijven die nu starten hebben een concurrentiev
 
 Klaar om te ontdekken hoe AI jouw bedrijf kan transformeren? [Plan een vrijblijvend gesprek](/contact) en laten we samen kijken naar de mogelijkheden.
 
-_Bron: [AI Studio Blog](https://ai-studio44.com/blog/welcome-to-ai-studio)_
+_Bron: [AI Studio Nieuws](https://ai-studio44.com/nieuws/welcome-to-ai-studio)_
