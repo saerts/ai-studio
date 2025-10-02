@@ -1,0 +1,380 @@
+---
+// Cookie Consent Component - GDPR Compliant
+// Blocks GTM and analytics until user explicitly consents
+---
+
+<div id="cookie-consent-banner" class="cookie-banner" aria-live="polite" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
+  <div class="cookie-content">
+    <div class="cookie-text">
+      <h2 id="cookie-title" class="cookie-title">Cookies & Privacy</h2>
+      <p id="cookie-description" class="cookie-description">
+        Wij gebruiken analytische cookies via Google Tag Manager om onze website te verbeteren.
+        Deze cookies verzamelen anonieme informatie over uw websitebezoek.
+        <a href="/privacy" class="cookie-link">Meer informatie</a>
+      </p>
+    </div>
+    <div class="cookie-buttons">
+      <button
+        id="cookie-reject"
+        class="cookie-btn cookie-btn-reject"
+        aria-label="Weiger analytische cookies"
+      >
+        Weigeren
+      </button>
+      <button
+        id="cookie-accept"
+        class="cookie-btn cookie-btn-accept"
+        aria-label="Accepteer analytische cookies"
+      >
+        Accepteren
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(15, 20, 25, 0.98) 0%, rgba(26, 43, 43, 0.98) 100%);
+    backdrop-filter: blur(10px);
+    border-top: 2px solid var(--color-teal-500, #14b8a6);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+    padding: 1.5rem;
+    z-index: 99999;
+    display: none;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .cookie-banner.show {
+    display: block;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .cookie-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .cookie-text {
+    flex: 1;
+  }
+
+  .cookie-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .cookie-description {
+    font-size: 0.875rem;
+    color: #d4d4d8;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .cookie-link {
+    color: var(--color-teal-400, #2dd4bf);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .cookie-link:hover {
+    color: var(--color-teal-300, #5eead4);
+  }
+
+  .cookie-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .cookie-btn {
+    padding: 0.625rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .cookie-btn:focus-visible {
+    outline: 2px solid var(--color-teal-400, #2dd4bf);
+    outline-offset: 2px;
+  }
+
+  .cookie-btn-accept {
+    background: linear-gradient(135deg, var(--color-teal-500, #14b8a6) 0%, var(--color-cyan-500, #06b6d4) 100%);
+    color: white;
+    border: none;
+  }
+
+  .cookie-btn-accept:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+  }
+
+  .cookie-btn-reject {
+    background: transparent;
+    color: #a1a1aa;
+    border: 1px solid #3f3f46;
+  }
+
+  .cookie-btn-reject:hover {
+    background: rgba(63, 63, 70, 0.3);
+    color: #d4d4d8;
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .cookie-content {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .cookie-buttons {
+      width: 100%;
+      flex-direction: column-reverse;
+    }
+
+    .cookie-btn {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .cookie-banner {
+      animation: none;
+    }
+
+    .cookie-btn {
+      transition: none;
+    }
+
+    .cookie-btn-accept:hover {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  // Cookie Consent Management
+  // GDPR-compliant - blocks analytics until explicit consent
+
+  const COOKIE_NAME = 'ai_studio_consent';
+  const COOKIE_EXPIRY_DAYS = 365;
+
+  interface ConsentState {
+    analytics: boolean;
+    timestamp: number;
+    version: number;
+  }
+
+  // Cookie utilities
+  function getCookie(name: string): string | null {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      const cookieValue = parts.pop()?.split(';').shift();
+      return cookieValue || null;
+    }
+    return null;
+  }
+
+  function setCookie(name: string, value: string, days: number): void {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/;SameSite=Strict;Secure`;
+  }
+
+  function deleteCookie(name: string): void {
+    document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+  }
+
+  // GTM Loading
+  function loadGTM(): void {
+    const GTM_ID = (window as any).__GTM_ID__ || 'GTM-KJZPCH44';
+
+    // Prevent double-loading
+    if ((window as any).__GTM_LOADED__) {
+      return;
+    }
+    (window as any).__GTM_LOADED__ = true;
+
+    // Initialize dataLayer
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+
+    // Load GTM script
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`;
+
+    const firstScript = document.getElementsByTagName('script')[0];
+    if (firstScript && firstScript.parentNode) {
+      firstScript.parentNode.insertBefore(script, firstScript);
+    } else {
+      document.head.appendChild(script);
+    }
+
+    // Add noscript iframe for GTM
+    const noscript = document.createElement('noscript');
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.googletagmanager.com/ns.html?id=${GTM_ID}`;
+    iframe.height = '0';
+    iframe.width = '0';
+    iframe.style.display = 'none';
+    iframe.style.visibility = 'hidden';
+    noscript.appendChild(iframe);
+    document.body.insertBefore(noscript, document.body.firstChild);
+
+    console.log('[Cookie Consent] GTM loaded after user consent');
+  }
+
+  // Clear analytics cookies
+  function clearAnalyticsCookies(): void {
+    // Google Analytics cookies
+    const gaCookies = ['_ga', '_gid', '_gat', '_gat_gtag_UA_'];
+    gaCookies.forEach(cookie => {
+      deleteCookie(cookie);
+      // Also try with domain prefix
+      document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=.${window.location.hostname}`;
+    });
+  }
+
+  // Save consent
+  function saveConsent(analytics: boolean): void {
+    const consent: ConsentState = {
+      analytics,
+      timestamp: Date.now(),
+      version: 1
+    };
+    setCookie(COOKIE_NAME, JSON.stringify(consent), COOKIE_EXPIRY_DAYS);
+  }
+
+  // Get saved consent
+  function getConsent(): ConsentState | null {
+    const cookieValue = getCookie(COOKIE_NAME);
+    if (!cookieValue) return null;
+
+    try {
+      return JSON.parse(cookieValue) as ConsentState;
+    } catch {
+      return null;
+    }
+  }
+
+  // Show/hide banner
+  function showBanner(): void {
+    const banner = document.getElementById('cookie-consent-banner');
+    if (banner) {
+      banner.classList.add('show');
+      // Focus management for accessibility
+      const acceptButton = document.getElementById('cookie-accept');
+      acceptButton?.focus();
+    }
+  }
+
+  function hideBanner(): void {
+    const banner = document.getElementById('cookie-consent-banner');
+    if (banner) {
+      banner.classList.remove('show');
+    }
+  }
+
+  // Handle consent
+  function handleConsent(accepted: boolean): void {
+    saveConsent(accepted);
+    hideBanner();
+
+    if (accepted) {
+      loadGTM();
+      // Push consent event to dataLayer
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'cookie_consent_update',
+        analytics_consent: 'granted'
+      });
+    } else {
+      clearAnalyticsCookies();
+      // Push rejection event (without loading GTM)
+      console.log('[Cookie Consent] Analytics rejected by user');
+    }
+  }
+
+  // Initialize on page load
+  function init(): void {
+    const consent = getConsent();
+
+    if (consent === null) {
+      // No consent decision yet - show banner
+      showBanner();
+    } else if (consent.analytics) {
+      // Consent previously given - load GTM
+      loadGTM();
+    } else {
+      // Consent previously denied - do nothing
+      console.log('[Cookie Consent] Analytics disabled by user preference');
+    }
+
+    // Event listeners
+    document.getElementById('cookie-accept')?.addEventListener('click', () => {
+      handleConsent(true);
+    });
+
+    document.getElementById('cookie-reject')?.addEventListener('click', () => {
+      handleConsent(false);
+    });
+
+    // Keyboard accessibility - ESC to focus on banner
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const banner = document.getElementById('cookie-consent-banner');
+        if (banner?.classList.contains('show')) {
+          const acceptButton = document.getElementById('cookie-accept');
+          acceptButton?.focus();
+        }
+      }
+    });
+  }
+
+  // Run on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Expose function for settings page to allow users to change preferences
+  (window as any).updateCookieConsent = function(analytics: boolean) {
+    handleConsent(analytics);
+    if (!analytics) {
+      // Reload page to clear GTM if it was loaded
+      window.location.reload();
+    }
+  };
+</script>

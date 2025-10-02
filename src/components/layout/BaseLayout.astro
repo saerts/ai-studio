@@ -5,6 +5,7 @@ import { orgSchema } from '../../lib/schema';
 import SkipLink from '../a11y/SkipLink.astro';
 import Header from '../nav/Header.astro';
 import Footer from '../nav/Footer.astro';
+import CookieConsent from '../CookieConsent.astro';
 import '../../styles/globals.css';
 
 export interface Props extends SEOProps {
@@ -13,6 +14,17 @@ export interface Props extends SEOProps {
 
 const seoProps = getSEOProps(Astro.props);
 const organizationSchema = orgSchema();
+
+// GTM Configuration - MUST use environment variables
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
+const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+// Error if environment variables are not set
+if (!GTM_ID || !GOOGLE_VERIFICATION) {
+  throw new Error(
+    'Missing required environment variables: PUBLIC_GTM_ID and PUBLIC_GOOGLE_SITE_VERIFICATION must be set in .env file'
+  );
+}
 ---
 
 <!doctype html>
@@ -53,11 +65,19 @@ const organizationSchema = orgSchema();
       type="application/ld+json"
       set:html={JSON.stringify(organizationSchema)}
     />
-    <meta name="google-site-verification" content="29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI" />
+    <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
+
+    <!-- GTM Configuration - External script to avoid CSP unsafe-inline -->
+    <!-- GTM will ONLY load after explicit user consent via CookieConsent.astro -->
+    <script src="/scripts/gtm-config.js" data-gtm-id={GTM_ID}></script>
   </head>
 
   <body class="min-h-full mt-auto bg-dark-900 text-white">
     <SkipLink />
+
+    <!-- Cookie Consent Banner - GDPR Compliant -->
+    <!-- GTM will only load after user explicitly consents -->
+    <CookieConsent />
 
     <div class="flex min-h-full flex-col">
       <Header />
