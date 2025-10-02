@@ -3,10 +3,10 @@
  * Handles form validation, anti-spam checks, and Web3Forms submission
  */
 
-// Check if we're in development mode (will be undefined in production)
+// Check if we're in development mode
 const isDev = typeof window !== 'undefined' &&
-              window.location.hostname === 'localhost' ||
-              window.location.hostname === '127.0.0.1';
+              (window.location.hostname === 'localhost' ||
+               window.location.hostname === '127.0.0.1');
 
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('[data-contact-form]');

@@ -3,7 +3,7 @@
  * Provides performant scroll-triggered animations with device-specific optimizations
  */
 
-export function initScrollAnimations() {
+function initScrollAnimations() {
   if (typeof window === 'undefined') return;
 
   // Prevent double-initialization across pages and auto-init
