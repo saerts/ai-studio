@@ -72,14 +72,14 @@ if (!GTM_ID || !GOOGLE_VERIFICATION) {
     <script src="/scripts/gtm-config.js" data-gtm-id={GTM_ID}></script>
   </head>
 
-  <body class="min-h-full mt-auto bg-dark-900 text-white">
+  <body class="h-full bg-dark-900 text-white">
     <SkipLink />
 
     <!-- Cookie Consent Banner - GDPR Compliant -->
     <!-- GTM will only load after user explicitly consents -->
     <CookieConsent />
 
-    <div class="flex min-h-full flex-col">
+    <div class="flex h-full flex-col">
       <Header />
 
       <main id="main-content" class={`flex-1 ${Astro.props.class || ''}`}>
