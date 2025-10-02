@@ -1076,7 +1076,7 @@ const seo = {
       const counterObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && entry.target instanceof HTMLElement) {
               animateCounter(entry.target);
               counterObserver.unobserve(entry.target);
             }
