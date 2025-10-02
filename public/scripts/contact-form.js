@@ -3,6 +3,11 @@
  * Handles form validation, anti-spam checks, and Web3Forms submission
  */
 
+// Check if we're in development mode (will be undefined in production)
+const isDev = typeof window !== 'undefined' &&
+              window.location.hostname === 'localhost' ||
+              window.location.hostname === '127.0.0.1';
+
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('[data-contact-form]');
   if (!form) return;
@@ -39,9 +44,97 @@ document.addEventListener('DOMContentLoaded', function () {
     field.addEventListener('blur', () => validateField(field));
   });
 
-  // Form submission
+  // Helper to show error message
+  const showError = (message) => {
+    const errorElement = document.getElementById('form-error');
+    if (errorElement) {
+      // Update error message if custom message provided
+      const messageElement = errorElement.querySelector('.mt-2');
+      if (messageElement && message) {
+        messageElement.textContent = message;
+      }
+      errorElement.classList.remove('hidden');
+    }
+  };
+
+  // Helper to hide all messages
+  const hideMessages = () => {
+    document.getElementById('form-success')?.classList.add('hidden');
+    document.getElementById('form-error')?.classList.add('hidden');
+  };
+
+  // Form submission with retry logic
+  const submitForm = async (formData, retryCount = 0) => {
+    const maxRetries = 2;
+
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        return { success: true };
+      } else if (response.status >= 500 && retryCount < maxRetries) {
+        // Server error - retry
+        if (isDev) {
+          console.log(`Server error, retrying... (${retryCount + 1}/${maxRetries})`);
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+        return submitForm(formData, retryCount + 1);
+      } else {
+        return {
+          success: false,
+          error: 'server',
+          message: 'Er ging iets mis bij het versturen. Probeer het later opnieuw.'
+        };
+      }
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        return {
+          success: false,
+          error: 'timeout',
+          message: 'De verbinding duurde te lang. Controleer je internetverbinding en probeer opnieuw.'
+        };
+      }
+
+      if (!navigator.onLine) {
+        return {
+          success: false,
+          error: 'offline',
+          message: 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.'
+        };
+      }
+
+      // Network error - retry
+      if (retryCount < maxRetries) {
+        if (isDev) {
+          console.log(`Network error, retrying... (${retryCount + 1}/${maxRetries})`);
+        }
+        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+        return submitForm(formData, retryCount + 1);
+      }
+
+      return {
+        success: false,
+        error: 'network',
+        message: 'Netwerkfout. Probeer het opnieuw of stuur een e-mail naar hi@ai-studio44.com'
+      };
+    }
+  };
+
+  // Form submission handler
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    // Hide any previous messages
+    hideMessages();
 
     // Validate all fields
     let isValid = true;
@@ -55,12 +148,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Anti-spam checks
     const honeypot = form.querySelector('[name="botcheck"]');
-    if (honeypot?.checked) return; // Bot detected
+    if (honeypot?.checked) {
+      // Silent fail for bots
+      if (isDev) console.log('Bot detected via honeypot');
+      return;
+    }
 
     const timestamp = form.querySelector('[name="_timestamp"]');
     const submitTime = Date.now();
     const formLoadTime = parseInt(timestamp?.value || '0');
-    if (submitTime - formLoadTime < 3000) return; // Too fast, likely bot
+    if (submitTime - formLoadTime < 3000) {
+      // Silent fail for bots
+      if (isDev) console.log('Bot detected via timestamp (too fast)');
+      return;
+    }
 
     // Submit form
     const submitButton = form.querySelector('button[type="submit"]');
@@ -70,32 +171,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     try {
       const formData = new FormData(form);
-      const response = await fetch(form.action, {
-        method: 'POST',
-        body: formData,
-      });
+      const result = await submitForm(formData);
 
-      if (response.ok) {
+      if (result.success) {
         document.getElementById('form-success')?.classList.remove('hidden');
         form.reset();
+
+        // Scroll to success message
+        document.getElementById('form-success')?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest'
+        });
       } else {
-        throw new Error('Network response was not ok');
+        showError(result.message);
+
+        // Only log detailed errors in development
+        if (isDev) {
+          console.error('Form submission failed:', result.error);
+        }
       }
     } catch (error) {
-      document.getElementById('form-error')?.classList.remove('hidden');
-      console.error('Form submission error:', error);
+      // Fallback error handler
+      showError('Er ging iets onverwachts mis. Probeer het opnieuw.');
+
+      // Only log in development
+      if (isDev) {
+        console.error('Unexpected form error:', error);
+      }
     } finally {
       submitButton.textContent = originalText;
       submitButton.disabled = false;
     }
   });
-});
-
-// Initialize scroll animations
-import('./scrollAnimations.js').then((module) => {
-  if (module.initScrollAnimations) {
-    module.initScrollAnimations();
-  }
-}).catch((error) => {
-  console.error('Failed to load scroll animations:', error);
 });
