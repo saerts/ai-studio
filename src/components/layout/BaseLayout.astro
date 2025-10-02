@@ -5,6 +5,7 @@ import { orgSchema } from '../../lib/schema';
 import SkipLink from '../a11y/SkipLink.astro';
 import Header from '../nav/Header.astro';
 import Footer from '../nav/Footer.astro';
+import CookieConsent from '../CookieConsent.astro';
 import '../../styles/globals.css';
 
 export interface Props extends SEOProps {
@@ -14,9 +15,16 @@ export interface Props extends SEOProps {
 const seoProps = getSEOProps(Astro.props);
 const organizationSchema = orgSchema();
 
-// GTM Configuration - use environment variable or fallback to hardcoded ID
-const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-KJZPCH44';
-const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI';
+// GTM Configuration - MUST use environment variables
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
+const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+// Error if environment variables are not set
+if (!GTM_ID || !GOOGLE_VERIFICATION) {
+  throw new Error(
+    'Missing required environment variables: PUBLIC_GTM_ID and PUBLIC_GOOGLE_SITE_VERIFICATION must be set in .env file'
+  );
+}
 ---
 
 <!doctype html>
@@ -58,23 +66,18 @@ const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '
       set:html={JSON.stringify(organizationSchema)}
     />
     <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
-    <!-- Google Tag Manager -->
-    <script is:inline define:vars={{ GTM_ID }}>
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer',GTM_ID);
-    </script>
-    <!-- End Google Tag Manager -->
+
+    <!-- GTM Configuration - External script to avoid CSP unsafe-inline -->
+    <!-- GTM will ONLY load after explicit user consent via CookieConsent.astro -->
+    <script src="/scripts/gtm-config.js" data-gtm-id={GTM_ID}></script>
   </head>
 
   <body class="min-h-full mt-auto bg-dark-900 text-white">
     <SkipLink />
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
-                      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Cookie Consent Banner - GDPR Compliant -->
+    <!-- GTM will only load after user explicitly consents -->
+    <CookieConsent />
 
     <div class="flex min-h-full flex-col">
       <Header />

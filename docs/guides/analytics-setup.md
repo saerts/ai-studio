@@ -1,52 +1,63 @@
 # Analytics Setup Guide
 
-This document outlines the analytics and tracking implementation for AI Studio.
+This document outlines the GDPR-compliant analytics and tracking implementation for AI Studio.
+
+## ⚠️ Important: Cookie Consent First
+
+**GTM ONLY loads after explicit user consent** via our cookie consent banner. This ensures GDPR/PECR compliance for EU visitors.
 
 ## Google Tag Manager (GTM)
 
 ### Overview
 
-AI Studio uses Google Tag Manager for centralized analytics and tracking management. GTM allows for flexible tag deployment without code changes.
+AI Studio uses Google Tag Manager for centralized analytics and tracking management with full GDPR compliance.
 
 ### Current Implementation
 
-**GTM Container ID:** `GTM-KJZPCH44`
+**GTM Configuration:**
+- GTM Container ID stored in environment variable `PUBLIC_GTM_ID`
+- GTM loads **ONLY** after user consents via cookie banner
+- Cookie consent managed by `/src/components/CookieConsent.astro`
 
-The GTM implementation is located in `/src/components/layout/BaseLayout.astro`:
+**Architecture:**
+
+1. **BaseLayout.astro** - Configures GTM ID from environment variable
+2. **CookieConsent.astro** - Manages user consent and conditionally loads GTM
+3. **gtm-config.js** - External script (CSP-compliant, no `unsafe-inline`)
 
 ```astro
-<!-- Google Tag Manager - Head -->
-<script is:inline>
-  (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer','GTM-KJZPCH44');
-</script>
+<!-- BaseLayout.astro -->
+<script src="/scripts/gtm-config.js" data-gtm-id={GTM_ID}></script>
 
-<!-- Google Tag Manager - Body (noscript fallback) -->
-<noscript>
-  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KJZPCH44"
-    height="0" width="0" style="display:none;visibility:hidden">
-  </iframe>
-</noscript>
+<CookieConsent />
 ```
+
+The cookie consent component handles GTM loading:
+- User clicks "Accept" → GTM loads
+- User clicks "Reject" → GTM never loads
+- Preference stored for 365 days
 
 ### Key Features
 
-- **`is:inline` directive**: Ensures GTM script is not processed by Astro's build system
-- **Dual implementation**: Script in `<head>` and noscript fallback in `<body>`
-- **DataLayer**: Uses standard `dataLayer` for event tracking
+- **✅ GDPR Compliant**: GTM blocked until explicit consent
+- **✅ CSP Secure**: No `unsafe-inline` scripts
+- **✅ Environment Variables**: No hardcoded secrets
+- **✅ Cookie Management**: Auto-clears analytics cookies on rejection
+- **✅ Accessibility**: Keyboard navigation and screen reader support
 
-## Google Site Verification
+## Environment Variables
 
-**Verification Code:** `29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI`
+**Required configuration in `.env` file:**
 
-```html
-<meta name="google-site-verification" content="29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI" />
+```bash
+# Get from Google Tag Manager: https://tagmanager.google.com/
+PUBLIC_GTM_ID=GTM-XXXXXXX
+
+# Get from Google Search Console: https://search.google.com/search-console
+PUBLIC_GOOGLE_SITE_VERIFICATION=your_verification_code_here
 ```
 
-This meta tag verifies domain ownership for Google Search Console.
+⚠️ **Never commit `.env` to git!** Use `.env.example` for reference.
 
 ## Environment Variables (Optional)
 
