@@ -5,7 +5,15 @@ import astro from 'eslint-plugin-astro';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default [
-  { ignores: ['dist/**', '.astro/**', 'mcp/**/dist/**'] },
+  {
+    ignores: [
+      'dist/**',
+      '.astro/**',
+      'mcp/**/dist/**',
+      '.vercel/**',
+      'node_modules/**',
+    ],
+  },
   js.configs.recommended,
   ...astro.configs.recommended,
   // Override for MCP workspace Node scripts and web APIs
@@ -37,6 +45,7 @@ export default [
         sourceType: 'module',
       },
       globals: {
+        // Node.js globals
         NodeJS: 'readonly',
         AbortSignal: 'readonly',
         process: 'readonly',
@@ -44,6 +53,8 @@ export default [
         console: 'readonly',
         setTimeout: 'readonly',
         clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
         fetch: 'readonly',
         Request: 'readonly',
         Response: 'readonly',
@@ -51,6 +62,30 @@ export default [
         URL: 'readonly',
         URLSearchParams: 'readonly',
         AbortController: 'readonly',
+        // Browser globals
+        window: 'readonly',
+        document: 'readonly',
+        navigator: 'readonly',
+        location: 'readonly',
+        localStorage: 'readonly',
+        sessionStorage: 'readonly',
+        crypto: 'readonly',
+        performance: 'readonly',
+        requestAnimationFrame: 'readonly',
+        cancelAnimationFrame: 'readonly',
+        IntersectionObserver: 'readonly',
+        ResizeObserver: 'readonly',
+        MutationObserver: 'readonly',
+        HTMLElement: 'readonly',
+        Element: 'readonly',
+        Node: 'readonly',
+        customElements: 'readonly',
+        TextEncoder: 'readonly',
+        TextDecoder: 'readonly',
+        ReadableStream: 'readonly',
+        Navigator: 'readonly',
+        Performance: 'readonly',
+        Window: 'readonly',
       },
     },
     rules: {

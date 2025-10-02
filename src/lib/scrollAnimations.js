@@ -2,7 +2,6 @@
  * Optimized Scroll Animation System for AI Studio
  * Provides performant scroll-triggered animations with device-specific optimizations
  */
-/* global window, document, IntersectionObserver, requestAnimationFrame */
 
 export function initScrollAnimations() {
   if (typeof window === 'undefined') return;

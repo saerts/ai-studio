@@ -8,10 +8,10 @@ const purify = DOMPurify(window);
 // Configure DOMPurify for blog content
 purify.addHook('beforeSanitizeElements', (node, data) => {
   // Remove any script tags entirely
-  if (data && (data as any).tagName === 'script') {
-    const el = node as any;
+  if (data && (data as { tagName?: string }).tagName === 'script') {
+    const el = node as Node & { remove?: () => void };
     if (typeof el.remove === 'function') {
-      (el as any).remove();
+      el.remove();
     } else if (el.parentNode) {
       el.parentNode.removeChild(el);
     }
