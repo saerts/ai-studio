@@ -33,8 +33,25 @@ export class AppError extends Error {
     Object.setPrototypeOf(this, AppError.prototype);
 
     // Capture stack trace when available in environment
-    if ('captureStackTrace' in Error && typeof (Error as any).captureStackTrace === 'function') {
-      (Error as any).captureStackTrace(this, this.constructor);
+    if (
+      'captureStackTrace' in Error &&
+      typeof (
+        Error as ErrorConstructor & {
+          captureStackTrace?: (
+            targetObject: object,
+            constructorOpt?: Function
+          ) => void;
+        }
+      ).captureStackTrace === 'function'
+    ) {
+      (
+        Error as ErrorConstructor & {
+          captureStackTrace: (
+            targetObject: object,
+            constructorOpt?: Function
+          ) => void;
+        }
+      ).captureStackTrace(this, this.constructor);
     }
   }
 }
@@ -71,12 +88,18 @@ export function extractErrorDetails(error: unknown): ErrorDetails {
   }
 
   if (error && typeof error === 'object') {
-    const errorObj = error as any;
+    const errorObj = error as Record<string, unknown>;
     return {
-      message: errorObj.message || 'Unknown error',
-      stack: errorObj.stack,
-      code: errorObj.code,
-      statusCode: errorObj.statusCode,
+      message:
+        typeof errorObj.message === 'string'
+          ? errorObj.message
+          : 'Unknown error',
+      stack: typeof errorObj.stack === 'string' ? errorObj.stack : undefined,
+      code: typeof errorObj.code === 'string' ? errorObj.code : undefined,
+      statusCode:
+        typeof errorObj.statusCode === 'number'
+          ? errorObj.statusCode
+          : undefined,
       timestamp,
     };
   }
@@ -118,7 +141,7 @@ export function createErrorResponse(
 /**
  * Wrap async functions with error handling
  */
-export function withErrorHandling<T extends any[], R>(
+export function withErrorHandling<T extends unknown[], R>(
   fn: (...args: T) => Promise<R>
 ): (...args: T) => Promise<R> {
   return async (...args: T): Promise<R> => {
@@ -189,15 +212,21 @@ export async function withRetry<T>(
  * Global unhandled promise rejection handler
  */
 export function setupGlobalErrorHandlers(): void {
-  process.on('unhandledRejection', (reason: unknown, promise: Promise<any>) => {
-    console.error('Unhandled Promise Rejection:', extractErrorDetails(reason));
-    console.error('Promise:', promise);
+  process.on(
+    'unhandledRejection',
+    (reason: unknown, promise: Promise<unknown>) => {
+      console.error(
+        'Unhandled Promise Rejection:',
+        extractErrorDetails(reason)
+      );
+      console.error('Promise:', promise);
 
-    // Don't terminate the process in production, just log the error
-    if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
+      // Don't terminate the process in production, just log the error
+      if (process.env.NODE_ENV !== 'production') {
+        process.exit(1);
+      }
     }
-  });
+  );
 
   process.on('uncaughtException', (error: Error) => {
     console.error('Uncaught Exception:', extractErrorDetails(error));

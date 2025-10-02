@@ -15,7 +15,6 @@ const refreshRateLimiter = new RateLimiterMemory({
   blockDuration: 300, // Block for 5 minutes if limit is reached
 });
 
-
 /**
  * Get client identifier from request
  * Uses IP address with optional forwarded headers consideration
@@ -76,7 +75,6 @@ export async function checkRefreshRateLimit(
     return { allowed: false, resetTime };
   }
 }
-
 
 /**
  * Create rate limit error response

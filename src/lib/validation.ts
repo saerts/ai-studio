@@ -17,7 +17,6 @@ export const blogRefreshSchema = z.object({
   imageStyle: z.string().optional().default('corporate'),
 });
 
-
 // Blog post data validation
 export const blogPostDataSchema = z.object({
   title: z.string().min(1).max(300),
@@ -50,7 +49,6 @@ export function validateBlogQuery(searchParams: URLSearchParams) {
 export function validateBlogRefresh(body: unknown) {
   return blogRefreshSchema.safeParse(body);
 }
-
 
 export function validateBlogPost(post: unknown) {
   return blogPostSchema.safeParse(post);

@@ -49,7 +49,6 @@ Uitgebreide documentatie is beschikbaar in de [`docs/`](./docs/) folder:
 - **[Full Documentation Index](./docs/README.md)** - Overzicht van alle documentatie
 - **[Troubleshooting](./docs/development/troubleshooting.md)** - Veelvoorkomende problemen en oplossingen
 
-
 ## 🛠️ Scripts
 
 ```bash

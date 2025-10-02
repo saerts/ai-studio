@@ -32,7 +32,6 @@ export interface BlogApiResponse {
   };
 }
 
-
 // Static path generation
 export interface StaticPath {
   params: { slug: string };
@@ -44,6 +43,7 @@ export interface StaticPath {
 
 // Astro content types
 export interface AstroContent {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render(): Promise<{ Content: any }>;
 }
 
@@ -52,6 +52,7 @@ export interface AstroCollectionEntry {
   slug: string;
   data: Record<string, unknown>;
   body?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   render?: () => Promise<{ Content: any }>;
 }
 

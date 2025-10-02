@@ -23,7 +23,6 @@ npm run lint         # ESLint + Prettier check
 npm run typecheck    # TypeScript validation
 ```
 
-
 ## 📁 Project Architecture
 
 ```
@@ -51,30 +50,30 @@ ai-studio/
 
 ```css
 /* Primary Brand Colors - Teal/Cyan */
---color-teal-300: #5eead4;     /* Light accent */
---color-teal-400: #2dd4bf;     /* Primary brand */
---color-teal-500: #14b8a6;     /* Primary hover */
---color-teal-600: #0d9488;     /* Primary active */
---color-cyan-400: #22d3ee;     /* Bright accent */
---color-cyan-500: #06b6d4;     /* Cyan primary */
+--color-teal-300: #5eead4; /* Light accent */
+--color-teal-400: #2dd4bf; /* Primary brand */
+--color-teal-500: #14b8a6; /* Primary hover */
+--color-teal-600: #0d9488; /* Primary active */
+--color-cyan-400: #22d3ee; /* Bright accent */
+--color-cyan-500: #06b6d4; /* Cyan primary */
 
 /* Dark Theme Backgrounds */
---color-dark-900: #0a0f0f;     /* Deepest background */
---color-dark-800: #0f1419;     /* Primary background */
---color-dark-700: #1a2b2b;     /* Card backgrounds */
---color-dark-600: #233333;     /* Elevated surfaces */
---color-dark-500: #2d4040;     /* Interactive elements */
+--color-dark-900: #0a0f0f; /* Deepest background */
+--color-dark-800: #0f1419; /* Primary background */
+--color-dark-700: #1a2b2b; /* Card backgrounds */
+--color-dark-600: #233333; /* Elevated surfaces */
+--color-dark-500: #2d4040; /* Interactive elements */
 
 /* Semantic Colors */
---color-success: #00d4aa;      /* Success states */
---color-error: #ef4444;        /* Error states */
---color-warning: #f59e0b;      /* Warning states */
---color-info: #22d3ee;         /* Information states */
+--color-success: #00d4aa; /* Success states */
+--color-error: #ef4444; /* Error states */
+--color-warning: #f59e0b; /* Warning states */
+--color-info: #22d3ee; /* Information states */
 
 /* Text Colors */
---color-text-primary: #ffffff;   /* Primary text */
+--color-text-primary: #ffffff; /* Primary text */
 --color-text-secondary: #a1a1aa; /* Secondary text */
---color-text-tertiary: #71717a;  /* Tertiary text */
+--color-text-tertiary: #71717a; /* Tertiary text */
 ```
 
 ### Typography Scale
@@ -84,14 +83,14 @@ ai-studio/
 font-family: 'Inter', system-ui, sans-serif;
 
 /* Type Scale */
---font-size-xs: 0.75rem;      /* 12px */
---font-size-sm: 0.875rem;     /* 14px */
---font-size-base: 1rem;       /* 16px - Body default */
---font-size-lg: 1.125rem;     /* 18px */
---font-size-xl: 1.25rem;      /* 20px */
---font-size-2xl: 1.5rem;      /* 24px */
---font-size-3xl: 1.875rem;    /* 30px */
---font-size-4xl: 2.25rem;     /* 36px - H1 */
+--font-size-xs: 0.75rem; /* 12px */
+--font-size-sm: 0.875rem; /* 14px */
+--font-size-base: 1rem; /* 16px - Body default */
+--font-size-lg: 1.125rem; /* 18px */
+--font-size-xl: 1.25rem; /* 20px */
+--font-size-2xl: 1.5rem; /* 24px */
+--font-size-3xl: 1.875rem; /* 30px */
+--font-size-4xl: 2.25rem; /* 36px - H1 */
 
 /* Font Weights */
 --font-weight-regular: 400;
@@ -104,23 +103,23 @@ font-family: 'Inter', system-ui, sans-serif;
 
 ```css
 /* Base unit: 8px */
---space-1: 0.25rem;   /* 4px */
---space-2: 0.5rem;    /* 8px */
---space-3: 0.75rem;   /* 12px */
---space-4: 1rem;      /* 16px */
---space-6: 1.5rem;    /* 24px */
---space-8: 2rem;      /* 32px */
---space-12: 3rem;     /* 48px */
---space-16: 4rem;     /* 64px */
+--space-1: 0.25rem; /* 4px */
+--space-2: 0.5rem; /* 8px */
+--space-3: 0.75rem; /* 12px */
+--space-4: 1rem; /* 16px */
+--space-6: 1.5rem; /* 24px */
+--space-8: 2rem; /* 32px */
+--space-12: 3rem; /* 48px */
+--space-16: 4rem; /* 64px */
 ```
 
 ### Component Design Tokens
 
 ```css
 /* Border Radius */
---radius-sm: 0.375rem;  /* 6px - buttons, inputs */
---radius-md: 0.5rem;    /* 8px - cards */
---radius-lg: 0.75rem;   /* 12px - modals */
+--radius-sm: 0.375rem; /* 6px - buttons, inputs */
+--radius-md: 0.5rem; /* 8px - cards */
+--radius-lg: 0.75rem; /* 12px - modals */
 
 /* Shadows */
 --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);

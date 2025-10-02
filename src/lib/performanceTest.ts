@@ -57,7 +57,7 @@ interface ExtendedNavigator extends Navigator {
 }
 
 // Logging function that only logs in development
-function logDev(message: string, data?: any): void {
+function logDev(message: string, data?: unknown): void {
   if (import.meta.env.DEV) {
     if (data !== undefined) {
       console.log(message, data);
@@ -94,7 +94,10 @@ function detectDeviceType(): DeviceInfo {
 
   let deviceType: 'desktop' | 'mobile' | 'low-end' = 'desktop';
   if (window.innerWidth <= 768) deviceType = 'mobile';
-  if ((typeof cores === 'number' && cores <= 2) || (typeof memory === 'number' && memory <= 2)) {
+  if (
+    (typeof cores === 'number' && cores <= 2) ||
+    (typeof memory === 'number' && memory <= 2)
+  ) {
     deviceType = 'low-end';
   }
   if (
@@ -150,8 +153,14 @@ function testAnimationOptimizations(): AnimationOptimizations {
   return optimizations;
 }
 
+interface PerformanceMemory {
+  usedJSHeapSize: number;
+  totalJSHeapSize: number;
+  jsHeapSizeLimit: number;
+}
+
 function getMemoryUsage(): MemoryUsage {
-  const perf = performance as any;
+  const perf = performance as Performance & { memory?: PerformanceMemory };
   if (perf.memory) {
     return {
       used: Math.round(perf.memory.usedJSHeapSize / 1048576), // MB
@@ -282,6 +291,16 @@ export function monitorAnimationPerformance(duration: number = 5000): void {
 
 // Export for testing in browser console (development only)
 if (typeof window !== 'undefined' && import.meta.env.DEV) {
-  (window as any).testAnimationPerformance = testAnimationPerformance;
-  (window as any).monitorAnimationPerformance = monitorAnimationPerformance;
+  (
+    window as Window & {
+      testAnimationPerformance?: typeof testAnimationPerformance;
+      monitorAnimationPerformance?: typeof monitorAnimationPerformance;
+    }
+  ).testAnimationPerformance = testAnimationPerformance;
+  (
+    window as Window & {
+      testAnimationPerformance?: typeof testAnimationPerformance;
+      monitorAnimationPerformance?: typeof monitorAnimationPerformance;
+    }
+  ).monitorAnimationPerformance = monitorAnimationPerformance;
 }
