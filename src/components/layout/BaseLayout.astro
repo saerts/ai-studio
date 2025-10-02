@@ -13,6 +13,10 @@ export interface Props extends SEOProps {
 
 const seoProps = getSEOProps(Astro.props);
 const organizationSchema = orgSchema();
+
+// GTM Configuration - use environment variable or fallback to hardcoded ID
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID || 'GTM-KJZPCH44';
+const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || '29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI';
 ---
 
 <!doctype html>
@@ -53,14 +57,14 @@ const organizationSchema = orgSchema();
       type="application/ld+json"
       set:html={JSON.stringify(organizationSchema)}
     />
-    <meta name="google-site-verification" content="29wxEwJLhETUXjq2CAl5-Sfo2DYfhFNqmr2AjOQuBSI" />
+    <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
     <!-- Google Tag Manager -->
-    <script is:inline>
+    <script is:inline define:vars={{ GTM_ID }}>
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-KJZPCH44');
+      })(window,document,'script','dataLayer',GTM_ID);
     </script>
     <!-- End Google Tag Manager -->
   </head>
@@ -68,7 +72,7 @@ const organizationSchema = orgSchema();
   <body class="min-h-full mt-auto bg-dark-900 text-white">
     <SkipLink />
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KJZPCH44"
+    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
                       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
