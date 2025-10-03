@@ -989,30 +989,35 @@ const seo = {
   />
 
   <!-- Schema.org Article Markup -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": "De Stille Revolutie waar uw Bedrijf aan Voorbijgaat - AI voor KMO's",
-    "description": "Terwijl ChatGPT miljoenen gebruikers telt, worstelen Belgische kmo's nog met de vraag wat AI voor hen kan betekenen. Ontdek concrete voorbeelden en praktische stappen.",
-    "author": {
-      "@type": "Organization",
-      "name": "AI Studio"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "AI Studio",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://aistudio.nl/logo.png"
-      }
-    },
-    "datePublished": "2024-01-15",
-    "dateModified": "2024-01-15",
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://aistudio.nl/ai-voor-bedrijven"
-    }
-  })} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline:
+        "De Stille Revolutie waar uw Bedrijf aan Voorbijgaat - AI voor KMO's",
+      description:
+        "Terwijl ChatGPT miljoenen gebruikers telt, worstelen Belgische kmo's nog met de vraag wat AI voor hen kan betekenen. Ontdek concrete voorbeelden en praktische stappen.",
+      author: {
+        '@type': 'Organization',
+        name: 'AI Studio',
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: 'AI Studio',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://aistudio.nl/logo.png',
+        },
+      },
+      datePublished: '2024-01-15',
+      dateModified: '2024-01-15',
+      mainEntityOfPage: {
+        '@type': 'WebPage',
+        '@id': 'https://aistudio.nl/ai-voor-bedrijven',
+      },
+    })}
+  />
 </BaseLayout>
 
 <!-- External scripts - CSP compliant -->
