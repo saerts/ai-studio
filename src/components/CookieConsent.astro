@@ -3,13 +3,21 @@
 // Blocks GTM and analytics until user explicitly consents
 ---
 
-<div id="cookie-consent-banner" class="cookie-banner" aria-live="polite" role="dialog" aria-labelledby="cookie-title" aria-describedby="cookie-description">
+<div
+  id="cookie-consent-banner"
+  class="cookie-banner"
+  aria-live="polite"
+  role="dialog"
+  aria-labelledby="cookie-title"
+  aria-describedby="cookie-description"
+>
   <div class="cookie-content">
     <div class="cookie-text">
       <h2 id="cookie-title" class="cookie-title">Cookies & Privacy</h2>
       <p id="cookie-description" class="cookie-description">
-        Wij gebruiken analytische cookies via Google Tag Manager om onze website te verbeteren.
-        Deze cookies verzamelen anonieme informatie over uw websitebezoek.
+        Wij gebruiken analytische cookies via Google Tag Manager om onze website
+        te verbeteren. Deze cookies verzamelen anonieme informatie over uw
+        websitebezoek.
         <a href="/privacy" class="cookie-link">Meer informatie</a>
       </p>
     </div>
@@ -38,7 +46,11 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, rgba(15, 20, 25, 0.98) 0%, rgba(26, 43, 43, 0.98) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(15, 20, 25, 0.98) 0%,
+      rgba(26, 43, 43, 0.98) 100%
+    );
     backdrop-filter: blur(10px);
     border-top: 2px solid var(--color-teal-500, #14b8a6);
     box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
@@ -122,7 +134,11 @@
   }
 
   .cookie-btn-accept {
-    background: linear-gradient(135deg, var(--color-teal-500, #14b8a6) 0%, var(--color-cyan-500, #06b6d4) 100%);
+    background: linear-gradient(
+      135deg,
+      var(--color-teal-500, #14b8a6) 0%,
+      var(--color-cyan-500, #06b6d4) 100%
+    );
     color: white;
     border: none;
   }
@@ -212,21 +228,31 @@
     document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
   }
 
+  // Extend Window interface for GTM
+  interface WindowWithGTM extends Window {
+    __GTM_ID__?: string;
+    __GTM_LOADED__?: boolean;
+    dataLayer?: Array<Record<string, unknown>>;
+    updateCookieConsent?: (analytics: boolean) => void;
+  }
+
+  declare const window: WindowWithGTM;
+
   // GTM Loading
   function loadGTM(): void {
-    const GTM_ID = (window as any).__GTM_ID__ || 'GTM-KJZPCH44';
+    const GTM_ID = window.__GTM_ID__ || 'GTM-KJZPCH44';
 
     // Prevent double-loading
-    if ((window as any).__GTM_LOADED__) {
+    if (window.__GTM_LOADED__) {
       return;
     }
-    (window as any).__GTM_LOADED__ = true;
+    window.__GTM_LOADED__ = true;
 
     // Initialize dataLayer
-    (window as any).dataLayer = (window as any).dataLayer || [];
-    (window as any).dataLayer.push({
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
       'gtm.start': new Date().getTime(),
-      event: 'gtm.js'
+      event: 'gtm.js',
     });
 
     // Load GTM script
@@ -259,7 +285,7 @@
   function clearAnalyticsCookies(): void {
     // Google Analytics cookies
     const gaCookies = ['_ga', '_gid', '_gat', '_gat_gtag_UA_'];
-    gaCookies.forEach(cookie => {
+    gaCookies.forEach((cookie) => {
       deleteCookie(cookie);
       // Also try with domain prefix
       document.cookie = `${cookie}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;domain=.${window.location.hostname}`;
@@ -271,7 +297,7 @@
     const consent: ConsentState = {
       analytics,
       timestamp: Date.now(),
-      version: 1
+      version: 1,
     };
     setCookie(COOKIE_NAME, JSON.stringify(consent), COOKIE_EXPIRY_DAYS);
   }
@@ -314,10 +340,10 @@
     if (accepted) {
       loadGTM();
       // Push consent event to dataLayer
-      (window as any).dataLayer = (window as any).dataLayer || [];
-      (window as any).dataLayer.push({
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
         event: 'cookie_consent_update',
-        analytics_consent: 'granted'
+        analytics_consent: 'granted',
       });
     } else {
       clearAnalyticsCookies();
@@ -370,7 +396,7 @@
   }
 
   // Expose function for settings page to allow users to change preferences
-  (window as any).updateCookieConsent = function(analytics: boolean) {
+  window.updateCookieConsent = function (analytics: boolean) {
     handleConsent(analytics);
     if (!analytics) {
       // Reload page to clear GTM if it was loaded

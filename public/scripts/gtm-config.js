@@ -4,7 +4,7 @@
  * GTM ID is passed via data attribute on script tag
  */
 
-(function() {
+(function () {
   'use strict';
 
   // Get GTM ID from script tag data attribute

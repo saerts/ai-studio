@@ -3,10 +3,13 @@
  * Handles form validation, anti-spam checks, and Web3Forms submission
  */
 
+/* global FormData */
+
 // Check if we're in development mode
-const isDev = typeof window !== 'undefined' &&
-              (window.location.hostname === 'localhost' ||
-               window.location.hostname === '127.0.0.1');
+const isDev =
+  typeof window !== 'undefined' &&
+  (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1');
 
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('[data-contact-form]');
@@ -84,15 +87,20 @@ document.addEventListener('DOMContentLoaded', function () {
       } else if (response.status >= 500 && retryCount < maxRetries) {
         // Server error - retry
         if (isDev) {
-          console.log(`Server error, retrying... (${retryCount + 1}/${maxRetries})`);
+          console.log(
+            `Server error, retrying... (${retryCount + 1}/${maxRetries})`
+          );
         }
-        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * (retryCount + 1))
+        );
         return submitForm(formData, retryCount + 1);
       } else {
         return {
           success: false,
           error: 'server',
-          message: 'Er ging iets mis bij het versturen. Probeer het later opnieuw.'
+          message:
+            'Er ging iets mis bij het versturen. Probeer het later opnieuw.',
         };
       }
     } catch (error) {
@@ -100,7 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return {
           success: false,
           error: 'timeout',
-          message: 'De verbinding duurde te lang. Controleer je internetverbinding en probeer opnieuw.'
+          message:
+            'De verbinding duurde te lang. Controleer je internetverbinding en probeer opnieuw.',
         };
       }
 
@@ -108,23 +117,29 @@ document.addEventListener('DOMContentLoaded', function () {
         return {
           success: false,
           error: 'offline',
-          message: 'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.'
+          message:
+            'Geen internetverbinding. Controleer je verbinding en probeer opnieuw.',
         };
       }
 
       // Network error - retry
       if (retryCount < maxRetries) {
         if (isDev) {
-          console.log(`Network error, retrying... (${retryCount + 1}/${maxRetries})`);
+          console.log(
+            `Network error, retrying... (${retryCount + 1}/${maxRetries})`
+          );
         }
-        await new Promise(resolve => setTimeout(resolve, 1000 * (retryCount + 1)));
+        await new Promise((resolve) =>
+          setTimeout(resolve, 1000 * (retryCount + 1))
+        );
         return submitForm(formData, retryCount + 1);
       }
 
       return {
         success: false,
         error: 'network',
-        message: 'Netwerkfout. Probeer het opnieuw of stuur een e-mail naar hi@ai-studio44.com'
+        message:
+          'Netwerkfout. Probeer het opnieuw of stuur een e-mail naar hi@ai-studio44.com',
       };
     }
   };
@@ -180,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Scroll to success message
         document.getElementById('form-success')?.scrollIntoView({
           behavior: 'smooth',
-          block: 'nearest'
+          block: 'nearest',
         });
       } else {
         showError(result.message);
