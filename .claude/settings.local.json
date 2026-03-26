@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio -name og-image* -o -name *og*)",
+      "Bash(grep -r \"image:\" /Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/pages/*.astro)",
+      "Bash(ls:*)",
+      "Bash(grep -h \"description:\" /Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/pages/*.astro)",
+      "Bash(grep -A 5 \"const seo\" /Users/saerts/Sites/WEBMASTER/sa_LIVE/sa73/AI-Studio/ai-studio/src/pages/*.astro)",
+      "Bash(npm run:*)"
+    ]
+  }
+}

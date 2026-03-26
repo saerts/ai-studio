@@ -11,7 +11,7 @@ const defaultSEO = {
   title: 'AI Studio — Breng AI in je dagelijkse flow',
   description:
     'AI Studio helpt bedrijven bij het implementeren van AI-oplossingen. Van workflow-automations tot training en coaching.',
-  image: '/og-image.jpg',
+  image: '/images/ai-voor-bedrijven.png',
   canonical: 'https://ai-studio44.com',
   type: 'website' as const,
 };

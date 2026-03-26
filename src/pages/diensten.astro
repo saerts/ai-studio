@@ -2,6 +2,7 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Button from '../components/ui/Button.astro';
+import { breadcrumbsSchema } from '../lib/schema';
 
 const seoProps = {
   title: 'Onze diensten',
@@ -216,6 +217,44 @@ const services = [
       </div>
     </div>
   </Section>
+
+  <!-- Breadcrumb Schema -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Diensten', url: '/diensten' },
+    ]))}
+  />
+
+  <!-- Service Schema -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      serviceType: 'AI Consulting',
+      provider: {
+        '@type': 'Organization',
+        name: 'AI Studio',
+        url: 'https://ai-studio44.com',
+      },
+      areaServed: {
+        '@type': 'Country',
+        name: 'Belgium',
+      },
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'AI Diensten',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI Scan', description: 'Grondige analyse van processen en identificatie van AI-kansen.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Workflow Automations', description: 'Automatiseer repetitieve taken met slimme AI-oplossingen.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Training & Coaching', description: 'Praktische AI-training en hands-on coaching voor teams.' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Pilot & Rollout', description: 'Van proof-of-concept tot volledige AI-implementatie.' } },
+        ],
+      },
+    })}
+  />
 </BaseLayout>
 
 <script>
