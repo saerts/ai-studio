@@ -371,27 +371,6 @@ const seoProps = {
   />
 </BaseLayout>
 
-<style>
-  @keyframes orb-drift {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    25% { transform: translate3d(30px, -20px, 0) scale(1.05); }
-    50% { transform: translate3d(-10px, 20px, 0) scale(0.95); }
-    75% { transform: translate3d(20px, 10px, 0) scale(1.02); }
-  }
-  @keyframes orb-drift-reverse {
-    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-    25% { transform: translate3d(-20px, 15px, 0) scale(0.97); }
-    50% { transform: translate3d(25px, -25px, 0) scale(1.04); }
-    75% { transform: translate3d(-15px, -10px, 0) scale(1); }
-  }
-  .orb-drift { animation: orb-drift 20s ease-in-out infinite; will-change: transform; }
-  .orb-drift-reverse { animation: orb-drift-reverse 25s ease-in-out infinite; will-change: transform; }
-  @media (prefers-reduced-motion: reduce) {
-    .orb-drift, .orb-drift-reverse { animation: none !important; }
-    #neural-bg { display: none; }
-  }
-</style>
-
 <!-- External scripts - CSP compliant -->
 <script is:inline src="/scripts/scrollAnimations.js"></script>
 <script is:inline src="/scripts/contact-form.js"></script>
