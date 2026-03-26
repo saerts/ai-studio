@@ -2,11 +2,12 @@
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import Section from '../components/ui/Section.astro';
 import Card from '../components/ui/Card.astro';
+import { breadcrumbsSchema } from '../lib/schema';
 
 const seoProps = {
   title: 'Contact',
   description:
-    'Neem contact op met AI Studio voor een vrijblijvend gesprek over hoe AI jouw bedrijf kan transformeren.',
+    'Neem contact op met AI Studio voor een vrijblijvend gesprek over hoe AI jouw bedrijf kan transformeren. Respons binnen 24 uur, vrijblijvend kennismakingsgesprek.',
   canonical: 'https://ai-studio44.com/contact',
 };
 ---
@@ -332,6 +333,33 @@ const seoProps = {
       </Card>
     </div>
   </Section>
+
+  <!-- Breadcrumb Schema -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Contact', url: '/contact' },
+    ]))}
+  />
+
+  <!-- ContactPoint Schema -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'LocalBusiness',
+      name: 'AI Studio',
+      url: 'https://ai-studio44.com',
+      email: 'hi@ai-studio44.com',
+      telephone: '+32475770888',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Schilde',
+        addressCountry: 'BE',
+      },
+    })}
+  />
 </BaseLayout>
 
 <!-- External scripts - CSP compliant -->
