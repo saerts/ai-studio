@@ -1,0 +1,904 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import AIConsultationCTA from '../components/AIConsultationCTA.astro';
+import { articleSchema, breadcrumbsSchema } from '../lib/schema';
+
+const seo = {
+  title: 'Vibe Coding — Hoe AI de Manier waarop we Software Bouwen Verandert',
+  description:
+    'Van GitHub Copilot tot Claude Code: AI-assistenten schrijven nu volledige applicaties. Wat betekent vibe coding voor ontwikkelaars, bedrijven en de toekomst van software?',
+  image: '/images/vibe-coding.png',
+  canonical: 'https://ai-studio44.com/vibe-coding',
+  type: 'article' as const,
+};
+---
+
+<BaseLayout {...seo}>
+  <style>
+    /* Reading Progress Bar */
+    .reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2dd4bf 0%, #22d3ee 100%);
+      transition: width 0.2s ease-out;
+      z-index: 9999;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(
+        135deg,
+        #0f172a 0%,
+        #0d9488 40%,
+        #06b6d4 70%,
+        #0f172a 100%
+      );
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10, 15, 15, 0.4) 0%,
+        rgba(10, 15, 15, 0.2) 40%,
+        rgba(10, 15, 15, 0.8) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .hero-badge {
+      animation: float 3s ease-in-out infinite;
+      background: rgba(10, 15, 15, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    /* Code Animation */
+    .code-line {
+      opacity: 0;
+      transform: translateX(-10px);
+      animation: typeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes typeIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Content Sections */
+    .content-section {
+      background-color: #0a0f0f;
+      padding: 4rem 0;
+    }
+
+    .stats-section {
+      background: linear-gradient(
+        135deg,
+        rgba(26, 43, 43, 0.8) 0%,
+        rgba(15, 20, 25, 0.9) 100%
+      );
+      border-top: 1px solid rgba(45, 212, 191, 0.1);
+      border-bottom: 1px solid rgba(45, 212, 191, 0.1);
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+
+    /* Typography */
+    .hero-title {
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      font-weight: 400;
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .section-title {
+      font-size: clamp(1.875rem, 4vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: #a1a1aa;
+    }
+
+    .article-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #d1d5db;
+    }
+
+    /* Components */
+    .tool-card {
+      background: linear-gradient(
+        135deg,
+        rgba(26, 43, 43, 0.4) 0%,
+        rgba(35, 51, 51, 0.2) 100%
+      );
+      border: 1px solid rgba(45, 212, 191, 0.1);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .tool-card:hover {
+      background: linear-gradient(
+        135deg,
+        rgba(26, 43, 43, 0.6) 0%,
+        rgba(35, 51, 51, 0.4) 100%
+      );
+      border-color: rgba(45, 212, 191, 0.3);
+      transform: translateY(-4px);
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(26, 43, 43, 0.3);
+      border-radius: 8px;
+      border: 1px solid rgba(45, 212, 191, 0.1);
+    }
+
+    .stat-number {
+      background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .quote-box {
+      background: linear-gradient(
+        135deg,
+        rgba(45, 212, 191, 0.1) 0%,
+        rgba(34, 211, 238, 0.05) 100%
+      );
+      border-left: 4px solid #2dd4bf;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 3rem 0;
+    }
+
+    .highlight-box {
+      background: linear-gradient(
+        135deg,
+        rgba(239, 68, 68, 0.1) 0%,
+        rgba(249, 115, 22, 0.05) 100%
+      );
+      border-left: 4px solid #ef4444;
+      border-radius: 8px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .code-block {
+      background: rgba(15, 20, 25, 0.9);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: 0.875rem;
+      overflow-x: auto;
+    }
+
+    .application-card {
+      background: rgba(26, 43, 43, 0.3);
+      border: 1px solid rgba(45, 212, 191, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .application-card:hover {
+      background: rgba(26, 43, 43, 0.5);
+      border-color: rgba(45, 212, 191, 0.3);
+    }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scale-in {
+      opacity: 0;
+      transform: scale(0.95);
+      transition:
+        opacity 0.6s ease,
+        transform 0.6s ease;
+    }
+
+    .scale-in.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .content-section {
+        padding: 3rem 0;
+      }
+
+      .tool-card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in,
+      .scale-in,
+      .hero-badge,
+      .code-line {
+        animation: none;
+        transition: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+
+  <div class="reading-progress" id="readingProgress"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+
+    <!-- Animated Code Background -->
+    <div class="absolute inset-0 opacity-10 overflow-hidden">
+      <div class="absolute top-20 left-10 text-teal-400 font-mono text-xs sm:text-sm space-y-1">
+        <div class="code-line" style="animation-delay: 0.2s;">{"const app = ai.generate({"}</div>
+        <div class="code-line" style="animation-delay: 0.6s;">{"  prompt: \"build me a dashboard\","}</div>
+        <div class="code-line" style="animation-delay: 1.0s;">{"  framework: \"react\","}</div>
+        <div class="code-line" style="animation-delay: 1.4s;">{"});"}</div>
+      </div>
+      <div class="absolute bottom-32 right-10 text-cyan-400 font-mono text-xs sm:text-sm space-y-1">
+        <div class="code-line" style="animation-delay: 1.8s;">{"// AI schrijft, mens stuurt"}</div>
+        <div class="code-line" style="animation-delay: 2.2s;">{"function vibeCoding() {"}</div>
+        <div class="code-line" style="animation-delay: 2.6s;">{"  return future.isNow();"}</div>
+        <div class="code-line" style="animation-delay: 3.0s;">{"}"}</div>
+      </div>
+    </div>
+
+    <div class="hero-content w-full">
+      <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
+        <div class="text-center space-y-8 fade-in">
+          <!-- Hero Badge -->
+          <div
+            class="inline-flex items-center px-4 py-2 rounded-full text-sm text-teal-300 hero-badge"
+          >
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path
+                fill-rule="evenodd"
+                d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"></path>
+            </svg>
+            De toekomst van software development
+          </div>
+
+          <!-- Hero Title -->
+          <h1 class="hero-title text-white mt-6">
+            <span
+              class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent"
+            >
+              Vibe Coding
+            </span><br />
+            Het Einde van Programmeren zoals we het Kennen?
+          </h1>
+
+          <!-- Hero Subtitle -->
+          <p class="hero-subtitle max-w-4xl mx-auto mt-6">
+            AI schrijft nu volledige applicaties op basis van een simpele beschrijving.
+            Van GitHub Copilot tot Claude Code en Cursor — de manier waarop software
+            ontstaat verandert fundamenteel. Wat betekent dit voor uw bedrijf?
+          </p>
+
+          <!-- Hero CTA -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8 mt-8">
+            <Button href="#intro" variant="primary" size="lg">
+              Ontdek vibe coding
+            </Button>
+            <Button href="#leestijd" variant="secondary" size="lg">
+              <span id="readTime">10 min leestijd</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section class="content-section" id="intro">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-8 fade-in">
+        <p class="article-text text-xl leading-relaxed">
+          Februari 2025. Andrej Karpathy, ex-AI-directeur bij Tesla en mede-oprichter
+          van OpenAI, tweet een simpele observatie die de techwereld op zijn kop zet:
+          <strong class="text-teal-400">"There's a new kind of coding I call vibe coding,
+          where you fully give in to the vibes, embrace exponentials, and forget that
+          the code even exists."</strong>
+        </p>
+
+        <div class="quote-box">
+          <blockquote class="text-lg italic text-teal-300 mb-4">
+            "Je beschrijft wat je wilt in gewone taal. De AI schrijft de code. Je test
+            het resultaat. En als het niet klopt, beschrijf je het probleem — opnieuw
+            in gewone taal."
+          </blockquote>
+          <cite class="text-sm text-zinc-400">
+            — Het basisprincipe van vibe coding
+          </cite>
+        </div>
+
+        <p class="article-text">
+          Wat begon als een half-ironische tweet, is uitgegroeid tot een beweging die
+          de fundamenten van softwareontwikkeling uitdaagt. In minder dan een jaar tijd
+          is "vibe coding" geëvolueerd van experiment naar productietool — met
+          verstrekkende gevolgen voor bedrijven, ontwikkelaars en de economie.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What is Vibe Coding Section -->
+  <section class="stats-section py-20">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <h2 class="section-title text-center text-white fade-in mb-16">
+        Wat is Vibe Coding <span class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent">Precies?</span>
+      </h2>
+
+      <div class="max-w-4xl mx-auto space-y-8 fade-in">
+        <p class="article-text">
+          Bij traditioneel programmeren schrijft een ontwikkelaar elke regel code zelf.
+          Bij vibe coding verschuift de rol: je <strong class="text-teal-400">beschrijft
+          je intentie</strong> en een AI-model genereert de code. De ontwikkelaar wordt
+          een regisseur die richting geeft, feedback levert en het eindresultaat
+          valideert.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="tool-card scale-in">
+            <h3 class="text-lg font-semibold text-zinc-400 mb-4">Traditioneel</h3>
+            <div class="code-block text-zinc-500">
+              <div>developer.write(code)</div>
+              <div>developer.debug(code)</div>
+              <div>developer.test(code)</div>
+              <div>developer.deploy(code)</div>
+              <div class="text-zinc-600 mt-2">// Weken tot maanden</div>
+            </div>
+          </div>
+
+          <div class="tool-card scale-in">
+            <h3 class="text-lg font-semibold text-teal-400 mb-4">Vibe Coding</h3>
+            <div class="code-block text-teal-300">
+              <div>human.describe(intention)</div>
+              <div>ai.generate(code)</div>
+              <div>human.review(result)</div>
+              <div>ai.iterate(feedback)</div>
+              <div class="text-teal-500 mt-2">// Uren tot dagen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Statistics -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="92">0</div>
+          <p class="text-lg text-teal-300 mt-2">%</p>
+          <p class="text-zinc-400 mt-2">van developers gebruikt AI-tools</p>
+        </div>
+
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="55">0</div>
+          <p class="text-lg text-cyan-300 mt-2">%</p>
+          <p class="text-zinc-400 mt-2">sneller code schrijven met AI</p>
+        </div>
+
+        <div class="stat-card fade-in">
+          <div class="stat-number" data-target="300">0</div>
+          <p class="text-lg text-teal-300 mt-2">%</p>
+          <p class="text-zinc-400 mt-2">groei AI coding tools in 2025</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Coding Tools Section -->
+  <section class="content-section" id="tools">
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="section-title text-white mb-4">
+          De Tools die het <span class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent">Mogelijk</span> Maken
+        </h2>
+        <p class="section-subtitle max-w-3xl mx-auto">
+          Een overzicht van de AI-coding tools die de markt domineren in 2026
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- GitHub Copilot -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">GitHub Copilot</h3>
+              <p class="text-sm text-teal-300">Microsoft / OpenAI</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            De pionier. Geïntegreerd in VS Code, suggereert code terwijl je typt.
+            Copilot Workspace gaat verder en bouwt complete features vanuit een
+            issue-beschrijving.
+          </p>
+        </div>
+
+        <!-- Cursor -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">Cursor</h3>
+              <p class="text-sm text-cyan-300">AI-native editor</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            Een complete IDE gebouwd rond AI. Chat met je codebase, laat hele
+            bestanden herschrijven, en gebruik "Composer" om multi-file wijzigingen
+            in één keer door te voeren.
+          </p>
+        </div>
+
+        <!-- Claude Code -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-orange-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">Claude Code</h3>
+              <p class="text-sm text-orange-300">Anthropic</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            Agentic coding in de terminal. Claude leest je hele codebase, voert
+            commando's uit, schrijft tests en refactort code — als een senior
+            developer die naast je zit.
+          </p>
+        </div>
+
+        <!-- Bolt / Lovable -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">Bolt & Lovable</h3>
+              <p class="text-sm text-purple-300">No-code AI builders</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            Beschrijf je app in woorden en zie hem live worden gebouwd. Ideaal voor
+            prototypes, MVPs en interne tools — zonder één regel code zelf te
+            schrijven.
+          </p>
+        </div>
+
+        <!-- Windsurf -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">Windsurf</h3>
+              <p class="text-sm text-blue-300">Codeium</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            "Flows" technologie combineert AI-suggesties met diep contextbegrip.
+            Begrijpt niet alleen je code maar ook je bedoeling en past zich aan
+            je stijl aan.
+          </p>
+        </div>
+
+        <!-- Replit -->
+        <div class="tool-card fade-in">
+          <div class="flex items-start space-x-4 mb-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-white">Replit Agent</h3>
+              <p class="text-sm text-green-300">Cloud-native</p>
+            </div>
+          </div>
+          <p class="text-zinc-300 text-sm leading-relaxed">
+            Van idee tot gedeployde app in de browser. De AI-agent installeert
+            dependencies, schrijft code, configureert databases en deployt — alles
+            automatisch.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section class="stats-section py-20">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <h2 class="section-title text-center text-white fade-in mb-16">
+        De Impact op het Vakgebied
+      </h2>
+
+      <div class="space-y-8 fade-in">
+        <p class="article-text">
+          Vibe coding polariseert de tech-industrie. Voorstanders zien een democratisering
+          van software, tegenstanders waarschuwen voor een tsunami van
+          ononderhoudbare code. De waarheid ligt genuanceerder.
+        </p>
+
+        <!-- Pros -->
+        <div class="grid md:grid-cols-2 gap-8 my-12">
+          <div>
+            <h3 class="text-xl font-semibold text-teal-400 mb-6">De kansen</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">10x snellere prototyping</p>
+                  <p class="text-zinc-400 text-sm">Van idee naar werkend prototype in uren i.p.v. weken</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Democratisering</p>
+                  <p class="text-zinc-400 text-sm">Niet-developers kunnen software bouwen voor eigen noden</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Focus op probleemoplossing</p>
+                  <p class="text-zinc-400 text-sm">Developers besteden meer tijd aan architectuur en design</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Lagere ontwikkelkosten</p>
+                  <p class="text-zinc-400 text-sm">Kleinere teams kunnen meer realiseren</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-xl font-semibold text-red-400 mb-6">De risico's</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Beveiligingsrisico's</p>
+                  <p class="text-zinc-400 text-sm">AI-gegenereerde code kan kwetsbaarheden bevatten</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Technische schuld</p>
+                  <p class="text-zinc-400 text-sm">Zonder review groeit de codebase onbeheersbaar</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Hallucinaties</p>
+                  <p class="text-zinc-400 text-sm">AI kan code genereren die er goed uitziet maar niet werkt</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <svg class="mr-3 mt-0.5 h-5 w-5 flex-shrink-0 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+                </svg>
+                <div>
+                  <p class="text-white font-medium">Afhankelijkheid</p>
+                  <p class="text-zinc-400 text-sm">Vaardigheidsverlies als ontwikkelaars stoppen met leren</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-box">
+          <h4 class="text-lg font-semibold text-red-400 mb-2">
+            De paradox van vibe coding
+          </h4>
+          <p class="text-zinc-300">
+            Hoe minder je van code begrijpt, hoe gevaarlijker vibe coding wordt.
+            De meest succesvolle "vibe coders" zijn ironisch genoeg vaak ervaren
+            developers die weten wat ze aan de AI moeten vragen — en wanneer ze
+            het resultaat niet moeten vertrouwen.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What This Means for Business Section -->
+  <section class="content-section">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-8 fade-in">
+        <h2 class="section-title text-white text-center mb-12">
+          Wat Betekent Dit voor <span class="bg-gradient-to-r from-teal-300 to-cyan-400 bg-clip-text text-transparent">uw Bedrijf?</span>
+        </h2>
+
+        <p class="article-text">
+          Of u nu een KMO runt, een startup leidt of een enterprise aanstuurt — vibe
+          coding verandert de spelregels. Hier zijn drie concrete verschuivingen die
+          elk bedrijf raken:
+        </p>
+
+        <div class="grid gap-8 my-12">
+          <!-- Shift 1 -->
+          <div class="tool-card">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-teal-500/20 rounded-lg flex items-center justify-center">
+                <span class="text-teal-400 text-xl font-bold">1</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">
+                  Interne tools worden goedkoper dan SaaS-abonnementen
+                </h3>
+                <p class="text-zinc-300 leading-relaxed">
+                  Bedrijven betalen duizenden euro's per maand aan software die niet
+                  exact doet wat ze nodig hebben. Met vibe coding kan een medewerker
+                  met domeinkennis een op-maat tool bouwen die perfect aansluit bij
+                  het bedrijfsproces — voor een fractie van de prijs.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shift 2 -->
+          <div class="tool-card">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-cyan-500/20 rounded-lg flex items-center justify-center">
+                <span class="text-cyan-400 text-xl font-bold">2</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">
+                  De "1-persoons startup" wordt mainstream
+                </h3>
+                <p class="text-zinc-300 leading-relaxed">
+                  Eén ondernemer met een goed idee en AI-tools kan nu een product
+                  bouwen waarvoor vroeger een team van 5-10 ontwikkelaars nodig was.
+                  De barrière om te innoveren is nooit zo laag geweest.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Shift 3 -->
+          <div class="tool-card">
+            <div class="flex items-start space-x-4">
+              <div class="flex-shrink-0 w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center">
+                <span class="text-purple-400 text-xl font-bold">3</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold text-white mb-3">
+                  De definitie van "developer" verandert
+                </h3>
+                <p class="text-zinc-300 leading-relaxed">
+                  De waarde van een developer verschuift van "code kunnen schrijven"
+                  naar "problemen kunnen analyseren, architectuur ontwerpen, en AI
+                  effectief aansturen." Domeinkennis wordt belangrijker dan syntax.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-box bg-blue-500/10 border-blue-500">
+          <p class="text-blue-300 text-lg">
+            In 2026 is de vraag niet meer <em>"kan uw team coderen?"</em> maar
+            <strong>"kan uw team AI effectief inzetten om software te bouwen?"</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Getting Started Section -->
+  <section class="stats-section py-20">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-8 fade-in text-center">
+        <h2 class="section-title text-white mb-12 mt-12">Aan de Slag met Vibe Coding</h2>
+
+        <p class="article-text text-xl">
+          U hoeft geen developer te zijn om te starten. Begin met een concreet
+          probleem, kies de juiste tool, en itereer. Hier zijn drie instapniveaus:
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-6 mt-12">
+          <div class="application-card text-left">
+            <div class="text-teal-400 text-sm font-semibold mb-2">Beginner</div>
+            <h4 class="text-lg font-semibold text-white mb-2">Bolt of Lovable</h4>
+            <p class="text-zinc-400 text-sm">
+              Beschrijf je app in woorden. Geen technische kennis vereist. Ideaal
+              voor prototypes en interne tools.
+            </p>
+          </div>
+
+          <div class="application-card text-left">
+            <div class="text-cyan-400 text-sm font-semibold mb-2">Gevorderd</div>
+            <h4 class="text-lg font-semibold text-white mb-2">Cursor of Windsurf</h4>
+            <p class="text-zinc-400 text-sm">
+              AI-gestuurde IDE's voor developers die controle willen houden maar
+              sneller willen werken.
+            </p>
+          </div>
+
+          <div class="application-card text-left">
+            <div class="text-orange-400 text-sm font-semibold mb-2">Expert</div>
+            <h4 class="text-lg font-semibold text-white mb-2">Claude Code</h4>
+            <p class="text-zinc-400 text-sm">
+              Agentic coding voor complexe projecten. Volledige codebase-analyse,
+              tests, en deployment.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conclusion Section -->
+  <section class="content-section">
+    <div class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
+      <div class="space-y-8 fade-in text-center">
+        <h2 class="section-title text-white mb-12">De Code Schrijft Zichzelf — De Visie is aan U</h2>
+
+        <p class="article-text text-xl leading-relaxed mt-6">
+          Vibe coding is geen hype die overwaait. Het is een fundamentele verschuiving
+          in hoe software ontstaat. Net zoals spreadsheets financiële analyses
+          democratiseerden en websites communicatie transformeerden, maakt AI-coding
+          softwarecreatie toegankelijk voor iedereen met een goed idee.
+        </p>
+
+        <p class="article-text text-2xl font-semibold text-teal-400 mt-8">
+          De vraag is niet óf AI uw softwareproces verandert, maar of u degene bent
+          die het stuurt — of achtervolgt.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <AIConsultationCTA
+    title="Klaar om AI in uw Ontwikkelproces te Brengen?"
+    subtitle="Wij helpen bedrijven bij het adopteren van AI-coding tools. Van eerste experimenten tot volledige integratie in uw development workflow."
+    primaryButtonText="Plan een vrijblijvend gesprek"
+    primaryButtonHref="/contact"
+  />
+
+  <!-- Schema.org Article Markup -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(articleSchema(
+      'Vibe Coding — Hoe AI de Manier waarop we Software Bouwen Verandert',
+      'Van GitHub Copilot tot Claude Code: AI-assistenten schrijven nu volledige applicaties. Wat betekent vibe coding voor ontwikkelaars, bedrijven en de toekomst van software?',
+      'https://ai-studio44.com/vibe-coding',
+      '2026-03-26',
+      '2026-03-26',
+      'https://ai-studio44.com/images/vibe-coding.png'
+    ))}
+  />
+
+  <!-- Breadcrumb Schema -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumbsSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Nieuws', url: '/nieuws' },
+      { name: 'Vibe Coding', url: '/vibe-coding' },
+    ]))}
+  />
+</BaseLayout>
+
+<!-- External scripts - CSP compliant -->
+<script is:inline src="/scripts/vibe-coding.js"></script>

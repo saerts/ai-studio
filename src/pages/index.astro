@@ -150,21 +150,31 @@ const aiExamples = [
   <Section class="relative pt-20 min-h-[calc(100vh-5rem)] overflow-hidden">
     <div class="absolute inset-0 grid-pattern"></div>
 
+    <!-- Neural Network Canvas -->
+    <canvas id="neural-bg" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+
+    <!-- Gradient Orbs -->
     <div class="absolute inset-0 overflow-hidden">
       <div
+        class="absolute top-[10%] left-[5%] w-72 h-72 bg-primary-400/8 rounded-full blur-3xl orb-drift performance-optimized"
+      ></div>
+      <div
+        class="absolute top-[60%] right-[10%] w-96 h-96 bg-cyan-500/6 rounded-full blur-3xl orb-drift-reverse performance-optimized"
+      ></div>
+      <div
+        class="absolute top-[30%] left-[50%] w-64 h-64 bg-primary-300/5 rounded-full blur-3xl orb-drift-slow performance-optimized"
+      ></div>
+      <div
         class="absolute top-20 left-10 w-32 h-32 bg-primary-400/10 rounded-full blur-lg float performance-optimized"
-      >
-      </div>
+      ></div>
       <div
         class="absolute top-40 right-20 w-24 h-24 bg-accent-400/15 rounded-lg blur-md pulse-glow performance-optimized"
         style="animation-delay: 3s;"
-      >
-      </div>
+      ></div>
       <div
         class="absolute bottom-32 left-1/4 w-16 h-16 bg-primary-300/20 rounded-full blur-sm essential-pulse performance-optimized"
         style="animation-delay: 6s;"
-      >
-      </div>
+      ></div>
     </div>
 
     <div
@@ -485,6 +495,59 @@ const aiExamples = [
   </Section>
 </BaseLayout>
 
+<style>
+  /* Gradient Orb Animations */
+  @keyframes orb-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    25% { transform: translate3d(30px, -20px, 0) scale(1.05); }
+    50% { transform: translate3d(-10px, 20px, 0) scale(0.95); }
+    75% { transform: translate3d(20px, 10px, 0) scale(1.02); }
+  }
+
+  @keyframes orb-drift-reverse {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    25% { transform: translate3d(-20px, 15px, 0) scale(0.97); }
+    50% { transform: translate3d(25px, -25px, 0) scale(1.04); }
+    75% { transform: translate3d(-15px, -10px, 0) scale(1); }
+  }
+
+  @keyframes orb-drift-slow {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    33% { transform: translate3d(40px, 20px, 0) scale(1.08); }
+    66% { transform: translate3d(-30px, -15px, 0) scale(0.93); }
+  }
+
+  .orb-drift {
+    animation: orb-drift 20s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .orb-drift-reverse {
+    animation: orb-drift-reverse 25s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  .orb-drift-slow {
+    animation: orb-drift-slow 30s ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orb-drift, .orb-drift-reverse, .orb-drift-slow {
+      animation: none !important;
+    }
+    #neural-bg {
+      display: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .orb-drift { animation-duration: 25s; }
+    .orb-drift-reverse { animation-duration: 30s; }
+    .orb-drift-slow { animation-duration: 35s; }
+  }
+</style>
+
 <script>
   import { initScrollAnimations } from '../lib/scrollAnimations.js';
   import {
@@ -502,3 +565,6 @@ const aiExamples = [
     }, 2000);
   }
 </script>
+
+<!-- Neural network background animation - CSP compliant -->
+<script is:inline src="/scripts/neural-bg.js"></script>

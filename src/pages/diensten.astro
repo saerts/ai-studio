@@ -93,8 +93,17 @@ const services = [
 
 <BaseLayout {...seoProps}>
   <!-- Header -->
-  <Section class="scroll-animate">
-    <div class="text-center">
+  <Section class="scroll-animate relative overflow-hidden">
+    <!-- Neural Network Canvas -->
+    <canvas id="neural-bg" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+
+    <!-- Gradient Orbs -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-[5%] right-[10%] w-72 h-72 bg-primary-400/8 rounded-full blur-3xl orb-drift performance-optimized"></div>
+      <div class="absolute bottom-[10%] left-[5%] w-80 h-80 bg-cyan-500/6 rounded-full blur-3xl orb-drift-reverse performance-optimized"></div>
+    </div>
+
+    <div class="relative z-10 text-center">
       <h1
         class="text-4xl font-bold tracking-tight text-white sm:text-5xl gradient-text"
       >
@@ -107,7 +116,7 @@ const services = [
     </div>
 
     <!-- Quick Navigation -->
-    <nav class="mt-12" aria-label="Diensten navigatie">
+    <nav class="mt-12 relative z-10" aria-label="Diensten navigatie">
       <div class="flex flex-wrap justify-center gap-4">
         {
           services.map((service) => (
@@ -257,7 +266,29 @@ const services = [
   />
 </BaseLayout>
 
+<style>
+  @keyframes orb-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    25% { transform: translate3d(30px, -20px, 0) scale(1.05); }
+    50% { transform: translate3d(-10px, 20px, 0) scale(0.95); }
+    75% { transform: translate3d(20px, 10px, 0) scale(1.02); }
+  }
+  @keyframes orb-drift-reverse {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    25% { transform: translate3d(-20px, 15px, 0) scale(0.97); }
+    50% { transform: translate3d(25px, -25px, 0) scale(1.04); }
+    75% { transform: translate3d(-15px, -10px, 0) scale(1); }
+  }
+  .orb-drift { animation: orb-drift 20s ease-in-out infinite; will-change: transform; }
+  .orb-drift-reverse { animation: orb-drift-reverse 25s ease-in-out infinite; will-change: transform; }
+  @media (prefers-reduced-motion: reduce) {
+    .orb-drift, .orb-drift-reverse { animation: none !important; }
+    #neural-bg { display: none; }
+  }
+</style>
+
 <script>
   import { initScrollAnimations } from '../lib/scrollAnimations.js';
   initScrollAnimations();
 </script>
+<script is:inline src="/scripts/neural-bg.js"></script>
