@@ -1,0 +1,570 @@
+---
+// Persoonlijke roast voor één prospect. Niet indexeerbaar, link gaat alleen naar het bedrijf zelf.
+// Nieuwe roast? Kopieer dit bestand en pas het blok `roast` aan.
+import RoastLayout from '../../components/layout/RoastLayout.astro';
+
+const roast = {
+  slug: 'quite-frankly',
+  naam: 'Quite Frankly',
+  url: 'quitefrankly.be',
+  datum: '19 november 2026',
+  aanhef: 'Quite Frankly, we moeten praten.',
+  kop: ['24.600 mensen volgen je op Instagram.', 'Je website weet van niets.'],
+  intro:
+    'Jullie pastrami is bekroond, de zaak staat in de gidsen en op Instagram loopt het storm. En dan komt iemand op je website terecht. Daar staat een logo, een gevelfoto en een uurrooster dat niet meer klopt.',
+  // Gemeten met Google Lighthouse (PageSpeed Insights), mobiel
+  scores: [
+    { vak: 'Snelheid', score: 89, oordeel: 'goed' },
+    { vak: 'Toegankelijkheid', score: 88, oordeel: 'goed' },
+    { vak: 'Best practices', score: 96, oordeel: 'prima' },
+    { vak: 'Vindbaarheid', score: 83, oordeel: 'kan beter' },
+  ],
+  inhoud: { vak: 'Inhoud', oordeel: 'ontbreekt' },
+  eerlijk:
+    'Eerlijk is eerlijk: technisch zit je goed. Maar een pagina waar bijna niets op staat, laadt altijd snel.',
+  opmerkingen: [
+    {
+      titel: 'Je uurrooster klopt niet meer.',
+      tekst:
+        'Je website zegt dat je op maandag gesloten bent. Op Instagram staat sinds 2 november dat je 7 op 7 open bent. Wie je website gelooft, blijft op maandag thuis.',
+    },
+    {
+      titel: 'Er staat geen enkel broodje op.',
+      tekst:
+        'Geen menu, geen pastrami, geen triple decker. Wie niet op Instagram zit, weet niet wat je verkoopt.',
+    },
+    {
+      titel: 'Je website kent je Instagram niet.',
+      tekst:
+        'Daar staan 152 posts en volgen 24.600 mensen je. Op je website staat er niet eens een link naar.',
+    },
+    {
+      titel: 'Niet gebouwd voor de gsm.',
+      tekst:
+        'De pagina heeft één vaste breedte en wordt gewoon verkleind. En je klant zoekt je net op straat, op zijn gsm.',
+    },
+    {
+      titel: 'Google krijgt niets om te tonen.',
+      tekst:
+        'Geen beschrijving, geen hoofdtitel. Google kiest dan zelf wat er onder je naam verschijnt.',
+    },
+  ],
+  slot: 'Een zaak van dit niveau verdient een website van dit niveau.',
+};
+
+const base = `/roasts/${roast.slug}`;
+const seoProps = {
+  title: `Roast: ${roast.naam}`,
+  description: `Persoonlijk websiterapport en ontwerpvoorstel voor ${roast.naam}.`,
+  canonical: `https://ai-studio44.com${base}`,
+  noindex: true,
+};
+---
+
+<RoastLayout {...seoProps}>
+  <header class="topbar">
+    <a href="/" class="logo">AI-Studio44</a>
+    <span class="for">Persoonlijke roast voor {roast.naam} · {roast.datum}</span>
+  </header>
+
+  <section class="hero t">
+    <p class="hand note p1">{roast.aanhef}</p>
+    <h1>
+      <span class="slam">{roast.kop[0]}</span>
+      <span class="slam d2"
+        ><span class="hl" style="background-image: linear-gradient(var(--marker), var(--marker))"
+          >{roast.kop[1]}</span
+        ></span
+      >
+    </h1>
+    <p class="intro">{roast.intro}</p>
+    <p class="cta-row">
+      <a class="cta btn" href={`${base}/concept.html`}>Bekijk je nieuwe homepage</a>
+      <a class="cta ghost btn" href="#rapport">Lees eerst het rapport</a>
+    </p>
+  </section>
+
+  <section class="desk" id="rapport">
+    <div class="sheet rv sv">
+      <svg class="clip" viewBox="0 0 40 100" aria-hidden="true"
+        ><path
+          d="M12 30 V78 a10 10 0 0 0 20 0 V18 a14 14 0 0 0 -28 0 V70"
+          fill="none"
+          stroke="#111111"
+          stroke-width="4"
+          stroke-linecap="round"></path></svg
+      >
+      <div class="sheet-head">
+        <div>
+          <p class="mono-title">WEBSITERAPPORT</p>
+          <p>Leerling: {roast.url}</p>
+          <p class="dim">Gemeten op {roast.datum}, mobiel</p>
+        </div>
+        <p class="hand verdict">Technisch in orde.<br />Inhoudelijk leeg.</p>
+      </div>
+
+      {
+        roast.scores.map((s) => (
+          <div class="row">
+            <span class="vak">{s.vak}</span>
+            <span class="track">
+              <span class="bar-fill bar" style={`width: ${s.score}%`} />
+            </span>
+            <span class="num">{s.score}</span>
+            <span class="hand oordeel ok">{s.oordeel}</span>
+          </div>
+        ))
+      }
+      <div class="row last">
+        <span class="vak">{roast.inhoud.vak}</span>
+        <span class="track"></span>
+        <span class="num">?</span>
+        <span class="hand oordeel">{roast.inhoud.oordeel}</span>
+      </div>
+
+      <p class="eerlijk">{roast.eerlijk}</p>
+
+      <p class="mono-title small">OPMERKINGEN</p>
+      <ol class="remarks">
+        {
+          roast.opmerkingen.map((o) => (
+            <li>
+              <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  class="pen"
+                  pathLength="1"
+                  stroke-width="3.5"
+                  d="M4 4 L20 20 M20 4 L4 20"
+                />
+              </svg>
+              <div>
+                <strong>{o.titel}</strong>
+                <span>{o.tekst}</span>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="hand slot">{roast.slot}</p>
+    </div>
+  </section>
+
+  <section class="compare">
+    <h2 class="rv sv">
+      Dus hebben we ze <span
+        class="hl"
+        style="background-image: linear-gradient(var(--marker), var(--marker))"
+        >alvast gemaakt.</span
+      >
+    </h2>
+    <p class="lead">
+      Met jullie eigen logo, jullie eigen foto's en jullie eigen woorden. Niets
+      verzonnen, alles van jullie eigen kanalen.
+    </p>
+    <div class="pair">
+      <figure class="rv" style="--r: -1.5deg">
+        <img
+          src={`${base}/voor.jpg`}
+          alt={`De huidige website van ${roast.naam}: een gevelfoto en een uurrooster met maandag gesloten`}
+          width="1131"
+          height="910"
+          loading="lazy"
+          style="object-position: bottom"
+        />
+        <figcaption><span class="tag voor">Nu</span> Een foto en een uurrooster.</figcaption>
+      </figure>
+      <figure class="rv" style="--r: 1.5deg">
+        <a href={`${base}/concept.html`}>
+          <img
+            src={`${base}/na.jpg`}
+            alt={`Het nieuwe ontwerp voor ${roast.naam}, met de titel Sandwiches en een foto van de pastrami`}
+            width="1440"
+            height="900"
+            loading="lazy"
+          />
+        </a>
+        <figcaption><span class="tag na">Voorstel</span> Jullie zaak, zoals ze is.</figcaption>
+      </figure>
+    </div>
+    <p class="cta-row center">
+      <a class="cta btn" href={`${base}/concept.html`}>Open het volledige ontwerp</a>
+    </p>
+  </section>
+
+  <section class="deal">
+    <div class="deal-in">
+      <div>
+        <h2>Wil je dit echt?</h2>
+        <p>
+          Dit ontwerp is een voorstel. Als het je aanstaat, bouwen we het af met
+          jullie volledige menu en jullie prijzen. Je kan daarna zelf je uren, je
+          specials en je foto's aanpassen. Zonder ons te bellen.
+        </p>
+        <p class="hand small-hand">geen verplichtingen, het rapport mag je houden</p>
+      </div>
+      <div class="prices">
+        <div class="price"><span>Website, wij passen aan</span><strong>vanaf €490</strong></div>
+        <div class="price"><span>Website, je past zelf aan</span><strong>vanaf €990</strong></div>
+        <a class="cta wide btn" href={`mailto:hi@ai-studio44.com?subject=${encodeURIComponent(roast.naam + ': laten we praten')}`}
+          >Ja, laten we praten</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span
+      >Dit rapport is gemaakt door <a href="/">AI-Studio44</a> op {roast.datum}, op
+      basis van publieke informatie. Foto's en teksten in het ontwerp komen van {roast.naam}'s
+      eigen kanalen.</span
+    >
+    <span>Liever geen berichten meer van ons? <a href="mailto:hi@ai-studio44.com?subject=Geen%20berichten%20meer">Laat het weten</a>.</span>
+  </footer>
+</RoastLayout>
+
+<style>
+  .topbar {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 22px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 24px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+  }
+  .for {
+    font-family: 'Courier Prime', monospace;
+    font-size: 15px;
+    color: #444;
+  }
+  .hand {
+    font-family: Caveat, cursive;
+    font-weight: 700;
+    color: var(--pen);
+    line-height: 1.05;
+  }
+  h1,
+  h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.96;
+    margin: 0;
+  }
+  .hero {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(28px, 5vw, 72px) 24px clamp(64px, 8vw, 120px);
+  }
+  .hero .note {
+    font-size: clamp(30px, 3.2vw, 46px);
+    rotate: -2deg;
+    transform-origin: left;
+    margin: 0 0 20px;
+  }
+  .hero h1 {
+    font-size: clamp(44px, 7.4vw, 112px);
+  }
+  .intro {
+    max-width: 640px;
+    margin: 36px 0 0;
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.5;
+  }
+  .cta-row {
+    margin: 36px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .cta-row.center {
+    justify-content: center;
+  }
+  .cta {
+    background: var(--pen);
+    color: #fff !important;
+    border: 2px solid #111;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 0 26px;
+    min-height: 58px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .cta.ghost {
+    background: #fff;
+    color: #111 !important;
+  }
+  .cta.wide {
+    justify-content: center;
+    background: #111;
+  }
+
+  .desk {
+    background: #ececec;
+    padding: clamp(64px, 8vw, 120px) 24px;
+  }
+  .sheet {
+    position: relative;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    rotate: -0.8deg;
+    box-shadow:
+      0 2px 0 #cfcfcf,
+      18px 22px 0 rgba(17, 17, 17, 0.1);
+    padding: clamp(26px, 4vw, 56px);
+    font-family: 'Courier Prime', 'Courier New', monospace;
+  }
+  .clip {
+    position: absolute;
+    top: -34px;
+    left: 56px;
+    width: 34px;
+    height: 86px;
+  }
+  .sheet-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: flex-start;
+    border-bottom: 2px solid #111;
+    padding-bottom: 22px;
+  }
+  .sheet-head p {
+    margin: 0 0 4px;
+    font-size: 16px;
+  }
+  .mono-title {
+    font-weight: 700;
+    font-size: 22px !important;
+  }
+  .mono-title.small {
+    font-size: 18px !important;
+    margin: 34px 0 16px;
+  }
+  .dim {
+    color: #555;
+  }
+  .verdict {
+    font-size: clamp(34px, 4vw, 52px) !important;
+    rotate: -4deg;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 22px;
+    padding: 16px 0;
+    border-bottom: 1px dashed #999;
+  }
+  .row.last {
+    border-bottom: 2px solid #111;
+  }
+  .vak {
+    flex: 1 1 190px;
+    font-size: 18px;
+  }
+  .track {
+    flex: 2 1 220px;
+    height: 14px;
+    background: #e4e4e4;
+  }
+  .bar-fill {
+    display: block;
+    height: 14px;
+    background: #111;
+  }
+  .num {
+    width: 40px;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .oordeel {
+    flex: 0 0 150px;
+    font-size: 30px;
+  }
+  .oordeel.ok {
+    color: #111;
+  }
+  .eerlijk {
+    margin: 24px 0 0;
+    font-size: 17px;
+    line-height: 1.5;
+    background: #fff8c9;
+    padding: 14px 16px;
+  }
+  .remarks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .remarks li {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .remarks svg {
+    flex: none;
+    margin-top: 2px;
+  }
+  .remarks strong {
+    display: block;
+    font-size: 18px;
+  }
+  .remarks span {
+    display: block;
+    font-size: 16.5px;
+    line-height: 1.5;
+    color: #333;
+    margin-top: 2px;
+  }
+  .slot {
+    margin: 36px 0 0;
+    font-size: clamp(30px, 3.4vw, 46px);
+    rotate: -1.5deg;
+    max-width: 640px;
+  }
+
+  .compare {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 120px) 24px;
+  }
+  .compare h2 {
+    font-size: clamp(40px, 6vw, 92px);
+  }
+  .lead {
+    max-width: 600px;
+    margin: 26px 0 48px;
+    font-size: 20px;
+    line-height: 1.5;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 40px;
+    align-items: start;
+  }
+  figure {
+    margin: 0;
+    background: #fff;
+    border: 2px solid #111;
+    box-shadow: 10px 12px 0 rgba(17, 17, 17, 0.12);
+    padding: 12px 12px 16px;
+    rotate: var(--r, 0deg);
+  }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 11;
+    object-fit: cover;
+    object-position: top;
+    border: 1px solid #111;
+  }
+  figcaption {
+    margin-top: 14px;
+    font-size: 17px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .tag {
+    font-weight: 700;
+    font-size: 14px;
+    padding: 6px 10px;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .tag.voor {
+    background: var(--pen);
+  }
+  .tag.na {
+    background: #111;
+  }
+
+  .deal {
+    background: var(--marker);
+    border-top: 3px solid #111;
+    border-bottom: 3px solid #111;
+  }
+  .deal-in {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 110px) 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 48px;
+    align-items: center;
+  }
+  .deal h2 {
+    font-size: clamp(40px, 5.4vw, 80px);
+  }
+  .deal p {
+    font-size: 19px;
+    line-height: 1.55;
+    max-width: 520px;
+    margin: 22px 0 0;
+  }
+  .small-hand {
+    font-size: 32px !important;
+    color: #111;
+    rotate: -2deg;
+    transform-origin: left;
+  }
+  .prices {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .price {
+    background: #fff;
+    border: 3px solid #111;
+    box-shadow: 7px 7px 0 #111;
+    padding: 20px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+  }
+  .price span {
+    font-weight: 700;
+    font-size: 18px;
+  }
+  .price strong {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.03em;
+  }
+  .foot {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 24px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 15px;
+    color: #444;
+  }
+  .foot a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
