@@ -90,3 +90,35 @@ body.roast-body{margin:0;background:#fff}
 .ns-b em{align-self:flex-start;font-style:normal;background:#D7FF3E;color:#0E3B2E;font:700 1.2em/1 Archivo,sans-serif;padding:1em 1.6em;border-radius:3em}
 .ns-p{flex:1;background:#E86A33;border-radius:1.6em;position:relative;overflow:hidden}
 .ns-p i{position:absolute;border-radius:50%;display:block}
+
+/* ---- tekstpagina's (RoastTextLayout) ---- */
+.roast-bar{max-width:1280px;margin:0 auto;padding:22px 24px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
+.roast .roast-logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;text-decoration:none}
+.roast .roast-cta{background:#111;color:#fff;border:2px solid #111;text-decoration:none;font-weight:700;font-size:16px;padding:0 20px;min-height:46px;display:inline-flex;align-items:center}
+.roast .roast-cta:hover{color:#fff}
+.roast-prose{max-width:760px;margin:0 auto;padding:clamp(40px,6vw,88px) 24px clamp(72px,9vw,130px);font-size:18px;line-height:1.65;color:#333}
+.roast-prose h1{margin:0 0 12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(40px,6vw,76px);line-height:.96;letter-spacing:-.04em;color:#111}
+.roast-prose h2{margin:48px 0 12px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(24px,2.6vw,32px);line-height:1.1;letter-spacing:-.02em;color:#111}
+.roast-prose p{margin:16px 0}
+.roast-prose ul{margin:16px 0;padding-left:1.3em;list-style:disc}
+.roast-prose ul ul{list-style:circle;margin:6px 0}
+.roast-prose li{margin:6px 0}
+.roast-prose a:not(.roast-cta){text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;text-decoration-color:var(--pen)}
+.roast-prose .roast-meta{color:#555;font-size:16px}
+.roast-hand{font:700 clamp(30px,3vw,42px)/1 Caveat,cursive;color:var(--pen);rotate:-3deg;transform-origin:left;margin:0 0 8px}
+.roast-prose .roast-404{font-size:clamp(120px,24vw,300px);line-height:.85}
+.roast-prose .roast-lead{font-size:clamp(20px,2vw,26px);line-height:1.4;color:#111;margin:24px 0 32px}
+.roast-foot{border-top:3px solid #111;max-width:none;padding:28px 24px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:15px}
+.roast-foot a{text-decoration:underline;text-underline-offset:3px}
+
+/* ---- cookiebanner in roast-stijl ---- */
+body.roast-body .cookie-banner{background:#fff;backdrop-filter:none;border-top:3px solid #111;box-shadow:none;font-family:Archivo,system-ui,sans-serif}
+body.roast-body .cookie-title{color:#111;font-family:'Bricolage Grotesque',sans-serif;font-weight:800}
+body.roast-body .cookie-description{color:#333;font-size:15px}
+body.roast-body .cookie-link,body.roast-body .cookie-link:hover{color:#111;text-decoration-color:var(--pen,#E4002B)}
+body.roast-body .cookie-btn{border-radius:0;font-weight:700;font-size:15px;min-height:44px;border:2px solid #111}
+body.roast-body .cookie-btn:focus-visible{outline:3px solid #E4002B;outline-offset:3px}
+body.roast-body .cookie-btn-accept{background:#111;color:#fff}
+body.roast-body .cookie-btn-accept:hover{box-shadow:none;background:#333}
+body.roast-body .cookie-btn-reject{background:#fff;color:#111}
+body.roast-body .cookie-btn-reject:hover{background:#ECECEC;color:#111}

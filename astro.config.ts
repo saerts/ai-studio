@@ -13,6 +13,14 @@ export default defineConfig({
     },
   }),
   integrations: [tailwind(), sitemap()],
+  // Oude pagina's van voor de Website Roast
+  redirects: {
+    '/diensten': '/',
+    '/nieuws': '/',
+    '/vibe-coding': '/',
+    '/ai-voor-bedrijven': '/',
+    '/contact': '/#aanvraag',
+  },
   markdown: {
     shikiConfig: {
       theme: 'github-light',
