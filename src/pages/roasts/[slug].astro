@@ -1,56 +1,14 @@
 ---
 // Persoonlijke roast voor één prospect. Niet indexeerbaar, link gaat alleen naar het bedrijf zelf.
-// Nieuwe roast? Kopieer dit bestand en pas het blok `roast` aan.
+// De gegevens staan in src/roasts/<slug>/roast.ts. De status daar bepaalt of de pagina online staat.
 import RoastLayout from '../../components/layout/RoastLayout.astro';
+import { vindRoast, isLive, isZichtbaar } from '../../roasts';
 
-const roast = {
-  slug: 'quite-frankly',
-  naam: 'Quite Frankly',
-  url: 'quitefrankly.be',
-  datum: '19 november 2026',
-  aanhef: 'Quite Frankly, we moeten praten.',
-  kop: ['24.600 mensen volgen je op Instagram.', 'Je website weet van niets.'],
-  intro:
-    'Jullie pastrami is bekroond, de zaak staat in de gidsen en op Instagram loopt het storm. En dan komt iemand op je website terecht. Daar staat een logo, een gevelfoto en een uurrooster dat niet meer klopt.',
-  // Gemeten met Google Lighthouse (PageSpeed Insights), mobiel
-  scores: [
-    { vak: 'Snelheid', score: 89, oordeel: 'goed' },
-    { vak: 'Toegankelijkheid', score: 88, oordeel: 'goed' },
-    { vak: 'Best practices', score: 96, oordeel: 'prima' },
-    { vak: 'Vindbaarheid', score: 83, oordeel: 'kan beter' },
-  ],
-  inhoud: { vak: 'Inhoud', oordeel: 'ontbreekt' },
-  eerlijk:
-    'Eerlijk is eerlijk: technisch zit je goed. Maar een pagina waar bijna niets op staat, laadt altijd snel.',
-  opmerkingen: [
-    {
-      titel: 'Je uurrooster klopt niet meer.',
-      tekst:
-        'Je website zegt dat je op maandag gesloten bent. Op Instagram staat sinds 2 november dat je 7 op 7 open bent. Wie je website gelooft, blijft op maandag thuis.',
-    },
-    {
-      titel: 'Er staat geen enkel broodje op.',
-      tekst:
-        'Geen menu, geen pastrami, geen triple decker. Wie niet op Instagram zit, weet niet wat je verkoopt.',
-    },
-    {
-      titel: 'Je website kent je Instagram niet.',
-      tekst:
-        'Daar staan 152 posts en volgen 24.600 mensen je. Op je website staat er niet eens een link naar.',
-    },
-    {
-      titel: 'Niet gebouwd voor de gsm.',
-      tekst:
-        'De pagina heeft één vaste breedte en wordt gewoon verkleind. En je klant zoekt je net op straat, op zijn gsm.',
-    },
-    {
-      titel: 'Google krijgt niets om te tonen.',
-      tekst:
-        'Geen beschrijving, geen hoofdtitel. Google kiest dan zelf wat er onder je naam verschijnt.',
-    },
-  ],
-  slot: 'Een zaak van dit niveau verdient een website van dit niveau.',
-};
+const roast = vindRoast(Astro.params.slug);
+if (!roast || !isZichtbaar(roast)) {
+  return Astro.rewrite('/404');
+}
+const live = isLive(roast);
 
 const base = `/roasts/${roast.slug}`;
 const seoProps = {
@@ -62,6 +20,14 @@ const seoProps = {
 ---
 
 <RoastLayout {...seoProps}>
+  {
+    !live && (
+      <p class="devnote">
+        Alleen zichtbaar in ontwikkeling. Status: <strong>{roast.status}</strong>.
+        Zet de status op "gepubliceerd" om deze roast online te zetten.
+      </p>
+    )
+  }
   <header class="topbar">
     <a href="/" class="logo">AI-Studio44</a>
     <span class="for">Persoonlijke roast voor {roast.naam} · {roast.datum}</span>
@@ -79,7 +45,7 @@ const seoProps = {
     </h1>
     <p class="intro">{roast.intro}</p>
     <p class="cta-row">
-      <a class="cta btn" href={`${base}/concept.html`}>Bekijk je nieuwe homepage</a>
+      <a class="cta btn" href={`${base}/concept`}>Bekijk je nieuwe homepage</a>
       <a class="cta ghost btn" href="#rapport">Lees eerst het rapport</a>
     </p>
   </section>
@@ -165,29 +131,29 @@ const seoProps = {
       <figure class="rv" style="--r: -1.5deg">
         <img
           src={`${base}/voor.jpg`}
-          alt={`De huidige website van ${roast.naam}: een gevelfoto en een uurrooster met maandag gesloten`}
+          alt={roast.beelden.voorAlt}
           width="1131"
           height="910"
           loading="lazy"
           style="object-position: bottom"
         />
-        <figcaption><span class="tag voor">Nu</span> Een foto en een uurrooster.</figcaption>
+        <figcaption><span class="tag voor">Nu</span> {roast.beelden.voorBijschrift}</figcaption>
       </figure>
       <figure class="rv" style="--r: 1.5deg">
-        <a href={`${base}/concept.html`}>
+        <a href={`${base}/concept`}>
           <img
             src={`${base}/na.jpg`}
-            alt={`Het nieuwe ontwerp voor ${roast.naam}, met de titel Sandwiches en een foto van de pastrami`}
+            alt={roast.beelden.naAlt}
             width="1440"
             height="900"
             loading="lazy"
           />
         </a>
-        <figcaption><span class="tag na">Voorstel</span> Jullie zaak, zoals ze is.</figcaption>
+        <figcaption><span class="tag na">Voorstel</span> {roast.beelden.naBijschrift}</figcaption>
       </figure>
     </div>
     <p class="cta-row center">
-      <a class="cta btn" href={`${base}/concept.html`}>Open het volledige ontwerp</a>
+      <a class="cta btn" href={`${base}/concept`}>Open het volledige ontwerp</a>
     </p>
   </section>
 
@@ -195,11 +161,7 @@ const seoProps = {
     <div class="deal-in">
       <div>
         <h2>Wil je dit echt?</h2>
-        <p>
-          Dit ontwerp is een voorstel. Als het je aanstaat, bouwen we het af met
-          jullie volledige menu en jullie prijzen. Je kan daarna zelf je uren, je
-          specials en je foto's aanpassen. Zonder ons te bellen.
-        </p>
+        <p>{roast.aanbod}</p>
         <p class="hand small-hand">geen verplichtingen, het rapport mag je houden</p>
       </div>
       <div class="prices">
@@ -223,6 +185,14 @@ const seoProps = {
 </RoastLayout>
 
 <style>
+  .devnote {
+    margin: 0;
+    padding: 10px 24px;
+    background: #111;
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+  }
   .topbar {
     max-width: 1180px;
     margin: 0 auto;

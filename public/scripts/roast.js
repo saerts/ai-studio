@@ -2,7 +2,8 @@
  * Website Roast: kleine interacties.
  * - hero-mockup kantelt mee met de muis
  * - URL uit de hero gaat mee naar het aanvraagformulier
- * - aanvraagformulier verstuurt via Web3Forms met onderwerp "Roast-aanvraag: <URL>"
+ * - aanvraagformulier verstuurt naar /api/roast-aanvraag (e-mailverificatie),
+ *   met Web3Forms als terugval zolang de sleutels niet ingesteld zijn
  */
 (function () {
   'use strict';
@@ -82,18 +83,62 @@
       button.textContent = 'Even geduld...';
     }
 
-    fetch(form.action, { method: 'POST', body: data })
+    // Eerst ons eigen eindpunt, dat de aanvraag bewaart. Drie uitkomsten:
+    // - 503: nog niet ingesteld, alles gaat via Web3Forms
+    // - verificatie aan: de aanvrager krijgt een bevestigingslink
+    // - verificatie uit: bewaard, en Web3Forms meldt de aanvraag aan Steven
+    var velden = {};
+    data.forEach(function (waarde, sleutel) {
+      velden[sleutel] = waarde;
+    });
+
+    fetch('/api/roast-aanvraag', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(velden),
+    })
       .then(function (res) {
-        if (!res.ok) throw new Error('status ' + res.status);
+        if (res.status === 503) {
+          return fetch(form.action, { method: 'POST', body: data }).then(
+            function (direct) {
+              if (!direct.ok) throw new Error('status ' + direct.status);
+              return 'direct';
+            }
+          );
+        }
+        if (!res.ok) {
+          return res.json().then(function (antwoord) {
+            var fout = new Error('status ' + res.status);
+            fout.bericht = antwoord && antwoord.bericht;
+            throw fout;
+          });
+        }
+        return res.json().then(function (antwoord) {
+          if (antwoord && antwoord.verificatie) return 'verificatie';
+          // Bewaard zonder verificatie: de melding per mail mag mislukken.
+          return fetch(form.action, { method: 'POST', body: data }).then(
+            function () {
+              return 'direct';
+            },
+            function () {
+              return 'direct';
+            }
+          );
+        });
+      })
+      .then(function (manier) {
         form.reset();
         say(
-          'Aanvraag ontvangen. Je hoort snel van ons, met je rapport en je voorstel.',
+          manier === 'verificatie'
+            ? 'Bijna klaar. Check je mailbox en klik op de link om je aanvraag te bevestigen.'
+            : 'Aanvraag ontvangen. Je hoort snel van ons, met je rapport en je voorstel.',
           true
         );
       })
-      .catch(function () {
+      .catch(function (fout) {
         say(
-          'Het versturen is niet gelukt. Probeer het opnieuw of mail je URL naar hi@ai-studio44.com.',
+          (fout && fout.bericht) ||
+            'Het versturen is niet gelukt. Probeer het opnieuw of mail je URL naar hi@ai-studio44.com.',
           false
         );
       })
