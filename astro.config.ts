@@ -14,8 +14,10 @@ export default defineConfig({
   }),
   integrations: [
     tailwind(),
-    // Persoonlijke roasts horen niet in de sitemap
-    sitemap({ filter: (page) => !page.includes('/roasts/') }),
+    // Persoonlijke roasts en het beheer horen niet in de sitemap
+    sitemap({
+      filter: (page) => !page.includes('/roasts/') && !page.includes('/beheer'),
+    }),
   ],
   // Oude pagina's van voor de Website Roast
   redirects: {
