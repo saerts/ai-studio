@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../components/layout/BaseLayout.astro';
+import RoastTextLayout from '../components/layout/RoastTextLayout.astro';
 
 const seoProps = {
-  title: 'Privacybeleid | AI Studio',
+  title: 'Privacybeleid',
   description:
     'Lees het privacybeleid van AI Studio: welke gegevens we verzamelen, waarom, hoelang we die bewaren en welke rechten je hebt.',
   canonical: 'https://ai-studio44.com/privacy',
@@ -10,16 +10,14 @@ const seoProps = {
 };
 ---
 
-<BaseLayout {...seoProps}>
-  <section class="mx-auto max-w-4xl px-6 py-24 sm:py-32">
-    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">Privacybeleid</h1>
-    <p class="mt-4 text-zinc-300 leading-relaxed">
-      Laatst bijgewerkt: 2 oktober 2025
+<RoastTextLayout {...seoProps}>
+  <section>
+    <h1>Privacybeleid</h1>
+    <p class="roast-meta">
+      Laatst bijgewerkt: 19 november 2026
     </p>
 
-    <div
-      class="prose prose-invert prose-lg mt-10 text-zinc-300 leading-relaxed [&_a]:text-primary-400 [&_a:hover]:text-primary-300 [&>h2]:mt-12 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:tracking-tight [&_p]:my-4 [&_ul]:my-4 [&_li]:my-1"
-    >
+    <div>
       <p>
         Bij AI Studio hechten we veel belang aan je privacy. In dit
         privacybeleid leggen we uit welke persoonsgegevens we verzamelen, waarom
@@ -29,7 +27,7 @@ const seoProps = {
 
       <h2>1. Verwerkingsverantwoordelijke</h2>
       <p>
-        AI-Studio44 — Schilde, BE. Voor vragen over dit beleid kan je ons
+        AI-Studio44 is een activiteit van d.Best bv, Schilde, BE. Voor vragen over dit beleid kan je ons
         bereiken via
         <a href="mailto:hi@ai-studio44.com">hi@ai-studio44.com</a>.
       </p>
@@ -45,6 +43,11 @@ const seoProps = {
           apparaat-informatie (via Google Tag Manager en analytics).
         </li>
         <li>Communicatie-inhoud wanneer je ons een bericht stuurt.</li>
+        <li>
+          Bij een roast-aanvraag: het adres van je website, de links en nota's
+          die je meegeeft, en je keuze of we je resultaat mogen tonen op onze
+          website en in onze cijfers. Zonder jouw ja tonen we niets.
+        </li>
       </ul>
 
       <h2>3. Waarom verwerken we je gegevens?</h2>
@@ -80,6 +83,14 @@ const seoProps = {
           <strong>Google LLC</strong> – Voor website analytics via Google Tag Manager
           en Google Analytics. Gegevens worden verwerkt conform het Google Privacy
           Shield en EU-VS Data Privacy Framework.
+        </li>
+        <li>
+          <strong>Supabase</strong> – Voor het bewaren van roast-aanvragen, op
+          servers in de Europese Unie.
+        </li>
+        <li>
+          <strong>Web3Forms</strong> – Voor het doorsturen van formulieren naar
+          onze mailbox.
         </li>
         <li>
           <strong>Hostingproviders</strong> – Voor het hosten van onze website en
@@ -152,4 +163,4 @@ const seoProps = {
       </p>
     </div>
   </section>
-</BaseLayout>
+</RoastTextLayout>

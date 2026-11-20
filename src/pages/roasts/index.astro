@@ -1,0 +1,73 @@
+---
+// Overzicht van alle roasts en hun status. Alleen in ontwikkeling (npm run dev), online bestaat deze pagina niet.
+import RoastTextLayout from '../../components/layout/RoastTextLayout.astro';
+import { alleRoasts, isLive } from '../../roasts';
+
+if (!import.meta.env.DEV) {
+  return Astro.rewrite('/404');
+}
+const roasts = alleRoasts();
+const seoProps = { title: 'Roasts: overzicht', noindex: true };
+---
+
+<RoastTextLayout {...seoProps}>
+  <p class="roast-hand">alleen voor jou</p>
+  <h1>Roasts</h1>
+  <p class="roast-meta">
+    {roasts.length} in totaal, {roasts.filter(isLive).length} online. Status wijzigen
+    doe je in <code>src/roasts/&lt;slug&gt;/roast.ts</code>.
+  </p>
+  <table class="overzicht">
+    <thead>
+      <tr><th>Zaak</th><th>Status</th><th>Bron</th><th>Gemeten</th><th>Links</th></tr>
+    </thead>
+    <tbody>
+      {
+        roasts.map((r) => (
+          <tr>
+            <td>
+              <strong>{r.naam}</strong>
+              <br />
+              {r.url}
+            </td>
+            <td>
+              <span class:list={['status', { live: isLive(r) }]}>{r.status}</span>
+            </td>
+            <td>{r.bron === 'dry' ? 'Roast Dry' : 'Website'}</td>
+            <td>{r.datum}</td>
+            <td>
+              <a href={`/roasts/${r.slug}`}>roast</a> ·
+              <a href={`/roasts/${r.slug}/concept`}>concept</a>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</RoastTextLayout>
+
+<style>
+  .overzicht {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    font-size: 16px;
+  }
+  .overzicht th,
+  .overzicht td {
+    text-align: left;
+    padding: 12px 10px;
+    border-bottom: 2px solid #111;
+    vertical-align: top;
+  }
+  .status {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 2px solid #111;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .status.live {
+    background: var(--marker);
+  }
+</style>

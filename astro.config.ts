@@ -12,7 +12,21 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  integrations: [tailwind(), sitemap()],
+  integrations: [
+    tailwind(),
+    // Persoonlijke roasts en het beheer horen niet in de sitemap
+    sitemap({
+      filter: (page) => !page.includes('/roasts/') && !page.includes('/beheer'),
+    }),
+  ],
+  // Oude pagina's van voor de Website Roast
+  redirects: {
+    '/diensten': '/',
+    '/nieuws': '/',
+    '/vibe-coding': '/',
+    '/ai-voor-bedrijven': '/',
+    '/contact': '/#aanvraag',
+  },
   markdown: {
     shikiConfig: {
       theme: 'github-light',

@@ -8,9 +8,9 @@ export interface SEOProps {
 }
 
 const defaultSEO = {
-  title: 'AI Studio — Breng AI in je dagelijkse flow',
+  title: 'Je website kost je klanten. Gratis Website Roast',
   description:
-    'AI Studio helpt bedrijven bij het implementeren van AI-oplossingen. Van workflow-automations tot training en coaching.',
+    'Plak je URL en krijg een eerlijk rapport over je website, plus een gratis ontwerp van je nieuwe homepage.',
   image: '/images/ai-voor-bedrijven.png',
   canonical: 'https://ai-studio44.com',
   type: 'website' as const,
@@ -26,7 +26,7 @@ export function getSEOProps(props: SEOProps = {}) {
     type = defaultSEO.type,
   } = props;
 
-  const fullTitle = title === defaultSEO.title ? title : `${title} — AI Studio`;
+  const fullTitle = title === defaultSEO.title ? title : `${title} | AI-Studio44`;
 
   return {
     title: fullTitle,

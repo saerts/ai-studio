@@ -1,0 +1,44 @@
+---
+import RoastTextLayout from '../components/layout/RoastTextLayout.astro';
+
+const status = Astro.url.searchParams.get('status');
+const gelukt = !status;
+const seoProps = {
+  title: gelukt ? 'Aanvraag bevestigd' : 'Link niet geldig',
+  description: 'Bevestiging van je roast-aanvraag.',
+  canonical: 'https://ai-studio44.com/aanvraag-bevestigd',
+  noindex: true,
+};
+---
+
+<RoastTextLayout {...seoProps}>
+  {
+    gelukt ? (
+      <>
+        <p class="roast-hand">binnen!</p>
+        <h1>Je aanvraag is bevestigd.</h1>
+        <p class="roast-lead">
+          We bekijken je website. Gaan we ermee aan de slag, dan krijg je normaal
+          binnen 3 werkdagen je rapport en een ontwerp van je nieuwe homepage in
+          je mailbox.
+        </p>
+        <p>
+          <a href="/" class="roast-cta btn">Terug naar de start</a>
+        </p>
+      </>
+    ) : (
+      <>
+        <p class="roast-hand">hm...</p>
+        <h1>Deze link werkt niet meer.</h1>
+        <p class="roast-lead">
+          {status === 'fout'
+            ? 'Er liep iets mis aan onze kant. Probeer de link straks opnieuw.'
+            : 'De link is verlopen of al gebruikt. Was je aanvraag al bevestigd, dan is alles in orde.'}
+        </p>
+        <p>
+          <a href="/#aanvraag" class="roast-cta btn">Nieuwe aanvraag</a>
+        </p>
+      </>
+    )
+  }
+</RoastTextLayout>
