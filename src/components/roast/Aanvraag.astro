@@ -1,0 +1,59 @@
+<section id="aanvraag" style="background: #ECECEC; border-bottom: 3px solid #111111">
+<div style="max-width: 1280px; margin: 0 auto; padding: clamp(72px, 9vw, 130px) 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 56px; align-items: start">
+<div>
+<h2 class="rv sv" style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: clamp(40px, 5.4vw, 80px); line-height: .96; letter-spacing: -.04em">Vraag je <span class="hl" style="background-image: linear-gradient(var(--marker), var(--marker))">gratis voorstel</span> aan.</h2>
+<p style="margin: 28px 0 0; max-width: 460px; font-size: 19px; line-height: 1.55; color: #444444">Vul in wat je weet. Alleen je URL is verplicht. Je krijgt je rapport en een eerste ontwerp van je nieuwe homepage in je mailbox.</p>
+<p style="margin: 28px 0 0; font: 700 clamp(30px, 3vw, 42px)/1.05 Caveat, cursive; color: var(--pen); rotate: -3deg; transform-origin: left">duurt twee minuten →</p>
+</div>
+<form class="rv" action="https://api.web3forms.com/submit" method="POST" data-roast-form style="background: #FFFFFF; border: 3px solid #111111; box-shadow: 10px 10px 0 #111111; padding: clamp(24px, 3vw, 40px); display: flex; flex-direction: column; gap: 22px">
+<input type="hidden" name="access_key" value="9c730d20-daa1-4a92-8c90-a7e123920d14">
+<input type="hidden" name="subject" value="Roast-aanvraag">
+<input type="hidden" name="from_name" value="Website Roast">
+<input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" style="display: none">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-url" style="font-weight: 700; font-size: 16px">Je website <span style="color: var(--pen)">(verplicht)</span></label>
+<input id="f-url" name="website" type="url" required placeholder="https://jouwbedrijf.be" style="min-height: 52px; padding: 0 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px Archivo, sans-serif; color: #111111">
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 22px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-naam" style="font-weight: 700; font-size: 16px">Je naam</label>
+<input id="f-naam" name="name" type="text" autocomplete="name" style="min-height: 52px; padding: 0 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px Archivo, sans-serif; color: #111111">
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-mail" style="font-weight: 700; font-size: 16px">Je e-mail <span style="color: var(--pen)">(verplicht)</span></label>
+<input id="f-mail" name="email" type="email" required autocomplete="email" style="min-height: 52px; padding: 0 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px Archivo, sans-serif; color: #111111">
+</div>
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<legend style="font-weight: 700; font-size: 16px; padding: 0; margin-bottom: 10px">Wat heb je nodig?</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<label style="border: 2px solid #111111; padding: 0 16px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 16px"><input type="radio" name="type" value="statisch" style="width: 18px; height: 18px; accent-color: #111111">Website zonder gedoe</label>
+<label style="border: 2px solid #111111; padding: 0 16px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 16px"><input type="radio" name="type" value="cms" style="width: 18px; height: 18px; accent-color: #111111">Zelf aanpassen</label>
+<label style="border: 2px solid #111111; padding: 0 16px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 16px"><input type="radio" name="type" value="webshop" style="width: 18px; height: 18px; accent-color: #111111">Webshop</label>
+<label style="border: 2px solid #111111; padding: 0 16px; min-height: 48px; display: inline-flex; align-items: center; gap: 10px; font-weight: 500; font-size: 16px"><input type="radio" name="type" value="weet-niet" style="width: 18px; height: 18px; accent-color: #111111">Geen idee, zeg jij het</label>
+</div>
+</fieldset>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-bronnen" style="font-weight: 700; font-size: 16px">Waar staan je beste foto's en teksten?</label>
+<textarea id="f-bronnen" name="bronnen" rows="2" placeholder="Instagram, Facebook, Google-profiel, een Dropbox-link..." style="padding: 12px 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px/1.4 Archivo, sans-serif; color: #111111; resize: vertical"></textarea>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-inspiratie" style="font-weight: 700; font-size: 16px">Websites die je wel mooi vindt</label>
+<textarea id="f-inspiratie" name="inspiratie" rows="2" placeholder="Eén link per regel. Mag van eender welke sector zijn." style="padding: 12px 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px/1.4 Archivo, sans-serif; color: #111111; resize: vertical"></textarea>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="f-nota" style="font-weight: 700; font-size: 16px">Nog iets dat we moeten weten?</label>
+<textarea id="f-nota" name="nota" rows="3" placeholder="Wat stoort je aan je huidige site? Wat moet er zeker op?" style="padding: 12px 14px; border: 2px solid #111111; background: #FFFFFF; font: 500 17px/1.4 Archivo, sans-serif; color: #111111; resize: vertical"></textarea>
+</div>
+<fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+<legend style="font-weight: 700; font-size: 16px; padding: 0; margin-bottom: 10px">Mogen we je resultaat tonen op onze website en in onze cijfers?</legend>
+<label style="border: 2px solid #111111; padding: 12px 16px; min-height: 48px; display: flex; align-items: center; gap: 12px; font-weight: 500; font-size: 16px; line-height: 1.35"><input type="radio" name="toestemming" value="ja" style="flex: none; width: 18px; height: 18px; accent-color: #111111">Ja, toon mijn voor en na gerust.</label>
+<label style="border: 2px solid #111111; padding: 12px 16px; min-height: 48px; display: flex; align-items: center; gap: 12px; font-weight: 500; font-size: 16px; line-height: 1.35"><input type="radio" name="toestemming" value="nee" style="flex: none; width: 18px; height: 18px; accent-color: #111111">Liever niet. Dan trakteer ik op een pintje.</label>
+<p style="margin: 2px 0 0; font: 700 26px/1.1 Caveat, cursive; color: var(--pen); rotate: -1deg">het pintje is vrijwillig, je voorstel krijg je sowieso</p>
+</fieldset>
+<p data-roast-status role="status" aria-live="polite" hidden style="margin: 0; padding: 14px 16px; border: 2px solid #111111; font-weight: 700; font-size: 16px"></p>
+<button class="btn" type="submit" style="background: var(--pen); color: #FFFFFF; border: 2px solid #111111; font: 700 19px Archivo, sans-serif; min-height: 62px; padding: 0 28px; cursor: pointer">Stuur mij mijn rapport en voorstel</button>
+<p style="margin: 0; font-size: 14px; color: #555555">Gratis en vrijblijvend. We gebruiken je gegevens alleen voor dit voorstel.</p>
+</form>
+</div>
+</section>

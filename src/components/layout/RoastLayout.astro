@@ -1,0 +1,75 @@
+---
+// Layout voor de Website Roast: licht thema, eigen navigatie en footer.
+// Hergebruikt SEO, GTM en cookiebanner van BaseLayout.
+import type { SEOProps } from '../../lib/seo';
+import { getSEOProps } from '../../lib/seo';
+import { orgSchema } from '../../lib/schema';
+import SkipLink from '../a11y/SkipLink.astro';
+import CookieConsent from '../CookieConsent.astro';
+import '../../styles/roast.css';
+
+export interface Props extends SEOProps {}
+
+const seoProps = getSEOProps(Astro.props);
+const organizationSchema = orgSchema();
+
+const GTM_ID = import.meta.env.PUBLIC_GTM_ID;
+const GOOGLE_VERIFICATION = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+if (!GTM_ID || !GOOGLE_VERIFICATION) {
+  throw new Error(
+    'Missing required environment variables: PUBLIC_GTM_ID and PUBLIC_GOOGLE_SITE_VERIFICATION must be set in .env file'
+  );
+}
+---
+
+<!doctype html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={seoProps.description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{seoProps.title}</title>
+    <link rel="canonical" href={seoProps.canonical} />
+    {seoProps.noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content={seoProps.type} />
+    <meta property="og:url" content={seoProps.canonical} />
+    <meta property="og:title" content={seoProps.title} />
+    <meta property="og:description" content={seoProps.description} />
+    <meta property="og:image" content={seoProps.image} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={seoProps.canonical} />
+    <meta property="twitter:title" content={seoProps.title} />
+    <meta property="twitter:description" content={seoProps.description} />
+    <meta property="twitter:image" content={seoProps.image} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Archivo:wght@400;500;700&family=Caveat:wght@700&family=Courier+Prime:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+    <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
+    <script is:inline src="/scripts/gtm-config.js" data-gtm-id={GTM_ID}></script>
+  </head>
+
+  <body class="roast-body">
+    <SkipLink />
+    <CookieConsent />
+    <main id="main-content" class="roast">
+      <slot />
+    </main>
+    <script is:inline src="/scripts/roast.js" defer></script>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 ---
-import BaseLayout from '../components/layout/BaseLayout.astro';
+import RoastTextLayout from '../components/layout/RoastTextLayout.astro';
 
 const seoProps = {
-  title: 'Algemene voorwaarden | AI Studio',
+  title: 'Algemene voorwaarden',
   description:
     'Lees de algemene voorwaarden van AI Studio: dienstverlening, offertes, betalingen, aansprakelijkheid en overige bepalingen.',
   canonical: 'https://ai-studio44.com/terms',
@@ -10,22 +10,21 @@ const seoProps = {
 };
 ---
 
-<BaseLayout {...seoProps}>
-  <section class="mx-auto max-w-4xl px-6 py-24 sm:py-32">
-    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
+<RoastTextLayout {...seoProps}>
+  <section>
+    <h1>
       Algemene voorwaarden
     </h1>
-    <p class="mt-4 text-zinc-300 leading-relaxed">
+    <p class="roast-meta">
       Laatst bijgewerkt: 28 september 2025
     </p>
 
-    <div
-      class="prose prose-invert prose-lg mt-10 text-zinc-300 leading-relaxed [&_a]:text-primary-400 [&_a:hover]:text-primary-300 [&>h2]:mt-12 [&>h2]:text-2xl [&>h2]:font-semibold [&>h2]:tracking-tight [&_p]:my-4 [&_ul]:my-4 [&_li]:my-1"
-    >
+    <div>
       <h2>1. Toepasselijkheid</h2>
       <p>
         Deze voorwaarden zijn van toepassing op alle offertes, overeenkomsten en
-        diensten van AI Studio (AI‑Studio44), gevestigd te Schilde, België.
+        diensten van AI-Studio44, een activiteit van d.Best bv, gevestigd te Schilde,
+        België.
       </p>
 
       <h2>2. Offertes en overeenkomsten</h2>
@@ -118,4 +117,4 @@ const seoProps = {
       </p>
     </div>
   </section>
-</BaseLayout>
+</RoastTextLayout>

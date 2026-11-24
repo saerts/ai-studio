@@ -1,0 +1,27 @@
+---
+// Tekstpagina's (privacy, voorwaarden, 404) in de stijl van de Website Roast.
+import type { SEOProps } from '../../lib/seo';
+import RoastLayout from './RoastLayout.astro';
+
+export interface Props extends SEOProps {}
+---
+
+<RoastLayout {...Astro.props}>
+  <header class="roast-bar">
+    <a href="/" class="roast-logo">AI-Studio44</a>
+    <a href="/#aanvraag" class="roast-cta btn">Roast mijn site</a>
+  </header>
+
+  <article class="roast-prose">
+    <slot />
+  </article>
+
+  <footer class="roast-foot">
+    <span><strong>AI-Studio44</strong> · Schilde, BE</span>
+    <a href="mailto:hi@ai-studio44.com">hi@ai-studio44.com</a>
+    <span>
+      <a href="/privacy">Privacybeleid</a> ·
+      <a href="/terms">Algemene voorwaarden</a>
+    </span>
+  </footer>
+</RoastLayout>
